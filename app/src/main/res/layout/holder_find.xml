@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:background="@color/white"
+    android:paddingTop="@dimen/margin_10"
+    android:paddingBottom="@dimen/margin_10"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+   <RelativeLayout
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="@dimen/margin_10"
+       android:gravity="center"
+       android:layout_width="wrap_content"
+       android:layout_height="80dp"
+       android:layout_weight="1">
+
+       <ImageView
+           android:id="@+id/find_img_1"
+           android:layout_centerHorizontal="true"
+           android:layout_width="50dp"
+           android:layout_height="50dp"
+           android:src="@drawable/icon_view"/>
+
+       <TextView
+           android:layout_marginTop="7dp"
+           android:layout_marginBottom="7dp"
+           android:layout_centerHorizontal="true"
+           android:layout_below="@+id/find_img_1"
+           android:text="看锦囊"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
+
+   </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_10"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/find_img_2"
+            android:layout_centerHorizontal="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/icon_view"/>
+
+        <TextView
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/find_img_2"
+            android:text="抢折扣"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_10"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/find_img_3"
+            android:layout_centerHorizontal="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/icon_view"/>
+
+        <TextView
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/find_img_3"
+            android:text="订酒店"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_10"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/find_img_4"
+            android:layout_centerHorizontal="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/icon_view"/>
+
+        <TextView
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/find_img_4"
+            android:text="旅途中"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
