@@ -46,6 +46,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activity.MainActivity" />
         </activity>
+
+        <activity android:name=".view.activity.PhotoActivity"
+            android:parentActivityName=".view.activity.MainActivity"/>
     </application>
 
 </manifest>

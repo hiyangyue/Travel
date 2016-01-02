@@ -68,8 +68,7 @@ public class SocialManager {
         }
     }
 
-
-    public static void createPost(final Context context,final String userId,
+    public static void createPost(final Context context, final String wallId, final String userId,
                                   final String content, List<byte[]> dataList, final IAnSocialCallback callback) {
         PhotoUploader mPhotoUploader = new PhotoUploader(context, userId, dataList, new PhotoUploader.PhotoUploadCallback() {
             @Override
@@ -89,6 +88,7 @@ public class SocialManager {
                 AnSocial anSocial = ((IMppApp) context.getApplicationContext()).anSocial;
                 Map<String, Object> params = new HashMap<String, Object>();
                 params.put("user_id", userId);
+                params.put("wall_id", wallId);
                 params.put("title", "_EMPTY_");
 
                 if (content != null && content.length() > 0) {
@@ -134,6 +134,71 @@ public class SocialManager {
         });
         mPhotoUploader.startUpload();
     }
+
+
+//    public static void createPost(final Context context,final String userId,
+//                                  final String content, List<byte[]> dataList, final IAnSocialCallback callback) {
+//        PhotoUploader mPhotoUploader = new PhotoUploader(context, userId, dataList, new PhotoUploader.PhotoUploadCallback() {
+//            @Override
+//            public void onFailure(String errorMsg) {
+//                DBug.e("createPost.uploadPhotos.onFailure", errorMsg);
+//            }
+//
+//            @Override
+//            public void onSuccess(List<String> urlList) {
+//                DBug.e("createPost.uploadPhotos.onSuccess", "?");
+//                String photoUrls = "";
+//                for (String url : urlList) {
+//                    DBug.e("createPost.uploadPhotos.onSuccess", url);
+//                    photoUrls += url + ",";
+//                }
+//
+//                AnSocial anSocial = ((IMppApp) context.getApplicationContext()).anSocial;
+//                Map<String, Object> params = new HashMap<String, Object>();
+//                params.put("user_id", userId);
+//                params.put("title", "_EMPTY_");
+//
+//                if (content != null && content.length() > 0) {
+//                    params.put("content", content);
+//                }
+//
+//                if (photoUrls.length() > 0) {
+//                    photoUrls = photoUrls.substring(0, photoUrls.length() - 1);
+//                    Map<String, String> custom_fields = new HashMap<String, String>();
+//                    custom_fields.put("photoUrls", photoUrls);
+//                    params.put("custom_fields", custom_fields);
+//                }
+//
+//                try {
+//                    anSocial.sendRequest("posts/create.json", AnSocialMethod.POST, params, new IAnSocialCallback() {
+//                        @Override
+//                        public void onFailure(JSONObject arg0) {
+//                            try {
+//                                String message = arg0.getJSONObject("meta").getString("message");
+//                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//
+//                            if (callback != null) {
+//                                callback.onFailure(arg0);
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onSuccess(JSONObject arg0) {
+//                            if (callback != null) {
+//                                callback.onSuccess(arg0);
+//                            }
+//                        }
+//                    });
+//                } catch (ArrownockException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        mPhotoUploader.startUpload();
+//    }
 
     public static void createComment(final Context context, String postId, String replyUserId, String userId,
                                      String content, final IAnSocialCallback callback) {

@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
-import com.yueyang.travel.manager.IMManager;
 import com.yueyang.travel.manager.SocialManager;
 import com.yueyang.travel.manager.UserManager;
 
@@ -31,7 +30,7 @@ public class FeedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_recommend, container, false);
         ButterKnife.bind(this, view);
-        createPost();
+//        createPost();
         return view;
     }
 
@@ -43,6 +42,7 @@ public class FeedFragment extends Fragment {
 
     private void createPost(){
         SocialManager.createPost(getContext(),
+                null,
                 UserManager.getInstance(getContext()).getCurrentUser().userId,
                 "Hello World",
                 null, new IAnSocialCallback() {

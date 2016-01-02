@@ -5,6 +5,10 @@ package com.yueyang.travel.model;
  */
 public class Constants {
 
+    //take photo
+    public final static String PHOTO_PATH = "photo_path";
+    public final static int REQUEST_TAKE_PHOTO = 1;
+
     public final static String FRIEND_REQUEST_KEY_TYPE = "type";
     public final static String FRIEND_REQUEST_KEY_USERNAME = "username";
     public final static String FRIEND_REQUEST_TYPE_SEND = "send";

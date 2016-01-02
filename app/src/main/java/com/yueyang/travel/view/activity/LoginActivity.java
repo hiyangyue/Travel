@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     private class LoginPagerAdapter extends FragmentPagerAdapter{
 
         private final int PAGE_COUNT = 2;
-        private String mTabs[] = { "Login" , "Register" };
+        private String mTabs[] = { "登入" , "注册" };
 
         public LoginPagerAdapter(FragmentManager fm) {
             super(fm);
