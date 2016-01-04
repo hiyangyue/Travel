@@ -3,22 +3,15 @@ package com.yueyang.travel.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
-import com.yueyang.travel.manager.IMManager;
 import com.yueyang.travel.manager.SpfHelper;
 import com.yueyang.travel.manager.UserManager;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.model.bean.User;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -42,19 +35,21 @@ public class SplashScreen extends AppCompatActivity {
         Animation animation = AnimationUtils.loadAnimation(SplashScreen.this, R.anim.splash);
         splashImage.startAnimation(animation);
         checkBundle();
+        signIn();
 
-        Thread timerThread = new Thread() {
-            public void run() {
-                try {
-                    sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } finally {
-                    signIn();
-                }
-            }
-        };
-        timerThread.start();
+//
+//        Thread timerThread = new Thread() {
+//            public void run() {
+//                try {
+//                    sleep(3000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                } finally {
+//                    signIn();
+//                }
+//            }
+//        };
+//        timerThread.start();
     }
 
     private void signIn(){

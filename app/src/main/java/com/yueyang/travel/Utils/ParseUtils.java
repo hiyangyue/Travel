@@ -1,8 +1,12 @@
 package com.yueyang.travel.Utils;
 
+import android.util.Log;
+
 import com.yueyang.travel.model.bean.City;
 import com.yueyang.travel.model.bean.Desitination;
+import com.yueyang.travel.model.bean.Post;
 import com.yueyang.travel.model.bean.Topic;
+import com.yueyang.travel.model.bean.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,6 +80,33 @@ public class ParseUtils {
         String cityRepresent = dataObj.getString("representative");
 
         return new City(id,cityName,enCityName,photoUrl,cityBeenStr,cityRepresent);
+    }
+
+    public static Post getPost(String jsonString) throws JSONException {
+        JSONObject jsonObject = new JSONObject(jsonString);
+        JSONObject responseObj = jsonObject.getJSONObject("response");
+        JSONObject postObj = responseObj.getJSONObject("post");
+        String content = postObj.getString("content");
+        int likeCount = postObj.getInt("likeCount");
+        String postId = postObj.getString("id");
+
+        //时间转换
+        String createString = postObj.getString("created_at");
+        long createAt = 2015-11-11;
+        Log.e("create_at","..." + createAt);
+
+        JSONObject customObj = postObj.getJSONObject("customFields");
+        String photoUrl = customObj.getString("photoUrls");
+
+        JSONObject userObj = postObj.getJSONObject("user");
+        String userId = userObj.getString("id");
+        String nickName = userObj.getString("firstName");
+
+        User user = new User();
+        user.nickname = nickName;
+        user.userId =  userId;
+
+        return new Post(photoUrl,createAt,user,likeCount,content,postId);
     }
 
 

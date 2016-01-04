@@ -1,30 +1,20 @@
 package com.yueyang.travel.view.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
-import com.yueyang.travel.manager.SocialManager;
-import com.yueyang.travel.manager.UserManager;
 import com.yueyang.travel.model.Constants;
 
-import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,8 +35,9 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
     @Bind(R.id.submit_photo_btn)
     Button submitPhotoBtn;
 
-    private List<byte[]> byteList;
     private String mPhotoPath;
+    private String mPhotoDescribe;
+    private List<byte[]> picBytes = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,20 +45,44 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_photo);
         ButterKnife.bind(this);
 
-        byteList = new ArrayList<>();
-        submitPhotoBtn.setOnClickListener(this);
-        setThumbImg();
-
+        init();
     }
 
-    private void setThumbImg() {
-        mPhotoPath = getIntent().getExtras().getString(Constants.PHOTO_PATH);
+    private void init(){
 
-        if (mPhotoPath != null) {
-            //通过地址解析图片
-            Bitmap bitmap = BitmapFactory.decodeFile(mPhotoPath);
-            photoThumbImg.setImageBitmap(bitmap);
+        submitPhotoBtn.setOnClickListener(this);
+
+        Bundle bundle = getIntent().getExtras();
+        mPhotoPath = bundle.getString(Constants.PHOTO_PATH);
+        if (mPhotoPath != null){
+            compressPic();
         }
+    }
+
+    //对图片进行缩放
+    private void compressPic(){
+        int targetW  = 120;
+        int targetH = 120;
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        //避免在解码之前进行内存分配
+        options.inJustDecodeBounds = true;
+
+        BitmapFactory.decodeFile(mPhotoPath, options);
+        int photoW = options.outWidth;
+        int photoH = options.outHeight;
+
+        int scaleSize = 1;
+        if (targetH / photoH >= 1 || targetW / photoW >= 1){
+            scaleSize = scaleSize * 2;
+        }
+
+        //对图片进行解析
+        options.inJustDecodeBounds = false;
+        options.inSampleSize = scaleSize;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mPhotoPath,options);
+        photoThumbImg.setImageBitmap(bitmap);
     }
 
     @Override
@@ -75,86 +90,26 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()){
             case R.id.submit_photo_btn:
 
-                Log.e("click", "...");
-                byteList.add(getDataFromFilePath(mPhotoPath));
+//                picBytes.add(bitmap2Byte(mPhotoPath));
+                mPhotoDescribe = photoEt.getText().toString();
 
-                SocialManager.createPost(PhotoActivity.this,
-                        getString(R.string.wall_id),
-                        UserManager.getInstance(this).getCurrentUser().userId,
-                        photoEt.getText().toString(),
-                        byteList, new IAnSocialCallback() {
-                            @Override
-                            public void onSuccess(JSONObject jsonObject) {
-
-                            }
-
-                            @Override
-                            public void onFailure(JSONObject jsonObject) {
-                                
-                            }
-                        });
+                Intent intent = new Intent();
+                intent.putExtra(Constants.TEST_1,mPhotoDescribe);
+//                intent.putExtra(Constants.TEST_2,bitmap2Byte(mPhotoPath));
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                setResult(Activity.RESULT_OK,intent);
+                this.finish();
                 break;
             default:
                 break;
         }
     }
 
-    private byte[] getDataFromFilePath(String filePath){
-        Bitmap bmResized = null ;
-        File file = new File(filePath);
-        int size = (int) file.length();
-        byte[] imgData = new byte[size];
-        try{
-            try {
-                BufferedInputStream buf = new BufferedInputStream(new FileInputStream(file));
-                buf.read(imgData, 0, imgData.length);
-                buf.close();
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
 
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            FileInputStream stream1=new FileInputStream(filePath);
-            BitmapFactory.decodeStream(stream1,null,o);
-            stream1.close();
-
-            //Find the correct scale value. It should be the power of 2.
-            final int REQUIRED_SIZE=256;
-            int width_tmp=o.outWidth, height_tmp=o.outHeight;
-            int scale=1;
-            while(true){
-                if(width_tmp/2<REQUIRED_SIZE || height_tmp/2<REQUIRED_SIZE)
-                    break;
-                width_tmp/=2;
-                height_tmp/=2;
-                scale*=2;
-            }
-
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize=scale;
-            FileInputStream stream2=new FileInputStream(filePath);
-            bmResized = BitmapFactory.decodeStream(stream2, null, o2);
-            stream2.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        ByteArrayOutputStream blob = new ByteArrayOutputStream();
-        bmResized.compress(Bitmap.CompressFormat.JPEG, 100, blob);
-        imgData = blob.toByteArray();
-
-        return imgData;
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
-
-
 }
 
 

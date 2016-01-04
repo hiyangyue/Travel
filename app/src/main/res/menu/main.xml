@@ -2,16 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item
+        android:id="@+id/action_user"
+        android:orderInCategory="100"
+        android:title="@string/action_user"
+        android:icon="@drawable/default_account"
+        app:showAsAction="always"/>
+
     <item android:id="@+id/action_search"
         android:orderInCategory="100"
         android:title="@string/action_search"
         android:icon="@drawable/icon_search"
         app:showAsAction="always"/>
 
-    <item android:id="@+id/action_toggle"
-        android:orderInCategory="100"
-        android:title="Toggle"
-        android:icon="@drawable/icon_toggle"
-        app:showAsAction="always"/>
+    <!--<item android:id="@+id/action_toggle"-->
+        <!--android:orderInCategory="100"-->
+        <!--android:title="Toggle"-->
+        <!--android:icon="@drawable/icon_toggle"-->
+        <!--app:showAsAction="always"/>-->
 
 </menu>

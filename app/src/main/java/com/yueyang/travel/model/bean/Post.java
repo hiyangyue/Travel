@@ -44,6 +44,19 @@ public class Post extends Model {
     @Column(name = "commentCount")
     public int commentCount;
 
+    public Post(){
+
+    }
+
+    public Post(String photoUrls, long createdAt, User owner,int likeCount, String content, String postId) {
+        this.photoUrls = photoUrls;
+        this.createdAt = createdAt;
+        this.owner = owner;
+        this.likeCount = likeCount;
+        this.content = content;
+        this.postId = postId;
+    }
+
     public Like myLike(User user) {
         user = user.getFromTable();
         return new Select().from(Like.class)

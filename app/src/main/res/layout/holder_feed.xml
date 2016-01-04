@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
-    android:layout_margin="@dimen/margin_20"
     android:foreground="?android:attr/selectableItemBackground"
     card:cardUseCompatPadding="true"
     card:elevation="4dp">
@@ -15,50 +14,56 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.yueyang.travel.view.wiget.CircleImageView
-            android:id="@+id/feed_header_image"
-            android:layout_width="@dimen/margin_30"
-            android:layout_height="@dimen/margin_30"
-            android:layout_marginTop="@dimen/margin_10"
-            android:layout_marginStart="@dimen/margin_10"
-            android:src="@drawable/test_account"/>
+        <RelativeLayout
+            android:id="@+id/header_iv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_30">
 
-        <TextView
-            android:id="@+id/feed_name"
-            android:layout_toRightOf="@+id/feed_header_image"
-            android:text="Mikey Yang"
-            android:gravity="center_vertical"
-            android:layout_marginStart="@dimen/margin_10"
-            android:textColor="@color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/margin_30" />
+            <com.yueyang.travel.view.wiget.CircleImageView
+                android:id="@+id/feed_header_image"
+                android:layout_width="@dimen/margin_30"
+                android:layout_height="@dimen/margin_30"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginStart="@dimen/margin_10"
+                android:src="@drawable/test_account"/>
 
-        <TextView
-            android:id="@+id/feed_time"
-            android:text="16 hours ago."
-            android:gravity="right|center_vertical"
-            android:layout_alignParentRight="true"
-            android:layout_toRightOf="@+id/feed_header_image"
-            android:layout_marginEnd="@dimen/margin_10"
-            android:layout_marginStart="@dimen/margin_10"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/margin_30" />
+            <TextView
+                android:id="@+id/feed_name"
+                android:layout_toRightOf="@+id/feed_header_image"
+                android:text="Mikey Yang"
+                android:gravity="center_vertical"
+                android:layout_marginStart="@dimen/margin_10"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_30" />
+
+            <TextView
+                android:id="@+id/feed_time"
+                android:text="16 hours ago."
+                android:gravity="end|center_vertical"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/feed_header_image"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_30" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/feed_content"
-            android:layout_below="@+id/feed_name"
-            android:layout_toRightOf="@+id/feed_header_image"
+            android:layout_below="@+id/header_iv"
             android:layout_marginStart="@dimen/margin_10"
             android:layout_marginEnd="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_10"
             android:text="This is the best place I have never been,i will be here again,with my love,I hope oneday I will,his is the best place I have never been,i will be here again,with my love,I hope oneday I will"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <ImageView
             android:id="@+id/feed_image"
-            android:layout_toRightOf="@+id/feed_header_image"
             android:layout_below="@+id/feed_content"
             android:layout_margin="@dimen/margin_10"
+            android:scaleType="centerCrop"
             android:src="@drawable/test_bg"
             android:layout_width="wrap_content"
             android:layout_height="150dp" />
@@ -66,7 +71,6 @@
         <ImageView
             android:id="@+id/feed_like"
             android:layout_below="@+id/feed_image"
-            android:layout_toRightOf="@+id/feed_header_image"
             android:layout_margin="@dimen/margin_10"
             android:layout_width="@dimen/margin_20"
             android:layout_height="@dimen/margin_20"
@@ -75,7 +79,7 @@
         <ImageView
             android:id="@+id/feed_commit"
             android:layout_below="@+id/feed_image"
-            android:layout_toRightOf="@+id/feed_like"
+            android:layout_toEndOf="@+id/feed_like"
             android:layout_margin="@dimen/margin_10"
             android:layout_width="@dimen/margin_20"
             android:layout_height="@dimen/margin_20"
@@ -84,8 +88,8 @@
         <TextView
             android:id="@+id/feed_like_text"
             android:layout_below="@+id/feed_image"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/margin_10"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/margin_10"
             android:layout_marginTop="@dimen/margin_10"
             android:text="Likes"
             android:layout_width="wrap_content"
@@ -95,15 +99,15 @@
             android:id="@+id/feed_like_count"
             android:text="10"
             android:layout_below="@+id/feed_image"
-            android:layout_toLeftOf="@+id/feed_like_text"
+            android:layout_toStartOf="@+id/feed_like_text"
             android:layout_marginTop="@dimen/margin_10"
-            android:layout_marginRight="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <ImageView
             android:layout_below="@+id/feed_image"
-            android:layout_toLeftOf="@+id/feed_like_count"
+            android:layout_toStartOf="@+id/feed_like_count"
             android:layout_margin="@dimen/margin_10"
             android:layout_width="@dimen/margin_20"
             android:layout_height="@dimen/margin_20"

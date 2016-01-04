@@ -8,6 +8,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
+    <string name="action_user">用户登入</string>
 
     <!--register && login-->
     <string name="register">注册</string>

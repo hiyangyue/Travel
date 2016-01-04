@@ -3,6 +3,7 @@ package com.yueyang.travel.view.adapter;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yueyang.travel.R;
+import com.yueyang.travel.Utils.GlideUtils;
 import com.yueyang.travel.model.bean.Post;
 import com.yueyang.travel.view.wiget.CircleImageView;
 
@@ -33,20 +35,24 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.e("feed_view","...");
         View view = LayoutInflater.from(mContext).inflate(R.layout.holder_feed,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        Log.e("bind","...");
         Post post = feedList.get(position);
-        holder.feedName.setText(post.owner.userName);
-//        holder.feedTime.setText(post.o);
+        holder.feedName.setText(post.owner.nickname);
+        holder.feedTime.setText(String.valueOf(post.createdAt));
+        holder.feedContent.setText(post.content);
+        GlideUtils.loadImg(mContext, post.photoUrls, holder.feedImage);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return feedList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
