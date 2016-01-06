@@ -1,12 +1,10 @@
 package com.yueyang.travel.view.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -19,21 +17,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yueyang.travel.R;
+import com.yueyang.travel.Utils.FileUtils;
 import com.yueyang.travel.Utils.ParseUtils;
+import com.yueyang.travel.manager.UserManager;
+import com.yueyang.travel.manager.WallManager;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.model.bean.Post;
+import com.yueyang.travel.model.bean.User;
 import com.yueyang.travel.view.activity.PhotoActivity;
 import com.yueyang.travel.view.adapter.FeedAdapter;
 
 import org.json.JSONException;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -60,7 +61,7 @@ public class FeedFragment extends Fragment {
         ButterKnife.bind(this, view);
         setUpFab();
         setUpRecyclerView();
-//        initData();
+        initData(getContext());
         return view;
     }
 
@@ -84,7 +85,7 @@ public class FeedFragment extends Fragment {
                     break;
                 case Constants.REQUEST_GET_POST:
                     try {
-                        Post post = ParseUtils.getPost(data.getExtras().getString(Constants.TEST_1));
+                        Post post = ParseUtils.getPost(data.getExtras().getString(Constants.RESULT_POST),getContext());
                         postList.add(post);
                         feedAdapter.notifyDataSetChanged();
 
@@ -108,11 +109,10 @@ public class FeedFragment extends Fragment {
                 Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePhotoIntent.resolveActivity(getActivity().getPackageManager()) != null) {
                     try {
-                        File file = createFile();
-                        if (file != null) {
-                            takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-                            startActivityForResult(takePhotoIntent, Constants.REQUEST_TAKE_PHOTO);
-                        }
+                        File file = FileUtils.createImgFile();
+                        mCurrentPhotoPath = file.getAbsolutePath();
+                        takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+                        startActivityForResult(takePhotoIntent, Constants.REQUEST_TAKE_PHOTO);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -123,12 +123,6 @@ public class FeedFragment extends Fragment {
 
     private void setUpRecyclerView() {
         postList = new ArrayList<>();
-
-        Post post = new Post("Hello World");
-        postList.add(post);
-
-//        List<String> stringList = new ArrayList<>();
-//        stringList.add("hello world");
         feedAdapter = new FeedAdapter(getContext(),postList);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -136,31 +130,34 @@ public class FeedFragment extends Fragment {
         feedRecycler.setItemAnimator(new DefaultItemAnimator());
         feedRecycler.setLayoutManager(layoutManager);
         feedRecycler.setAdapter(feedAdapter);
-
     }
 
-    public File createFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_hhMMss").format(new Date());
-        String imgFileName = "JPEG" + "_" + timeStamp + "_";
-        //使用SD卡的标识
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
+    private void initData(final Context context){
+        UserManager.getInstance(context).getMyLocalFriends(new UserManager.FetchUserCallback() {
+            @Override
+            public void onFinish(List<User> data) {
+                Set<String> friendSet = new HashSet<>();
+                for(User friend : data){
+                    friendSet.add(friend.userId);
+                }
 
-        File file = File.createTempFile(
-                imgFileName,
-                ".jpg",
-                storageDir
-        );
+                WallManager wallManager = new WallManager(context,
+                        getResources().getString(R.string.wall_id),friendSet);
+                wallManager.init(new WallManager.FetchPostsCallback() {
+                    @Override
+                    public void onFailure(String errorMsg) {
 
-        mCurrentPhotoPath = file.getAbsolutePath();
-        return file;
-    }
+                    }
 
-    private byte[] bitmap2Byte(String filePath) {
-        Bitmap bitmap = BitmapFactory.decodeFile(filePath);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-        return bos.toByteArray();
+                    @Override
+                    public void onFinish(List<Post> data) {
+                        postList.addAll(data);
+                        feedAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+
     }
 
     private void hideProgessBar(){

@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="170dp"
+<android.support.v7.widget.CardView android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="3dp"
+    android:layout_margin="@dimen/margin_5"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-<!--<TextView-->
-    <!--android:text="Hello world"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content" />-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
         <com.yueyang.travel.view.wiget.CircleImageView
             android:id="@+id/feed_header_image"
@@ -18,16 +22,14 @@
         <TextView
             android:id="@+id/feed_name"
             android:layout_toRightOf="@+id/feed_header_image"
-            android:text="Mikey Yang"
             android:gravity="center_vertical"
             android:layout_marginStart="@dimen/margin_10"
-            android:textColor="@color/black"
+            android:textSize="22sp"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/margin_30" />
 
         <TextView
             android:id="@+id/feed_time"
-            android:text="16 hours ago."
             android:gravity="end|center_vertical"
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/feed_header_image"
@@ -36,40 +38,43 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/margin_30" />
 
-    <TextView
-        android:id="@+id/feed_content"
-        android:layout_below="@+id/feed_header_image"
-        android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginEnd="@dimen/margin_10"
-        android:layout_marginTop="@dimen/margin_10"
-        android:text="This is the best place I have never been,i will be here again,with my love,I hope oneday I will,his is the best place I have never been,i will be here again,with my love,I hope oneday I will"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/feed_content"
+            android:layout_below="@+id/feed_header_image"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_5"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <ImageView
-        android:id="@+id/feed_image"
-        android:layout_below="@+id/feed_content"
-        android:layout_margin="@dimen/margin_10"
-        android:scaleType="fitCenter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/feed_image"
+            android:layout_below="@+id/feed_content"
+            android:adjustViewBounds="true"
+            android:maxHeight="200dp"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <ImageView
-        android:id="@+id/feed_like"
-        android:layout_below="@+id/feed_image"
-        android:layout_margin="@dimen/margin_10"
-        android:layout_width="@dimen/margin_20"
-        android:layout_height="@dimen/margin_20"
-        android:src="@drawable/icon_like_grey"/>
+        <ImageView
+            android:id="@+id/feed_like"
+            android:layout_below="@+id/feed_image"
+            android:layout_toLeftOf="@+id/feed_commit"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_width="@dimen/margin_20"
+            android:layout_height="@dimen/margin_20"
+            android:src="@drawable/icon_like_grey"/>
 
-    <ImageView
-        android:id="@+id/feed_commit"
-        android:layout_below="@+id/feed_image"
-        android:layout_toEndOf="@+id/feed_like"
-        android:layout_margin="@dimen/margin_10"
-        android:layout_width="@dimen/margin_20"
-        android:layout_height="@dimen/margin_20"
-        android:src="@drawable/icon_commit"/>
+        <ImageView
+            android:id="@+id/feed_commit"
+            android:layout_below="@+id/feed_image"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/margin_10"
+            android:layout_marginBottom="@dimen/margin_5"
+            android:layout_width="@dimen/margin_20"
+            android:layout_height="@dimen/margin_20"
+            android:src="@drawable/icon_commit"/>
 
+    </RelativeLayout>
 
-</RelativeLayout>
+</android.support.v7.widget.CardView>

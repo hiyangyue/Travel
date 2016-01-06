@@ -3,7 +3,7 @@ package com.yueyang.travel.model.bean;
 /**
  * Created by Yang on 2015/12/19.
  */
-public class Post  {
+public class Post{
     public String postId;
 
     public String content;
@@ -12,7 +12,7 @@ public class Post  {
 
     public long createdAt;
 
-    public User owner;
+    public User user;
 
     public String wallId;
 
@@ -20,18 +20,10 @@ public class Post  {
 
     public int commentCount;
 
-    public Post(){
-
-    }
-
-    public Post(String content) {
-        this.content = content;
-    }
-
-    public Post(String photoUrls, long createdAt, User owner, int likeCount, String content, String postId) {
+    public Post(String photoUrls,long createdAt,User user,int likeCount,String content,String postId){
         this.photoUrls = photoUrls;
         this.createdAt = createdAt;
-        this.owner = owner;
+        this.user = user;
         this.likeCount = likeCount;
         this.content = content;
         this.postId = postId;
@@ -69,12 +61,12 @@ public class Post  {
         this.createdAt = createdAt;
     }
 
-    public User getOwner() {
-        return owner;
+    public User getUser() {
+        return user;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getWallId() {

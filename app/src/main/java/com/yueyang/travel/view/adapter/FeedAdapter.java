@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yueyang.travel.R;
+import com.yueyang.travel.Utils.GlideUtils;
 import com.yueyang.travel.model.bean.Post;
 import com.yueyang.travel.view.wiget.CircleImageView;
 
@@ -40,9 +41,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         Post post = postList.get(position);
+        holder.feedName.setText(post.getUser().nickname);
+        holder.feedTime.setText(String.valueOf(post.createdAt));
         holder.feedContent.setText(post.getContent());
 
-
+        GlideUtils.loadImg(mContext,post.photoUrls,holder.feedImage);
+        if (post.user.userPhotoUrl != null){
+            GlideUtils.loadImg(mContext,post.user.userPhotoUrl,holder.feedHeaderImage);
+        }
     }
 
     @Override

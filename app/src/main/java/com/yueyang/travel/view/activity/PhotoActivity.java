@@ -107,10 +107,8 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
                         new IAnSocialCallback() {
                             @Override
                             public void onSuccess(JSONObject jsonObject) {
-                                Log.e("success",jsonObject.toString());
-                                Log.e("success","...");
                                 Intent intent = new Intent();
-                                intent.putExtra(Constants.TEST_1,jsonObject.toString());
+                                intent.putExtra(Constants.RESULT_POST,jsonObject.toString());
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 setResult(Activity.RESULT_OK, intent);
                                 PhotoActivity.this.finish();
@@ -121,21 +119,6 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
                                 Log.e("error",jsonObject.toString());
                             }
                         });
-
-
-
-
-
-
-//                picBytes.add(bitmap2Byte(mPhotoPath));
-                mPhotoDescribe = photoEt.getText().toString();
-
-//                Intent intent = new Intent();
-//                intent.putExtra(Constants.TEST_1,mPhotoDescribe);
-//                intent.putExtra(Constants.TEST_2,bitmap2Byte(mPhotoPath));
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//                setResult(Activity.RESULT_OK,intent);
-//                this.finish();
                 break;
             default:
                 break;
@@ -149,11 +132,6 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
         return bos.toByteArray();
     }
 
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
 }
 
 

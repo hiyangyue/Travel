@@ -3,13 +3,11 @@ package com.yueyang.travel.view.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
@@ -38,8 +36,8 @@ public class RegisterFragment extends Fragment {
     EditText userPassEt;
     @Bind(R.id.register_btn)
     Button registerBtn;
-    @Bind(R.id.progress_bar)
-    ProgressBar progressBar;
+    @Bind(R.id.user_nick_et)
+    EditText userNickEt;
 
     private String payload;
 
@@ -64,25 +62,23 @@ public class RegisterFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    private void initRegister(){
+    private void initRegister() {
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                loadProgress();
                 UserManager.getInstance(getContext())
-                        .signUp(userNameEt.getText().toString(), userPassEt.getText().toString(), "nickname",new IAnSocialCallback() {
+                        .signUp(userNameEt.getText().toString(), userPassEt.getText().toString(), userNickEt.getText().toString(), new IAnSocialCallback() {
                             @Override
                             public void onSuccess(JSONObject jsonObject) {
-                                hideProgress();
                                 SnackbarUtils.getSnackbar(registerBtn, getString(R.string.register_success));
                                 JSONObject userJson = null;
                                 try {
                                     userJson = jsonObject.getJSONObject("response").getJSONObject("user");
                                     User user = new User(userJson);
                                     user.update();
-                                    afterRegister(user, userNameEt.getText().toString(), userPassEt.getText().toString(), "nickname");
+                                    afterRegister(user, userNameEt.getText().toString(), userPassEt.getText().toString(),userNickEt.getText().toString());
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -90,7 +86,6 @@ public class RegisterFragment extends Fragment {
 
                             @Override
                             public void onFailure(JSONObject jsonObject) {
-                                hideProgress();
                                 SnackbarUtils.getSnackbar(registerBtn, getString(R.string.register_error));
                             }
                         });
@@ -98,7 +93,7 @@ public class RegisterFragment extends Fragment {
         });
     }
 
-    private void afterRegister(User user,String name,String pass,String nickName){
+    private void afterRegister(User user, String name, String pass, String nickName) {
         if (!SpfHelper.getInstance(getContext()).hasSignIn()) {
             SpfHelper.getInstance(getContext()).saveUserInfo(name,
                     pass,
@@ -111,23 +106,15 @@ public class RegisterFragment extends Fragment {
         goToMainActivity();
     }
 
-    private void  goToMainActivity(){
+    private void goToMainActivity() {
         Intent i = new Intent(getActivity(), MainActivity.class);
         if (payload != null) {
             i.putExtra(Constants.INTENT_EXTRA_KEY_PAYLOAD, payload);
         }
         startActivity(i);
-        hideProgress();
         getActivity().finish();
     }
 
-    private void loadProgress(){
-        progressBar.setVisibility(View.VISIBLE);
-    }
-
-    private void hideProgress(){
-        progressBar.setVisibility(View.INVISIBLE);
-    }
 }
 
 

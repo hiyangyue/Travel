@@ -1,7 +1,9 @@
 package com.yueyang.travel.Utils;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.yueyang.travel.manager.UserManager;
 import com.yueyang.travel.model.bean.City;
 import com.yueyang.travel.model.bean.Desitination;
 import com.yueyang.travel.model.bean.Post;
@@ -82,7 +84,8 @@ public class ParseUtils {
         return new City(id,cityName,enCityName,photoUrl,cityBeenStr,cityRepresent);
     }
 
-    public static Post getPost(String jsonString) throws JSONException {
+    public static Post getPost(String jsonString, Context context) throws JSONException {
+
         JSONObject jsonObject = new JSONObject(jsonString);
         JSONObject responseObj = jsonObject.getJSONObject("response");
         JSONObject postObj = responseObj.getJSONObject("post");
@@ -93,20 +96,33 @@ public class ParseUtils {
         //时间转换
         String createString = postObj.getString("created_at");
         long createAt = 2015-11-11;
-        Log.e("create_at","..." + createAt);
-
         JSONObject customObj = postObj.getJSONObject("customFields");
         String photoUrl = customObj.getString("photoUrls");
+        Log.e("post_url",photoUrl);
 
-        JSONObject userObj = postObj.getJSONObject("user");
-        String userId = userObj.getString("id");
-        String nickName = userObj.getString("firstName");
+        return new Post(photoUrl,createAt, UserManager.getInstance(context).getCurrentUser(),likeCount,content,postId);
+    }
 
-        User user = new User();
-        user.nickname = nickName;
-        user.userId =  userId;
+    public static Post getPostFromUser(JSONObject jsonObject) throws JSONException {
 
-        return new Post(photoUrl,createAt,user,likeCount,content,postId);
+        String content = jsonObject.getString("content");
+        String id = jsonObject.getString("id");
+        int likeCount = jsonObject.getInt("likeCount");
+        String createAt = jsonObject.getString("created_at");
+
+        JSONObject customFields = jsonObject.getJSONObject("customFields");
+        String photoUrl = customFields.getString("photoUrls");
+        JSONObject userObject = jsonObject.getJSONObject("user");
+        String userId = userObject.getString("id");
+        String username = userObject.getString("username");
+        String nickName = userObject.getString("firstName");
+        String headerImgUrl = null;
+        if (userObject.has("photo")){
+            headerImgUrl = userObject.getString("photo");
+        }
+        User user = new User(userId,username,headerImgUrl,nickName);
+
+        return new Post(photoUrl,2015-9,user,likeCount,content,id);
     }
 
 

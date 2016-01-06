@@ -102,8 +102,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 TopicHolder topicHolder = (TopicHolder) holder;
                 Topic topic = (Topic) mItems.get(position);
                 Log.e("topic_url", topic.getImgUrl());
-                GlideUtils.loadImg(mContext, topic.getImgUrl(), topicHolder.topicImg);
-//                Glide.with(mContext).load(topic.getImgUrl()).into(topicHolder.topicImg);
+                GlideUtils.loadImg(mContext,topic.getImgUrl(), topicHolder.topicImg);
                 break;
             default:
                 break;

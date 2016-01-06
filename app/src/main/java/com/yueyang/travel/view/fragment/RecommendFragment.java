@@ -69,9 +69,6 @@ public class RecommendFragment extends Fragment implements IRecommendView{
         recommendRecycler.setItemAnimator(new DefaultItemAnimator());
         adapter = new RecommendAdapter(getActivity(), mItems);
         recommendRecycler.setAdapter(adapter);
-//        recommendRecycler.addItemDecoration(new DividerItemDecoration(getContext(), 30));
-
-//        client.get(getActivity(), TravelApi.POPULAR_TOPIC, topicHandler);
     }
 
     private void initPresenter(){
@@ -84,7 +81,6 @@ public class RecommendFragment extends Fragment implements IRecommendView{
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
-
 
     @Override
     public void loadPagers() {

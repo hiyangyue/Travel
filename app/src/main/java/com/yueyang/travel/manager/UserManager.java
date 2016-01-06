@@ -2,7 +2,6 @@ package com.yueyang.travel.manager;
 
 import android.content.Context;
 import android.os.Handler;
-import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 import com.arrownock.exception.ArrownockException;
@@ -10,20 +9,16 @@ import com.arrownock.social.AnSocial;
 import com.arrownock.social.AnSocialFile;
 import com.arrownock.social.AnSocialMethod;
 import com.arrownock.social.IAnSocialCallback;
-import com.yueyang.travel.R;
 import com.yueyang.travel.Utils.DBug;
 import com.yueyang.travel.application.IMppApp;
-import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.model.bean.Friend;
 import com.yueyang.travel.model.bean.FriendRequest;
 import com.yueyang.travel.model.bean.User;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +35,7 @@ public class UserManager extends Observable {
     private User currentUser;
 
     public enum UpdateType {
-        Friend, User,Room
+        Friend, User
     }
 
     private UserManager(Context ct) {
@@ -64,102 +59,6 @@ public class UserManager extends Observable {
         return currentUser;
     }
 
-    public void fetchMyRemoteFriend(final IAnSocialCallback cbk) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Map<String, Object> params = new HashMap<String, Object>();
-                    params.put("user_id", currentUser.userId);
-                    params.put("limit", 100);
-                    anSocial.sendRequest("friends/list.json", AnSocialMethod.GET, params, new IAnSocialCallback() {
-                        @Override
-                        public void onFailure(JSONObject response) {
-                            DBug.e("fetchMyRemoteFriend.onFailure", response.toString());
-                            if (cbk != null) {
-                                cbk.onFailure(response);
-                            }
-                        }
-
-                        @Override
-                        public void onSuccess(JSONObject response) {
-                            DBug.e("fetchMyRemoteFriend.onSuccess", response.toString());
-                            try {
-                                JSONArray users = response.getJSONObject("response").getJSONArray("friends");
-                                for (int i = 0; i < users.length(); i++) {
-                                    JSONObject userJson = users.getJSONObject(i);
-                                    User user = new User(userJson);
-                                    saveUser(user);
-                                    boolean isMutual = userJson.getJSONObject("friendProperties")
-                                            .getBoolean("isMutual");
-                                    addFriendLocal(user.clientId, isMutual);
-                                }
-                            } catch (JSONException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-                            if (cbk != null) {
-                                cbk.onSuccess(response);
-                            }
-                        }
-                    });
-                } catch (ArrownockException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
-    public void searchRemoteUser(final String username, final FetchUserCallback cbk) {
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Map<String, Object> params = new HashMap<String, Object>();
-                    params.put("username", username);
-                    params.put("limit", 100);
-                    anSocial.sendRequest("users/search.json", AnSocialMethod.GET, params, new IAnSocialCallback() {
-                        @Override
-                        public void onFailure(JSONObject response) {
-                            DBug.e("searchRemoteUser.onFailure", response.toString());
-                            if (cbk != null) {
-                                List<User> userList = new ArrayList<User>();
-                                cbk.onFinish(userList);
-                            }
-                        }
-
-                        @Override
-                        public void onSuccess(JSONObject response) {
-                            List<User> userList = new ArrayList<User>();
-                            try {
-                                JSONArray users = response.getJSONObject("response").getJSONArray("users");
-                                for (int i = 0; i < users.length(); i++) {
-                                    JSONObject userJson = users.getJSONObject(i);
-                                    User user = new User(userJson);
-                                    saveUser(user);
-
-                                    if (!user.userId.equals(currentUser.userId)) {
-                                        userList.add(user);
-                                    }
-                                }
-                            } catch (JSONException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-                            if (cbk != null) {
-                                cbk.onFinish(userList);
-                            }
-                        }
-                    });
-                } catch (ArrownockException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
 
     public void fetchUserDataByClientId(final String clientId) {
         final Map<String, Object> params = new HashMap<String, Object>();
@@ -183,326 +82,6 @@ public class UserManager extends Observable {
                         e.printStackTrace();
                     }
 
-                }
-            });
-        } catch (ArrownockException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void fetchSIngleUserDataByClientId(final String clientId, final FetchSingleUserCallback callback) {
-        final Map<String, Object> params = new HashMap<String, Object>();
-        params.put("clientId", clientId);
-        try {
-            anSocial.sendRequest("users/query.json", AnSocialMethod.GET, params, new IAnSocialCallback() {
-                @Override
-                public void onFailure(JSONObject arg0) {
-                }
-
-                @Override
-                public void onSuccess(final JSONObject arg0) {
-                    try {
-                        DBug.e("fetchSIngleUserDataByClientId", clientId + "," + arg0.toString());
-                        JSONObject json = arg0.getJSONObject("response").getJSONArray("users").getJSONObject(0);
-                        User user = new User();
-                        user.parseJSON(json);
-                        saveUser(user);
-                        if (callback != null) {
-                            callback.onFinish(user);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        } catch (ArrownockException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void fetchUserlistDataByClientIds(final String clientIds, final FetchUserlistCallBack callback) {
-        final Map<String, Object> params = new HashMap<String, Object>();
-        params.put("clientId", clientIds); //
-
-        try {
-            anSocial.sendRequest("users/query.json", AnSocialMethod.GET, params, new IAnSocialCallback() {
-                @Override
-                public void onFailure(JSONObject arg0) {
-                }
-
-                @Override
-                public void onSuccess(final JSONObject arg0) {
-                    try {
-                        DBug.e("fetchSIngleUserDataByClientId", clientIds + "," + arg0.toString());
-
-                        List<User> userList = new ArrayList<User>();
-
-                        for (int i = 0; i < clientIds.length(); i++) {
-                            JSONObject json = arg0.getJSONObject("response").getJSONArray("users").getJSONObject(i);
-                            User user = new User();
-                            user.parseJSON(json);
-                            saveUser(user);
-                            userList.add(user);
-                        }
-                        if (callback != null) {
-                            callback.onFinish(userList);
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        } catch (ArrownockException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void fetchSIngleUserDataByUserId(final String userId, final FetchSingleUserCallback callback) {
-        final Map<String, Object> params = new HashMap<String, Object>();
-        params.put("user_ids", userId);
-        try {
-            anSocial.sendRequest("users/get.json", AnSocialMethod.GET, params, new IAnSocialCallback() {
-                @Override
-                public void onFailure(JSONObject arg0) {
-                    if (callback != null) {
-                        callback.onFinish(null);
-                    }
-                }
-
-                @Override
-                public void onSuccess(final JSONObject arg0) {
-                    try {
-                        DBug.e("fetchSIngleUserDataByUserId", userId + "," + arg0.toString());
-                        int count = arg0.getJSONObject("response").getJSONArray("users").length();
-                        if (count == 0) {
-                            if (callback != null) {
-                                callback.onFinish(null);
-                            }
-                        } else {
-                            JSONObject json = arg0.getJSONObject("response").getJSONArray("users").getJSONObject(0);
-                            User user = new User();
-                            user.parseJSON(json);
-                            saveUser(user);
-                            if (callback != null) {
-                                callback.onFinish(user);
-                            }
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        } catch (ArrownockException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void addFriend(final User currentUser, final User toUser, final AddFriendCallback callback) {
-        final Map<String, Object> params = new HashMap<String, Object>();
-        params.put("user_id", currentUser.userId);
-        params.put("target_user_id", toUser.userId);
-        try {
-            anSocial.sendRequest("friends/add.json", AnSocialMethod.POST, params, new IAnSocialCallback() {
-                @Override
-                public void onFailure(JSONObject arg0) {
-                    if (callback != null) {
-                        callback.onFinish(false);
-                    }
-                }
-
-                @Override
-                public void onSuccess(final JSONObject arg0) {
-                    final Map<String, Object> params = new HashMap<String, Object>();
-                    params.put("user_id", toUser.userId);
-                    params.put("target_user_id", currentUser.userId);
-                    try {
-                        anSocial.sendRequest("friends/add.json", AnSocialMethod.POST, params, new IAnSocialCallback() {
-                            @Override
-                            public void onFailure(JSONObject arg0) {
-                                if (callback != null) {
-                                    callback.onFinish(false);
-                                }
-                            }
-
-                            @Override
-                            public void onSuccess(final JSONObject arg0) {
-                                addFriendLocal(toUser.clientId, true);
-                                if (callback != null) {
-                                    callback.onFinish(true);
-                                }
-                            }
-                        });
-                    } catch (ArrownockException e) {
-                        if (callback != null) {
-                            callback.onFinish(false);
-                        }
-                    }
-                }
-            });
-        } catch (ArrownockException e) {
-            if (callback != null) {
-                callback.onFinish(false);
-            }
-        }
-    }
-
-    public void fetchFriendRequest(final IAnSocialCallback cbk) {
-        final Map<String, Object> params = new HashMap<String, Object>();
-        params.put("to_user_id", currentUser.userId);
-        params.put("limit", 100);
-        try {
-            anSocial.sendRequest("friends/requests/list.json", AnSocialMethod.GET, params, new IAnSocialCallback() {
-                @Override
-                public void onFailure(JSONObject arg0) {
-                    if (cbk != null) {
-                        cbk.onFailure(arg0);
-                    }
-                }
-
-                @Override
-                public void onSuccess(final JSONObject arg0) {
-                    try {
-                        JSONArray requests = arg0.getJSONObject("response").getJSONArray("friendRequests");
-                        for (int i = 0; i < requests.length(); i++) {
-                            FriendRequest friendReqst = new FriendRequest(currentUser.clientId, requests
-                                    .getJSONObject(i));
-                            friendReqst.update();
-
-                            saveUser(new User(requests.getJSONObject(i).getJSONObject("from")));
-                        }
-                    } catch (JSONException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                    if (cbk != null) {
-                        cbk.onSuccess(arg0);
-                    }
-                }
-            });
-        } catch (ArrownockException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void rejectFriendRequest(final FriendRequest request, final IAnSocialCallback cbk) {
-        final Map<String, Object> params = new HashMap<String, Object>();
-        params.put("request_id", request.friendRequestId);
-        params.put("keep_request", true);
-        try {
-            anSocial.sendRequest("friends/requests/reject.json", AnSocialMethod.POST, params, new IAnSocialCallback() {
-                @Override
-                public void onFailure(JSONObject arg0) {
-                    if (cbk != null) {
-                        cbk.onFailure(arg0);
-                    }
-                }
-
-                @Override
-                public void onSuccess(final JSONObject arg0) {
-                    Toast.makeText(ct, ct.getString(R.string.friend_request_rejected), Toast.LENGTH_LONG).show();
-                    if (cbk != null) {
-                        cbk.onSuccess(arg0);
-                    }
-                }
-            });
-        } catch (ArrownockException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void approveFriendRequest(final FriendRequest request, final IAnSocialCallback cbk) {
-        final Map<String, Object> params = new HashMap<String, Object>();
-        params.put("request_id", request.friendRequestId);
-        params.put("keep_request", true);
-        try {
-            anSocial.sendRequest("friends/requests/approve.json", AnSocialMethod.POST, params, new IAnSocialCallback() {
-                @Override
-                public void onFailure(JSONObject arg0) {
-                    if (cbk != null) {
-                        cbk.onFailure(arg0);
-                    }
-                }
-
-                @Override
-                public void onSuccess(final JSONObject arg0) {
-                    addFriendLocal(request.user().clientId, true);
-                    addFriendRemote(request.user());
-                    try {
-                        Map<String, String> c_data = new HashMap<String, String>();
-                        c_data.put(Constants.FRIEND_REQUEST_KEY_TYPE, Constants.FRIEND_REQUEST_TYPE_APPROVE);
-                        IMManager
-                                .getInstance(ct)
-                                .getAnIM()
-                                .sendBinary(request.user().clientId, new byte[1], Constants.FRIEND_REQUEST_TYPE_SEND,
-                                        c_data);
-                    } catch (ArrownockException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                    if (cbk != null) {
-                        cbk.onSuccess(arg0);
-                    }
-                }
-            });
-        } catch (ArrownockException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void sendFriendRequest(final User targetUser, final IAnSocialCallback cbk) {
-        final Map<String, Object> params = new HashMap<String, Object>();
-        params.put("user_id", currentUser.userId);
-        params.put("target_user_id", targetUser.userId);
-        try {
-            anSocial.sendRequest("friends/requests/send.json", AnSocialMethod.POST, params, new IAnSocialCallback() {
-                @Override
-                public void onFailure(JSONObject arg0) {
-                    if (cbk != null) {
-                        cbk.onFailure(arg0);
-                    }
-                }
-
-                @Override
-                public void onSuccess(final JSONObject arg0) {
-//                    Toast.makeText(ct, ct.getString(R.string.friend_request_sent), Toast.LENGTH_LONG).show();
-                    DBug.e("sendFriendRequest", arg0.toString());
-                    addFriendLocal(targetUser.clientId, false);
-                    addFriendRemote(targetUser);
-                    Map<String, String> c_data = new HashMap<String, String>();
-                    c_data.put(Constants.FRIEND_REQUEST_KEY_TYPE, Constants.FRIEND_REQUEST_TYPE_SEND);
-                    c_data.put(Constants.FRIEND_REQUEST_KEY_USERNAME, targetUser.userName);
-                    try {
-                        IMManager
-                                .getInstance(ct)
-                                .getAnIM()
-                                .sendBinary(targetUser.clientId, new byte[1], Constants.FRIEND_REQUEST_TYPE_SEND, c_data);
-                    } catch (ArrownockException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                    if (cbk != null) {
-                        cbk.onSuccess(arg0);
-                    }
-                }
-            });
-        } catch (ArrownockException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void addFriendRemote(User targetUser) {
-        final Map<String, Object> params = new HashMap<String, Object>();
-        params.put("user_id", currentUser.userId);
-        params.put("target_user_id", targetUser.userId);
-        try {
-            anSocial.sendRequest("friends/add.json", AnSocialMethod.POST, params, new IAnSocialCallback() {
-                @Override
-                public void onFailure(JSONObject arg0) {
-                }
-
-                @Override
-                public void onSuccess(final JSONObject arg0) {
                 }
             });
         } catch (ArrownockException e) {
@@ -651,34 +230,7 @@ public class UserManager extends Observable {
         }
     }
 
-    public int getLocalPendingFriendRequestCount() {
-        List<FriendRequest> data = new Select()
-                .from(FriendRequest.class)
-                .where("currentUserClientId = \"" + currentUser.clientId + "\" and status = \""
-                        + FriendRequest.STATUS_PENDING + "\"").execute();
-        return data.size();
-    }
 
-    public void getLocalFriendRequest(final FetchFriendRequestCallback callback) {
-        if (currentUser == null) {
-            throw new IllegalArgumentException("currentUser is null");
-        }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final List<FriendRequest> data = new Select().from(FriendRequest.class)
-                        .where("currentUserClientId = ? ", currentUser.clientId).execute();
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (callback != null) {
-                            callback.onFinish(data);
-                        }
-                    }
-                });
-            }
-        }).start();
-    }
 
     public void addFriendLocal(String targetClientId, boolean isMutual) {
         if (!currentUser.isFriend(targetClientId)) {
