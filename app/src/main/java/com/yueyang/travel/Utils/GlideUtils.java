@@ -18,6 +18,7 @@ public class GlideUtils {
     public static void loadImg(Context context,String imgUrl,ImageView imageView){
         Glide.with(context)
                 .load(imgUrl)
+                .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(imageView);
     }

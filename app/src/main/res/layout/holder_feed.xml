@@ -1,122 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/feed_card"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground"
-    card:cardUseCompatPadding="true"
-    card:elevation="4dp">
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="170dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+<!--<TextView-->
+    <!--android:text="Hello world"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content" />-->
 
-        <RelativeLayout
-            android:id="@+id/header_iv"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_30">
-
-            <com.yueyang.travel.view.wiget.CircleImageView
-                android:id="@+id/feed_header_image"
-                android:layout_width="@dimen/margin_30"
-                android:layout_height="@dimen/margin_30"
-                android:layout_marginTop="@dimen/margin_10"
-                android:layout_marginStart="@dimen/margin_10"
-                android:src="@drawable/test_account"/>
-
-            <TextView
-                android:id="@+id/feed_name"
-                android:layout_toRightOf="@+id/feed_header_image"
-                android:text="Mikey Yang"
-                android:gravity="center_vertical"
-                android:layout_marginStart="@dimen/margin_10"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/margin_30" />
-
-            <TextView
-                android:id="@+id/feed_time"
-                android:text="16 hours ago."
-                android:gravity="end|center_vertical"
-                android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@+id/feed_header_image"
-                android:layout_marginEnd="@dimen/margin_10"
-                android:layout_marginStart="@dimen/margin_10"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/margin_30" />
-        </RelativeLayout>
+        <com.yueyang.travel.view.wiget.CircleImageView
+            android:id="@+id/feed_header_image"
+            android:layout_width="@dimen/margin_20"
+            android:layout_height="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginStart="@dimen/margin_10" />
 
         <TextView
-            android:id="@+id/feed_content"
-            android:layout_below="@+id/header_iv"
+            android:id="@+id/feed_name"
+            android:layout_toRightOf="@+id/feed_header_image"
+            android:text="Mikey Yang"
+            android:gravity="center_vertical"
             android:layout_marginStart="@dimen/margin_10"
-            android:layout_marginEnd="@dimen/margin_10"
-            android:layout_marginTop="@dimen/margin_10"
-            android:text="This is the best place I have never been,i will be here again,with my love,I hope oneday I will,his is the best place I have never been,i will be here again,with my love,I hope oneday I will"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/feed_image"
-            android:layout_below="@+id/feed_content"
-            android:layout_margin="@dimen/margin_10"
-            android:scaleType="centerCrop"
-            android:src="@drawable/test_bg"
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
-            android:layout_height="150dp" />
-
-        <ImageView
-            android:id="@+id/feed_like"
-            android:layout_below="@+id/feed_image"
-            android:layout_margin="@dimen/margin_10"
-            android:layout_width="@dimen/margin_20"
-            android:layout_height="@dimen/margin_20"
-            android:src="@drawable/icon_like_grey"/>
-
-        <ImageView
-            android:id="@+id/feed_commit"
-            android:layout_below="@+id/feed_image"
-            android:layout_toEndOf="@+id/feed_like"
-            android:layout_margin="@dimen/margin_10"
-            android:layout_width="@dimen/margin_20"
-            android:layout_height="@dimen/margin_20"
-            android:src="@drawable/icon_commit"/>
+            android:layout_height="@dimen/margin_30" />
 
         <TextView
-            android:id="@+id/feed_like_text"
-            android:layout_below="@+id/feed_image"
+            android:id="@+id/feed_time"
+            android:text="16 hours ago."
+            android:gravity="end|center_vertical"
             android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/feed_header_image"
             android:layout_marginEnd="@dimen/margin_10"
-            android:layout_marginTop="@dimen/margin_10"
-            android:text="Likes"
+            android:layout_marginStart="@dimen/margin_10"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="@dimen/margin_30" />
 
-        <TextView
-            android:id="@+id/feed_like_count"
-            android:text="10"
-            android:layout_below="@+id/feed_image"
-            android:layout_toStartOf="@+id/feed_like_text"
-            android:layout_marginTop="@dimen/margin_10"
-            android:layout_marginEnd="@dimen/margin_5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/feed_content"
+        android:layout_below="@+id/feed_header_image"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_10"
+        android:text="This is the best place I have never been,i will be here again,with my love,I hope oneday I will,his is the best place I have never been,i will be here again,with my love,I hope oneday I will"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-        <ImageView
-            android:layout_below="@+id/feed_image"
-            android:layout_toStartOf="@+id/feed_like_count"
-            android:layout_margin="@dimen/margin_10"
-            android:layout_width="@dimen/margin_20"
-            android:layout_height="@dimen/margin_20"
-            android:src="@drawable/icon_like_blue"/>
+    <ImageView
+        android:id="@+id/feed_image"
+        android:layout_below="@+id/feed_content"
+        android:layout_margin="@dimen/margin_10"
+        android:scaleType="fitCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/feed_like"
+        android:layout_below="@+id/feed_image"
+        android:layout_margin="@dimen/margin_10"
+        android:layout_width="@dimen/margin_20"
+        android:layout_height="@dimen/margin_20"
+        android:src="@drawable/icon_like_grey"/>
+
+    <ImageView
+        android:id="@+id/feed_commit"
+        android:layout_below="@+id/feed_image"
+        android:layout_toEndOf="@+id/feed_like"
+        android:layout_margin="@dimen/margin_10"
+        android:layout_width="@dimen/margin_20"
+        android:layout_height="@dimen/margin_20"
+        android:src="@drawable/icon_commit"/>
 
 
-
-    </RelativeLayout>
-
-
-
-</android.support.v7.widget.CardView>
+</RelativeLayout>

@@ -46,7 +46,7 @@ public class UserManager extends Observable {
     private UserManager(Context ct) {
         this.ct = ct;
         anSocial = ((IMppApp) ct.getApplicationContext()).anSocial;
-//        handler = new Handler();
+        handler = new Handler();
     }
 
     public static UserManager getInstance(Context ct) {
@@ -133,7 +133,6 @@ public class UserManager extends Observable {
                         @Override
                         public void onSuccess(JSONObject response) {
                             List<User> userList = new ArrayList<User>();
-                            DBug.e("searchRemoteUser.onSuccess", response.toString());
                             try {
                                 JSONArray users = response.getJSONObject("response").getJSONArray("users");
                                 for (int i = 0; i < users.length(); i++) {

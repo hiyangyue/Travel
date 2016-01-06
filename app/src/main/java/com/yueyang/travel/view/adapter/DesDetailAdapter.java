@@ -67,7 +67,6 @@ public class DesDetailAdapter extends RecyclerView.Adapter<DesDetailAdapter.View
         @Bind(R.id.cityRl)
         RelativeLayout cityRl;
 
-
         public ViewHolder(View itemView) {
             super(itemView);
 

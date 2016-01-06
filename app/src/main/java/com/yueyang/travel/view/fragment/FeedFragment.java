@@ -14,23 +14,18 @@ import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
 import com.yueyang.travel.Utils.ParseUtils;
-import com.yueyang.travel.manager.SocialManager;
-import com.yueyang.travel.manager.SpfHelper;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.model.bean.Post;
 import com.yueyang.travel.view.activity.PhotoActivity;
 import com.yueyang.travel.view.adapter.FeedAdapter;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -65,6 +60,7 @@ public class FeedFragment extends Fragment {
         ButterKnife.bind(this, view);
         setUpFab();
         setUpRecyclerView();
+//        initData();
         return view;
     }
 
@@ -87,40 +83,15 @@ public class FeedFragment extends Fragment {
                     startActivityForResult(intent, Constants.REQUEST_GET_POST);
                     break;
                 case Constants.REQUEST_GET_POST:
+                    try {
+                        Post post = ParseUtils.getPost(data.getExtras().getString(Constants.TEST_1));
+                        postList.add(post);
+                        feedAdapter.notifyDataSetChanged();
 
-                    String content = data.getExtras().getString(Constants.TEST_1);
-                    List<byte[]> byteLis = new ArrayList<>();
-                    byteLis.add(bitmap2Byte(mCurrentPhotoPath));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-                    showProgessBar();
-
-                    SocialManager.createPost(getActivity(),
-                            SpfHelper.getInstance(getActivity()).getMyUserId(),
-                            content,
-                            byteLis,
-                            new IAnSocialCallback() {
-                                @Override
-                                public void onSuccess(JSONObject jsonObject) {
-
-                                    Log.e("success", "...");
-                                    try {
-                                        Post post = ParseUtils.getPost(jsonObject.toString());
-                                        postList.add(post);
-                                        feedAdapter.notifyDataSetChanged();
-                                        hideProgessBar();
-                                        Log.e("end", "...");
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(JSONObject jsonObject) {
-                                    Log.e("error", "...");
-                                }
-                            }
-
-                    );
                 default:
                     break;
             }
@@ -128,6 +99,7 @@ public class FeedFragment extends Fragment {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 
     private void setUpFab() {
         fab.setOnClickListener(new View.OnClickListener() {
@@ -150,15 +122,21 @@ public class FeedFragment extends Fragment {
     }
 
     private void setUpRecyclerView() {
-//        Post post = new Post(null,21123,null,1,"hello",null);
         postList = new ArrayList<>();
-        feedAdapter = new FeedAdapter(getActivity(), postList);
+
+        Post post = new Post("Hello World");
+        postList.add(post);
+
+//        List<String> stringList = new ArrayList<>();
+//        stringList.add("hello world");
+        feedAdapter = new FeedAdapter(getContext(),postList);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         feedRecycler.setItemAnimator(new DefaultItemAnimator());
         feedRecycler.setLayoutManager(layoutManager);
         feedRecycler.setAdapter(feedAdapter);
+
     }
 
     public File createFile() throws IOException {

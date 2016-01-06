@@ -1,9 +1,7 @@
 package com.yueyang.travel.view.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yueyang.travel.R;
-import com.yueyang.travel.Utils.GlideUtils;
 import com.yueyang.travel.model.bean.Post;
 import com.yueyang.travel.view.wiget.CircleImageView;
 
@@ -26,33 +23,31 @@ import butterknife.ButterKnife;
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<Post> feedList;
+    private List<Post> postList;
 
-    public FeedAdapter(Context mContext, List<Post> feedList) {
+    public FeedAdapter(Context mContext, List<Post> postList) {
         this.mContext = mContext;
-        this.feedList = feedList;
+        this.postList = postList;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.e("feed_view","...");
-        View view = LayoutInflater.from(mContext).inflate(R.layout.holder_feed,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.holder_feed, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Log.e("bind","...");
-        Post post = feedList.get(position);
-        holder.feedName.setText(post.owner.nickname);
-        holder.feedTime.setText(String.valueOf(post.createdAt));
-        holder.feedContent.setText(post.content);
-        GlideUtils.loadImg(mContext, post.photoUrls, holder.feedImage);
+
+        Post post = postList.get(position);
+        holder.feedContent.setText(post.getContent());
+
+
     }
 
     @Override
     public int getItemCount() {
-        return feedList.size();
+        return postList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -71,15 +66,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         ImageView feedLike;
         @Bind(R.id.feed_commit)
         ImageView feedCommit;
-        @Bind(R.id.feed_like_text)
-        TextView feedLikeText;
-        @Bind(R.id.feed_like_count)
-        TextView feedLikeCount;
-        @Bind(R.id.feed_card)
-        CardView feedCard;
 
         public ViewHolder(View itemView) {
             super(itemView);
+
             ButterKnife.bind(this,itemView);
         }
     }

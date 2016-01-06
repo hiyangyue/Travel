@@ -6,15 +6,22 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
+import com.yueyang.travel.manager.SocialManager;
+import com.yueyang.travel.manager.SpfHelper;
 import com.yueyang.travel.model.Constants;
 
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,19 +97,56 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()){
             case R.id.submit_photo_btn:
 
+                picBytes.add(bitmap2Byte(mPhotoPath));
+                Log.e("btn_click","...");
+                SocialManager.createPost(PhotoActivity.this,
+                        getString(R.string.wall_id),
+                        SpfHelper.getInstance(this).getMyUserId(),
+                        photoEt.getText().toString(),
+                        picBytes,
+                        new IAnSocialCallback() {
+                            @Override
+                            public void onSuccess(JSONObject jsonObject) {
+                                Log.e("success",jsonObject.toString());
+                                Log.e("success","...");
+                                Intent intent = new Intent();
+                                intent.putExtra(Constants.TEST_1,jsonObject.toString());
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                setResult(Activity.RESULT_OK, intent);
+                                PhotoActivity.this.finish();
+                            }
+
+                            @Override
+                            public void onFailure(JSONObject jsonObject) {
+                                Log.e("error",jsonObject.toString());
+                            }
+                        });
+
+
+
+
+
+
 //                picBytes.add(bitmap2Byte(mPhotoPath));
                 mPhotoDescribe = photoEt.getText().toString();
 
-                Intent intent = new Intent();
-                intent.putExtra(Constants.TEST_1,mPhotoDescribe);
+//                Intent intent = new Intent();
+//                intent.putExtra(Constants.TEST_1,mPhotoDescribe);
 //                intent.putExtra(Constants.TEST_2,bitmap2Byte(mPhotoPath));
 //                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                setResult(Activity.RESULT_OK,intent);
-                this.finish();
+//                setResult(Activity.RESULT_OK,intent);
+//                this.finish();
                 break;
             default:
                 break;
         }
+    }
+
+    private byte[] bitmap2Byte(String filePath) {
+        Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+        return bos.toByteArray();
     }
 
 
