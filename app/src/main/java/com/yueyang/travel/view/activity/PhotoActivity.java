@@ -2,11 +2,8 @@ package com.yueyang.travel.view.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,13 +12,13 @@ import android.widget.TextView;
 
 import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
+import com.yueyang.travel.Utils.BitmapUtils;
 import com.yueyang.travel.manager.SocialManager;
 import com.yueyang.travel.manager.SpfHelper;
 import com.yueyang.travel.model.Constants;
 
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,34 +59,8 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
         Bundle bundle = getIntent().getExtras();
         mPhotoPath = bundle.getString(Constants.PHOTO_PATH);
         if (mPhotoPath != null){
-            compressPic();
+            BitmapUtils.compressPic(photoThumbImg,mPhotoPath);
         }
-    }
-
-    //对图片进行缩放
-    private void compressPic(){
-        int targetW  = 120;
-        int targetH = 120;
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        //避免在解码之前进行内存分配
-        options.inJustDecodeBounds = true;
-
-        BitmapFactory.decodeFile(mPhotoPath, options);
-        int photoW = options.outWidth;
-        int photoH = options.outHeight;
-
-        int scaleSize = 1;
-        if (targetH / photoH >= 1 || targetW / photoW >= 1){
-            scaleSize = scaleSize * 2;
-        }
-
-        //对图片进行解析
-        options.inJustDecodeBounds = false;
-        options.inSampleSize = scaleSize;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(mPhotoPath,options);
-        photoThumbImg.setImageBitmap(bitmap);
     }
 
     @Override
@@ -97,8 +68,7 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()){
             case R.id.submit_photo_btn:
 
-                picBytes.add(bitmap2Byte(mPhotoPath));
-                Log.e("btn_click","...");
+                picBytes.add(BitmapUtils.bitmap2byte(mPhotoPath));
                 SocialManager.createPost(PhotoActivity.this,
                         getString(R.string.wall_id),
                         SpfHelper.getInstance(this).getMyUserId(),
@@ -116,7 +86,7 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
 
                             @Override
                             public void onFailure(JSONObject jsonObject) {
-                                Log.e("error",jsonObject.toString());
+
                             }
                         });
                 break;
@@ -125,12 +95,6 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private byte[] bitmap2Byte(String filePath) {
-        Bitmap bitmap = BitmapFactory.decodeFile(filePath);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-        return bos.toByteArray();
-    }
 
 }
 

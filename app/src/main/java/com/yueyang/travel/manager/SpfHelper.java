@@ -72,4 +72,8 @@ public class SpfHelper {
         return Account.getString(KEY_USER_PWD, "");
     }
 
+    public String getMyNickname(){
+        return Account.getString(KEY_USER_NICKNAME,"");
+    }
+
 }

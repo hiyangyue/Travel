@@ -7,12 +7,14 @@ public class Constants {
 
     //take photo
     public final static String PHOTO_PATH = "photo_path";
-    public final static String POST_JSON = "post_json";
-
     public final static String RESULT_POST = "result_post";
 
     public final static int REQUEST_TAKE_PHOTO = 1;
     public final static int REQUEST_GET_POST = 2;
+    public final static int REQUEST_PICK_PHOTO = 3;
+
+
+
 
     public final static String FRIEND_REQUEST_KEY_TYPE = "type";
     public final static String FRIEND_REQUEST_KEY_USERNAME = "username";

@@ -29,21 +29,9 @@
             android:layout_height="@dimen/margin_30" />
 
         <TextView
-            android:id="@+id/feed_time"
-            android:gravity="end|center_vertical"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/feed_header_image"
-            android:layout_marginEnd="@dimen/margin_10"
-            android:layout_marginStart="@dimen/margin_10"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/margin_30" />
-
-        <TextView
             android:id="@+id/feed_content"
             android:layout_below="@+id/feed_header_image"
-            android:layout_marginStart="@dimen/margin_10"
-            android:layout_marginEnd="@dimen/margin_5"
-            android:layout_marginTop="@dimen/margin_5"
+            android:layout_margin="@dimen/margin_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -55,6 +43,16 @@
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/feed_time"
+            android:gravity="end|center_vertical"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_below="@+id/feed_image"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/margin_20" />
 
         <ImageView
             android:id="@+id/feed_like"
@@ -74,6 +72,8 @@
             android:layout_width="@dimen/margin_20"
             android:layout_height="@dimen/margin_20"
             android:src="@drawable/icon_commit"/>
+
+
 
     </RelativeLayout>
 
