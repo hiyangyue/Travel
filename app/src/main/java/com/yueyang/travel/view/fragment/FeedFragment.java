@@ -103,6 +103,7 @@ public class FeedFragment extends Fragment {
 
 
     private void setUpFab() {
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,6 +168,7 @@ public class FeedFragment extends Fragment {
     private void showProgessBar(){
         progressBar.show();
     }
+
 }
 
 

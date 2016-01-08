@@ -1,13 +1,8 @@
 package com.yueyang.travel.view.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Build;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -15,24 +10,29 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
+import com.yueyang.travel.Utils.BitmapUtils;
 import com.yueyang.travel.Utils.FileUtils;
+import com.yueyang.travel.Utils.SnackbarUtils;
 import com.yueyang.travel.manager.SpfHelper;
+import com.yueyang.travel.manager.UserManager;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.view.adapter.HomePagerAdapter;
 import com.yueyang.travel.view.wiget.CircleImageView;
+
+import org.json.JSONObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     @Bind(R.id.tab_layout)
     TabLayout tabLayout;
@@ -104,16 +104,24 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == Constants.REQUEST_PICK_PHOTO
                 && resultCode == RESULT_OK && data != null){
 
+            final String imagePath = FileUtils.getRealPathFromURI(this,data.getData());
+            final Bitmap bitmap = BitmapUtils.compressPic(headerImg,imagePath);
+            UserManager.getInstance(this).
+                    updateMyPhoto(BitmapUtils.bitmap2byte(bitmap), new IAnSocialCallback() {
+                        @Override
+                        public void onSuccess(JSONObject jsonObject) {
+                            headerImg.setImageBitmap(bitmap);
+                            SnackbarUtils.getSnackbar(drawer,getString(R.string.avatar_update_success));
+                        }
 
-            String imagePath = FileUtils.getRealPathFromURI(this,data.getData());
-            Log.e("path",imagePath);
-
-
-
+                        @Override
+                        public void onFailure(JSONObject jsonObject) {
+                            SnackbarUtils.getSnackbar(drawer,getString(R.string.avatar_update_error));
+                        }
+                    });
         }
 
     }
@@ -128,11 +136,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_user:
-                drawer.openDrawer(GravityCompat.START);
-                break;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -143,7 +146,6 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId()) {
             case R.id.nav_camera:
-                Log.e("camera","...");
             default:
                 break;
         }
@@ -151,6 +153,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
 }

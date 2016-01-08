@@ -2,8 +2,10 @@ package com.yueyang.travel.view.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +16,7 @@ import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
 import com.yueyang.travel.Utils.BitmapUtils;
 import com.yueyang.travel.manager.SocialManager;
-import com.yueyang.travel.manager.SpfHelper;
+import com.yueyang.travel.manager.UserManager;
 import com.yueyang.travel.model.Constants;
 
 import org.json.JSONObject;
@@ -40,7 +42,6 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
     Button submitPhotoBtn;
 
     private String mPhotoPath;
-    private String mPhotoDescribe;
     private List<byte[]> picBytes = new ArrayList<>();
 
     @Override
@@ -59,7 +60,8 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
         Bundle bundle = getIntent().getExtras();
         mPhotoPath = bundle.getString(Constants.PHOTO_PATH);
         if (mPhotoPath != null){
-            BitmapUtils.compressPic(photoThumbImg,mPhotoPath);
+            Bitmap bitmap = BitmapUtils.compressPic(photoThumbImg,mPhotoPath);
+            photoThumbImg.setImageBitmap(bitmap);
         }
     }
 
@@ -67,11 +69,11 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.submit_photo_btn:
-
+                Log.e("sub_clicked","...");
                 picBytes.add(BitmapUtils.bitmap2byte(mPhotoPath));
                 SocialManager.createPost(PhotoActivity.this,
                         getString(R.string.wall_id),
-                        SpfHelper.getInstance(this).getMyUserId(),
+                        UserManager.getInstance(this).getCurrentUser().userId,
                         photoEt.getText().toString(),
                         picBytes,
                         new IAnSocialCallback() {
@@ -86,7 +88,7 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
 
                             @Override
                             public void onFailure(JSONObject jsonObject) {
-
+                                Log.e("error",jsonObject.toString());
                             }
                         });
                 break;

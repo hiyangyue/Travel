@@ -108,6 +108,7 @@ public class ParseUtils {
         String content = jsonObject.getString("content");
         String id = jsonObject.getString("id");
         int likeCount = jsonObject.getInt("likeCount");
+        Log.e("like_count",",." + likeCount);
         String createAt = jsonObject.getString("created_at");
 
         JSONObject customFields = jsonObject.getJSONObject("customFields");
@@ -123,6 +124,13 @@ public class ParseUtils {
         User user = new User(userId,username,headerImgUrl,nickName);
 
         return new Post(photoUrl,2015-9,user,likeCount,content,id);
+    }
+
+    public static String getLikeId(JSONObject jsonObject) throws JSONException {
+        JSONObject responseObj = jsonObject.getJSONObject("response");
+        JSONArray likesArray = responseObj.getJSONArray("likes");
+        JSONObject object = likesArray.getJSONObject(0);
+        return object.getString("id");
     }
 
 

@@ -169,8 +169,8 @@ public class WallManager extends Observable {
 
 
     public interface LikeCallback{
-        public void onFailure(Post post);
-        public void onSuccess(Post post);
+        public void onFailure(JSONObject object);
+        public void onSuccess(JSONObject object);
     }
 
     public interface FetchPostsCallback{

@@ -2,7 +2,6 @@ package com.yueyang.travel.Utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
@@ -14,13 +13,18 @@ public class BitmapUtils {
 
     public static byte[] bitmap2byte(String filePath){
         Bitmap bitmap = BitmapFactory.decodeFile(filePath);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,bos);
-        return bos.toByteArray();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
     }
 
-    public static void compressPic(ImageView iv,String photoPath){
-        Log.e("hello1","world");
+    public static byte[] bitmap2byte(Bitmap bitmap){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
+    }
+
+    public static Bitmap compressPic(ImageView iv,String photoPath){
         int targetW = iv.getWidth();
         int targetH = iv.getHeight();
 
@@ -31,9 +35,7 @@ public class BitmapUtils {
         options.inSampleSize = calculateInSize(options,targetW,targetH);
         options.inJustDecodeBounds = false;
 
-        Bitmap bitmap = BitmapFactory.decodeFile(photoPath,options);
-        iv.setImageBitmap(bitmap);
-        Log.e("hello","world");
+        return BitmapFactory.decodeFile(photoPath,options);
     }
 
     public static int calculateInSize(BitmapFactory.Options options,int reqWidth,int reqHeight){

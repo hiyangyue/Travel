@@ -108,11 +108,11 @@ public class User extends Model implements Serializable {
             clientId = json.getString("clientId");
             userId = json.getString("id");
             userName = json.getString("username");
+            nickname = json.getString("firstName");
             if(json.has("photo")){
                 userPhotoUrl = json.getJSONObject("photo").getString("url");
             }
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

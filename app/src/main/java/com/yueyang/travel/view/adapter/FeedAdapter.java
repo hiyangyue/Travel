@@ -2,6 +2,7 @@ package com.yueyang.travel.view.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,14 @@ import android.widget.TextView;
 
 import com.yueyang.travel.R;
 import com.yueyang.travel.Utils.GlideUtils;
+import com.yueyang.travel.Utils.ParseUtils;
+import com.yueyang.travel.manager.SocialManager;
+import com.yueyang.travel.manager.WallManager;
 import com.yueyang.travel.model.bean.Post;
 import com.yueyang.travel.view.wiget.CircleImageView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -38,9 +45,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        Post post = postList.get(position);
+        final Post post = postList.get(position);
         holder.feedName.setText(post.getUser().nickname);
         holder.feedTime.setText(String.valueOf(post.createdAt));
         holder.feedContent.setText(post.getContent());
@@ -48,6 +55,61 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         GlideUtils.loadImg(mContext,post.photoUrls,holder.feedImage);
         if (post.user.userPhotoUrl != null){
             GlideUtils.loadImg(mContext,post.user.userPhotoUrl,holder.feedHeaderImage);
+        }
+
+        holder.feedLike.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                isLike(post,holder.feedLike);
+            }
+        });
+    }
+
+    private void isLike(final Post post, final ImageView likeImg){
+        if (post.likeCount > 0){
+
+            SocialManager.getLikeIdByUser(mContext, post.postId, new SocialManager.FetchLikeyByIdCallback() {
+                @Override
+                public void onFailure(JSONObject jsonObject) {
+
+                }
+
+                @Override
+                public void onSuccess(final JSONObject jsonObject) {
+                    try {
+                        String likeId = ParseUtils.getLikeId(jsonObject);
+                        SocialManager.deleteLike(mContext, likeId, post, new WallManager.LikeCallback() {
+                            @Override
+                            public void onFailure(JSONObject object) {
+
+                            }
+
+                            @Override
+                            public void onSuccess(JSONObject object) {
+
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+        }else {
+            SocialManager.createLike(mContext, post.user, post, new WallManager.LikeCallback() {
+                @Override
+                public void onFailure(JSONObject object) {
+                    Log.e("create_error","...");
+                }
+
+                @Override
+                public void onSuccess(JSONObject object) {
+                    Log.e("create_success",object.toString());
+                    likeImg.setImageResource(R.drawable.icon_like_grey);
+                }
+            });
         }
     }
 
@@ -79,4 +141,5 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             ButterKnife.bind(this,itemView);
         }
     }
+
 }

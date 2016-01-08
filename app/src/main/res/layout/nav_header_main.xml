@@ -5,7 +5,7 @@
     android:background="@color/colorPrimary"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="bottom"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -14,24 +14,24 @@
 
     <com.yueyang.travel.view.wiget.CircleImageView
         android:id="@+id/drawer_header_img"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="57dp"
+        android:layout_height="57dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:src="@drawable/default_account"
         app:civ_border_width="2dp"
+        app:civ_border_overlay="true"
         app:civ_border_color="@color/white"/>
 
     <TextView
         android:id="@+id/drawer_nickname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:layout_width="wrap_content"
+        android:layout_height="57dp"
+        android:textSize="25sp"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:gravity="center_horizontal"
+        android:text="Mikey"
+        android:paddingTop="@dimen/margin_10"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-    <TextView
-        android:id="@+id/drawer_describe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:singleLine="true"/>
 
 </LinearLayout>

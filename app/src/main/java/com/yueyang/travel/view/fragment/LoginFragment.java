@@ -3,19 +3,16 @@ package com.yueyang.travel.view.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
 import com.yueyang.travel.Utils.SnackbarUtils;
-import com.yueyang.travel.manager.IMManager;
 import com.yueyang.travel.manager.SpfHelper;
 import com.yueyang.travel.manager.UserManager;
 import com.yueyang.travel.model.Constants;
@@ -64,30 +61,28 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.login_btn:
                 loadProgress();
-                if (SpfHelper.getInstance(getContext()).hasSignIn()){
-                    UserManager.getInstance(getContext())
-                            .login(userNameEt.getText().toString(), userPassEt.getText().toString(), new IAnSocialCallback() {
-                                @Override
-                                public void onSuccess(JSONObject jsonObject) {
-                                    hideProgress();
-                                    SnackbarUtils.getSnackbar(loginBtn, getString(R.string.login_success));
-                                    JSONObject userJson = null;
-                                    try {
-                                        userJson = jsonObject.getJSONObject("response").getJSONObject("user");
-                                        User user = new User(userJson);
-                                        afterLogin(user,userNameEt.getText().toString(),userPassEt.getText().toString());
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
+                UserManager.getInstance(getContext())
+                        .login(userNameEt.getText().toString(), userPassEt.getText().toString(), new IAnSocialCallback() {
+                            @Override
+                            public void onSuccess(JSONObject jsonObject) {
+                                hideProgress();
+                                SnackbarUtils.getSnackbar(loginBtn, getString(R.string.login_success));
+                                JSONObject userJson = null;
+                                try {
+                                    userJson = jsonObject.getJSONObject("response").getJSONObject("user");
+                                    User user = new User(userJson);
+                                    afterLogin(user,userNameEt.getText().toString(),userPassEt.getText().toString());
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
+                            }
 
-                                @Override
-                                public void onFailure(JSONObject jsonObject) {
-                                    hideProgress();
-                                    SnackbarUtils.getSnackbar(loginBtn, getString(R.string.login_error));
-                                }
-                            });
-                }
+                            @Override
+                            public void onFailure(JSONObject jsonObject) {
+                                hideProgress();
+                                SnackbarUtils.getSnackbar(loginBtn, getString(R.string.login_error));
+                            }
+                        });
                 break;
         }
     }

@@ -11,6 +11,8 @@ import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.Utils.DBug;
 import com.yueyang.travel.application.IMppApp;
 import com.yueyang.travel.model.bean.Comment;
+import com.yueyang.travel.model.bean.Post;
+import com.yueyang.travel.model.bean.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,10 +76,8 @@ public class SocialManager {
 
             @Override
             public void onSuccess(List<String> urlList) {
-                DBug.e("createPost.uploadPhotos.onSuccess", "?");
                 String photoUrls = "";
                 for (String url : urlList) {
-                    DBug.e("createPost.uploadPhotos.onSuccess", url);
                     photoUrls += url + ",";
                 }
 
@@ -119,7 +119,7 @@ public class SocialManager {
                         public void onSuccess(JSONObject arg0) {
                             if (callback != null) {
                                 callback.onSuccess(arg0);
-                            }
+                        }
                         }
                     });
                 } catch (ArrownockException e) {
@@ -131,8 +131,77 @@ public class SocialManager {
         mPhotoUploader.startUpload();
     }
 
+    public static void getLikeIdByUser(Context context, String postId, final FetchLikeyByIdCallback callback){
+        Map<String,Object> params = new HashMap<>();
+        params.put("object_type","Post");
+        params.put("object_id",postId);
+        AnSocial anSocial = ((IMppApp) context.getApplicationContext()).anSocial;
+        try {
+            anSocial.sendRequest("likes/query.json", AnSocialMethod.GET, params,
+                    new IAnSocialCallback() {
+                        @Override
+                        public void onSuccess(JSONObject jsonObject) {
+                            callback.onSuccess(jsonObject);
+                        }
 
+                        @Override
+                        public void onFailure(JSONObject jsonObject) {
+                            callback.onFailure(jsonObject);
+                        }
+                    });
+        } catch (ArrownockException e) {
+            e.printStackTrace();
+        }
 
+    }
+
+    public static void createLike(Context context,User user, final Post post, final WallManager.LikeCallback callback){
+
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("object_type", "Post");
+        params.put("object_id", post.postId);
+        params.put("like", "true");
+        params.put("user_id", user.userId);
+
+        AnSocial anSocial = ((IMppApp) context.getApplicationContext()).anSocial;
+
+        try {
+            anSocial.sendRequest("likes/create.json", AnSocialMethod.POST, params, new IAnSocialCallback(){
+                @Override
+                public void onFailure(JSONObject jsonObject) {
+                    callback.onFailure(jsonObject);
+                }
+                @Override
+                public void onSuccess(JSONObject jsonObject) {
+                    callback.onSuccess(jsonObject);
+                }
+            });
+        } catch (ArrownockException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteLike(Context context,final String likeId, final Post post, final WallManager.LikeCallback callback){
+        Map<String, Object> params = new HashMap<>();
+        params.put("like_id", likeId);
+
+        AnSocial anSocial = ((IMppApp) context.getApplicationContext()).anSocial;
+
+        try {
+            anSocial.sendRequest("likes/delete.json", AnSocialMethod.POST, params, new IAnSocialCallback(){
+                @Override
+                public void onFailure(JSONObject jsonObject) {
+                    callback.onSuccess(jsonObject);
+                }
+                @Override
+                public void onSuccess(JSONObject jsonObject) {
+                    callback.onSuccess(jsonObject);
+                }
+            });
+        } catch (ArrownockException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void createComment(final Context context, String postId, String replyUserId, String userId,
                                      String content, final IAnSocialCallback callback) {
@@ -175,6 +244,12 @@ public class SocialManager {
         }
     }
 
+
+    public  interface FetchLikeyByIdCallback{
+        public void onFailure(JSONObject jsonObject);
+
+        public void onSuccess(JSONObject jsonObject);
+    }
 
 
 

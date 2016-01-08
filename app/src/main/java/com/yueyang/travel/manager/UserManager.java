@@ -200,6 +200,7 @@ public class UserManager extends Observable {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("photo", AnFile);
         params.put("user_id", currentUser.userId);
+
         try {
             anSocial.sendRequest("users/update.json", AnSocialMethod.POST, params, new IAnSocialCallback() {
                 @Override
@@ -230,15 +231,6 @@ public class UserManager extends Observable {
         }
     }
 
-
-
-    public void addFriendLocal(String targetClientId, boolean isMutual) {
-        if (!currentUser.isFriend(targetClientId)) {
-            currentUser.addFriend(targetClientId, isMutual);
-            setChanged();
-            notifyObservers(UpdateType.Friend);
-        }
-    }
 
     public void saveUser(User user) {
         if ((user.userId == null || user.userName == null) && user.clientId != null) {
@@ -278,35 +270,6 @@ public class UserManager extends Observable {
                 });
             }
         }).start();
-    }
-
-    public void getMyLocalFriends(final FetchFriendCallback callback) {
-        if (currentUser == null) {
-            throw new IllegalArgumentException("currentUser is null");
-        }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final List<Friend> data = new Select().from(Friend.class)
-                        .where("userClientId = ?", currentUser.clientId).execute();
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (callback != null) {
-                            callback.onFinish(data);
-                        }
-                    }
-                });
-            }
-        }).start();
-    }
-
-    public interface FetchSingleUserCallback {
-        public void onFinish(User user);
-    }
-
-    public interface FetchUserlistCallBack{
-        public void onFinish(List<User> userList);
     }
 
     public interface FetchUserCallback {

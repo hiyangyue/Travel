@@ -24,13 +24,7 @@ public class FileUtils {
         //使用SD卡的标识
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
-
-        File file = File.createTempFile(
-                imgFileName,
-                ".jpg",
-                storageDir
-        );
-        return file;
+        return File.createTempFile(imgFileName, ".jpg", storageDir);
     }
 
     public static String getRealPathFromURI(Context context, Uri contentUri) {
