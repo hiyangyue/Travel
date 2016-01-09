@@ -61,7 +61,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
             @Override
             public void onClick(View v) {
-
                 isLike(post,holder.feedLike);
             }
         });
@@ -80,17 +79,20 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 public void onSuccess(final JSONObject jsonObject) {
                     try {
                         String likeId = ParseUtils.getLikeId(jsonObject);
-                        SocialManager.deleteLike(mContext, likeId, post, new WallManager.LikeCallback() {
-                            @Override
-                            public void onFailure(JSONObject object) {
+                        if (likeId != null){
+                            SocialManager.deleteLike(mContext, likeId, post, new WallManager.LikeCallback() {
+                                @Override
+                                public void onFailure(JSONObject object) {
 
-                            }
+                                }
 
-                            @Override
-                            public void onSuccess(JSONObject object) {
+                                @Override
+                                public void onSuccess(JSONObject object) {
 
-                            }
-                        });
+                                }
+                            });
+                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

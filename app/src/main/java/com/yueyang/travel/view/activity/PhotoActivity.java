@@ -69,7 +69,6 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.submit_photo_btn:
-                Log.e("sub_clicked","...");
                 picBytes.add(BitmapUtils.bitmap2byte(mPhotoPath));
                 SocialManager.createPost(PhotoActivity.this,
                         getString(R.string.wall_id),

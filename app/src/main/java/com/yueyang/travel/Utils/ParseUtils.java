@@ -130,7 +130,11 @@ public class ParseUtils {
         JSONObject responseObj = jsonObject.getJSONObject("response");
         JSONArray likesArray = responseObj.getJSONArray("likes");
         JSONObject object = likesArray.getJSONObject(0);
-        return object.getString("id");
+        String likeId = null;
+        if (object.has("id")){
+            likeId = object.getString("id");
+        }
+        return likeId;
     }
 
 
