@@ -15,7 +15,6 @@ import com.yueyang.travel.R;
 import com.yueyang.travel.Utils.GlideUtils;
 import com.yueyang.travel.Utils.ParseUtils;
 import com.yueyang.travel.manager.SocialManager;
-import com.yueyang.travel.manager.WallManager;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.model.bean.Post;
 import com.yueyang.travel.view.activity.CommentActivity;
@@ -95,7 +94,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                     try {
                         String likeId = ParseUtils.getLikeId(jsonObject);
                         if (likeId != null){
-                            SocialManager.deleteLike(mContext, likeId, post, new WallManager.LikeCallback() {
+                            SocialManager.deleteLike(mContext, likeId, post, new SocialManager.LikeCallback() {
                                 @Override
                                 public void onFailure(JSONObject object) {
 
@@ -115,7 +114,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             });
 
         }else {
-            SocialManager.createLike(mContext, post.user, post, new WallManager.LikeCallback() {
+            SocialManager.createLike(mContext, post.user, post, new SocialManager.LikeCallback() {
                 @Override
                 public void onFailure(JSONObject object) {
                     Log.e("create_error","...");
@@ -123,7 +122,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
                 @Override
                 public void onSuccess(JSONObject object) {
-                    Log.e("create_success",object.toString());
                     likeImg.setImageResource(R.drawable.icon_like_grey);
                 }
             });

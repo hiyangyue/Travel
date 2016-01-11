@@ -1,7 +1,6 @@
 package com.yueyang.travel.manager;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.arrownock.exception.ArrownockException;
@@ -9,6 +8,7 @@ import com.arrownock.social.AnSocial;
 import com.arrownock.social.AnSocialFile;
 import com.arrownock.social.AnSocialMethod;
 import com.arrownock.social.IAnSocialCallback;
+import com.yueyang.travel.R;
 import com.yueyang.travel.Utils.DBug;
 import com.yueyang.travel.Utils.ParseUtils;
 import com.yueyang.travel.application.IMppApp;
@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Yang on 2015/12/24.
@@ -135,6 +136,56 @@ public class SocialManager {
         mPhotoUploader.startUpload();
     }
 
+    public static void fetchAllPosts(final Context context,final Set<String> friendSet,final int page, final FetchPostsCallback callback){
+
+        String userIds ="";
+
+        friendSet.add(UserManager.getInstance(context).getCurrentUser().userId);
+
+        for(String friendUserId : friendSet){
+            userIds += friendUserId + ",";
+        }
+        userIds = userIds.substring(0, userIds.length()-1);
+
+        AnSocial anSocial = ((IMppApp) context.getApplicationContext()).anSocial;
+        Map<String, Object> params = new HashMap<>();
+        params.put("wall_id", context.getResources().getString(R.string.wall_id));
+        params.put("user_id", userIds);
+        params.put("page", page);
+        params.put("limit", 100);
+        params.put("sort", "-created_at");
+
+        try {
+            anSocial.sendRequest("posts/query.json", AnSocialMethod.GET, params, new IAnSocialCallback(){
+                @Override
+                public void onFailure(final JSONObject arg0) {
+                    callback.onFailure(arg0.toString());
+                }
+                @Override
+                public void onSuccess(JSONObject arg0) {
+
+                    try {
+                        final List<Post> posts = new ArrayList<Post>();
+                        JSONArray postArray = arg0.getJSONObject("response").getJSONArray("posts");
+                        for(int i =0;i<postArray.length();i++){
+                            JSONObject postJson = postArray.getJSONObject(i);
+                            Post post = ParseUtils.getPostFromUser(postJson);
+                            posts.add(post);
+                        }
+
+                        callback.onFinish(posts);
+                    } catch (final JSONException e) {
+                        e.printStackTrace();
+
+                    }
+                }
+            });
+        } catch (final ArrownockException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public static void getLikeIdByUser(Context context, String postId, final FetchLikeyByIdCallback callback){
         Map<String,Object> params = new HashMap<>();
         params.put("object_type","Post");
@@ -159,7 +210,7 @@ public class SocialManager {
 
     }
 
-    public static void createLike(Context context,User user, final Post post, final WallManager.LikeCallback callback){
+    public static void createLike(Context context,User user, final Post post, final LikeCallback callback){
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("object_type", "Post");
@@ -185,7 +236,7 @@ public class SocialManager {
         }
     }
 
-    public static void deleteLike(Context context,final String likeId, final Post post, final WallManager.LikeCallback callback){
+    public static void deleteLike(Context context,final String likeId, final Post post, final LikeCallback callback){
         Map<String, Object> params = new HashMap<>();
         params.put("like_id", likeId);
 
@@ -285,16 +336,23 @@ public class SocialManager {
 
     public  interface FetchLikeyByIdCallback{
         public void onFailure(JSONObject jsonObject);
-
         public void onSuccess(JSONObject jsonObject);
     }
 
 
+    public interface FetchPostsCallback{
+        public void onFailure(String errorMsg);
+        public void onFinish(List<Post> data);
+    }
 
     public interface FetchCommentCallback {
         public void onFailure();
-
         public void onSuccess(List<Comment> data);
+    }
+
+    public interface LikeCallback{
+        public void onFailure(JSONObject object);
+        public void onSuccess(JSONObject object);
     }
 
 }

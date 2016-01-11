@@ -12,6 +12,7 @@ import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +20,8 @@ import android.view.ViewGroup;
 import com.yueyang.travel.R;
 import com.yueyang.travel.Utils.FileUtils;
 import com.yueyang.travel.Utils.ParseUtils;
+import com.yueyang.travel.manager.SocialManager;
 import com.yueyang.travel.manager.UserManager;
-import com.yueyang.travel.manager.WallManager;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.model.bean.Post;
 import com.yueyang.travel.model.bean.User;
@@ -54,6 +55,7 @@ public class FeedFragment extends Fragment {
     private String mCurrentPhotoPath;
     private FeedAdapter feedAdapter;
     private List<Post> postList;
+    private int page = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -142,9 +144,7 @@ public class FeedFragment extends Fragment {
                     friendSet.add(friend.userId);
                 }
 
-                WallManager wallManager = new WallManager(context,
-                        getResources().getString(R.string.wall_id),friendSet);
-                wallManager.init(new WallManager.FetchPostsCallback() {
+                SocialManager.fetchAllPosts(getContext(), friendSet, page, new SocialManager.FetchPostsCallback() {
                     @Override
                     public void onFailure(String errorMsg) {
 
@@ -152,6 +152,7 @@ public class FeedFragment extends Fragment {
 
                     @Override
                     public void onFinish(List<Post> data) {
+                        page ++;
                         postList.addAll(data);
                         feedAdapter.notifyDataSetChanged();
                     }

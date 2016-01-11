@@ -171,7 +171,6 @@ public class ParseUtils {
 
         User commentUser = new User(userId,nickName,avatarUrl);
         return new Comment(commendId,content,commentUser);
-
     }
 
 

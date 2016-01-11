@@ -11,8 +11,6 @@ import com.arrownock.social.AnSocialMethod;
 import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.Utils.DBug;
 import com.yueyang.travel.application.IMppApp;
-import com.yueyang.travel.model.bean.Friend;
-import com.yueyang.travel.model.bean.FriendRequest;
 import com.yueyang.travel.model.bean.User;
 
 import org.json.JSONException;
@@ -276,15 +274,4 @@ public class UserManager extends Observable {
         public void onFinish(List<User> data);
     }
 
-    public interface FetchFriendCallback {
-        public void onFinish(List<Friend> data);
-    }
-
-    public interface FetchFriendRequestCallback {
-        public void onFinish(List<FriendRequest> data);
-    }
-
-    public interface AddFriendCallback {
-        public void onFinish(boolean isOK);
-    }
 }
