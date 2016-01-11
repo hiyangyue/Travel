@@ -1,6 +1,7 @@
 package com.yueyang.travel.manager;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.arrownock.exception.ArrownockException;
@@ -9,15 +10,18 @@ import com.arrownock.social.AnSocialFile;
 import com.arrownock.social.AnSocialMethod;
 import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.Utils.DBug;
+import com.yueyang.travel.Utils.ParseUtils;
 import com.yueyang.travel.application.IMppApp;
 import com.yueyang.travel.model.bean.Comment;
 import com.yueyang.travel.model.bean.Post;
 import com.yueyang.travel.model.bean.User;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -236,6 +240,40 @@ public class SocialManager {
                 public void onSuccess(JSONObject arg0) {
                     if (callback != null) {
                         callback.onSuccess(arg0);
+                    }
+                }
+            });
+        } catch (ArrownockException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void fetchCommentByPostId(final Context context, String postId, final FetchCommentCallback callback) {
+        AnSocial anSocial = ((IMppApp) context.getApplicationContext()).anSocial;
+        Map<String, Object> params = new HashMap<>();
+        params.put("object_type", "Post");
+        params.put("object_id", postId);
+
+        try {
+            anSocial.sendRequest("comments/query.json", AnSocialMethod.GET, params, new IAnSocialCallback() {
+                @Override
+                public void onFailure(JSONObject arg0) {
+                    callback.onFailure();
+                }
+
+                @Override
+                public void onSuccess(JSONObject arg0) {
+                    try {
+                        List<Comment> commentList = new ArrayList<>();
+                        JSONArray postArray = arg0.getJSONObject("response").getJSONArray("comments");
+                        for (int i = 0 ; i < postArray.length() ; i ++){
+                            Comment comment = ParseUtils.getCommentByPostId(postArray.getJSONObject(i));
+                            commentList.add(comment);
+                        }
+                        callback.onSuccess(commentList);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
             });

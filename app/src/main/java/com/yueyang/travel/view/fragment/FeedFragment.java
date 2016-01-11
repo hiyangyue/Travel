@@ -161,13 +161,6 @@ public class FeedFragment extends Fragment {
 
     }
 
-    private void hideProgessBar(){
-        progressBar.hide();
-    }
-
-    private void showProgessBar(){
-        progressBar.show();
-    }
 
 }
 

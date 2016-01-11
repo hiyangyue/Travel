@@ -57,14 +57,14 @@
         <ImageView
             android:id="@+id/feed_like"
             android:layout_below="@+id/feed_image"
-            android:layout_toLeftOf="@+id/feed_commit"
+            android:layout_toLeftOf="@+id/feed_comment"
             android:layout_marginTop="@dimen/margin_10"
             android:layout_width="@dimen/margin_20"
             android:layout_height="@dimen/margin_20"
             android:src="@drawable/icon_like_grey"/>
 
         <ImageView
-            android:id="@+id/feed_commit"
+            android:id="@+id/feed_comment"
             android:layout_below="@+id/feed_image"
             android:layout_alignParentEnd="true"
             android:layout_margin="@dimen/margin_10"

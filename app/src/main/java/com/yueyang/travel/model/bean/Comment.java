@@ -1,32 +1,29 @@
 package com.yueyang.travel.model.bean;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
-
 /**
  * Created by Yang on 2015/12/24.
  */
-@Table(name = "Comment")
-public class Comment extends Model {
-    @Column(name = "commentId")
+public class Comment{
+
     public String commentId;
-
-    @Column(name = "content")
     public String content;
+    public User commentUser;
 
-    @Column(name = "createdAt")
-    public long createdAt;
+    public Comment(String commentId, String content, User commentUser) {
+        this.commentId = commentId;
+        this.content = content;
+        this.commentUser = commentUser;
+    }
 
-    @Column(name = "Owner")
-    public User owner;
+    public String getCommentId() {
+        return commentId;
+    }
 
-    @Column(name = "replyUser")
-    public User replyUser;
+    public String getContent() {
+        return content;
+    }
 
-    @Column(name = "Post")
-    public Post post;
-
-
-
+    public User getCommentUser() {
+        return commentUser;
+    }
 }

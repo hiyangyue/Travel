@@ -31,6 +31,12 @@ public class User extends Model implements Serializable {
     public User(){
     }
 
+    public User(String userId,String nickname,String userPhotoUrl){
+        this.userId = userId;
+        this.nickname = nickname;
+        this.userPhotoUrl = userPhotoUrl;
+    }
+
     public User(String userId, String userName, String userPhotoUrl, String nickname) {
         this.userId = userId;
         this.userName = userName;

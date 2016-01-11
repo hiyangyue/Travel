@@ -20,14 +20,14 @@
     <string name="password">密码</string>
     <string name="user_name">账号</string>
     <string name="nick_name">昵称</string>
-
     <string name="drawer_default_text">点击头像登入</string>
     <string name="avatar_update_success">头像更新成功</string>
     <string name="avatar_update_error">头像更新成功</string>
+    
     <!--IM-->
     <string name="friend_request_rejected">拒绝</string>
-
     <!--others-->
     <string name="photo_detail">输入此刻的想法...</string>
     <string name="location_text">所在位置</string>
+    <string name="btn_send">发送</string>
 </resources>

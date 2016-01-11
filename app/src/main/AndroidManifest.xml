@@ -56,6 +56,9 @@
 
         <activity android:name=".view.activity.PhotoActivity"
             android:parentActivityName=".view.activity.MainActivity"/>
+
+        <activity android:name=".view.activity.CommentActivity"
+            android:parentActivityName=".view.activity.MainActivity"/>
     </application>
 
 </manifest>

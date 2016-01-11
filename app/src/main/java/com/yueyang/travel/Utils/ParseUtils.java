@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.yueyang.travel.manager.UserManager;
 import com.yueyang.travel.model.bean.City;
+import com.yueyang.travel.model.bean.Comment;
 import com.yueyang.travel.model.bean.Desitination;
 import com.yueyang.travel.model.bean.Post;
 import com.yueyang.travel.model.bean.Topic;
@@ -18,7 +19,6 @@ import org.json.JSONObject;
  * Created by Yang on 2015/12/10.
  */
 public class ParseUtils {
-
 
 
     public static void getPopularNotes(String popularUrl,int position) throws JSONException {
@@ -108,7 +108,6 @@ public class ParseUtils {
         String content = jsonObject.getString("content");
         String id = jsonObject.getString("id");
         int likeCount = jsonObject.getInt("likeCount");
-        Log.e("like_count",",." + likeCount);
         String createAt = jsonObject.getString("created_at");
 
         JSONObject customFields = jsonObject.getJSONObject("customFields");
@@ -135,6 +134,44 @@ public class ParseUtils {
             likeId = object.getString("id");
         }
         return likeId;
+    }
+
+    //添加Commment
+    public static Comment getComment(JSONObject jsonObject) throws JSONException{
+        JSONObject responseObj = jsonObject.getJSONObject("response");
+        JSONObject commentObj = responseObj.getJSONObject("comment");
+        String commentId = commentObj.getString("id");
+        String content = commentObj.getString("content");
+
+        JSONObject userObj = commentObj.getJSONObject("user");
+        String userId = userObj.getString("id");
+        String nickName = userObj.getString("firstName");
+        String avatarUrl = "";
+        if (userObj.has("photo")){
+            JSONObject photoObj = userObj.getJSONObject("photo");
+            avatarUrl = photoObj.getString("url");
+        }
+
+        User commentUser = new User(userId,nickName,avatarUrl);
+        return new Comment(commentId,content,commentUser);
+    }
+
+    public static Comment getCommentByPostId(JSONObject jsonObject) throws JSONException{
+        String commendId = jsonObject.getString("id");
+        String content = jsonObject.getString("content");
+
+        JSONObject userObj = jsonObject.getJSONObject("user");
+        String userId = userObj.getString("id");
+        String nickName = userObj.getString("firstName");
+        String avatarUrl = "";
+        if (userObj.has("photo")){
+            JSONObject photoObj = userObj.getJSONObject("photo");
+            avatarUrl = photoObj.getString("url");
+        }
+
+        User commentUser = new User(userId,nickName,avatarUrl);
+        return new Comment(commendId,content,commentUser);
+
     }
 
 

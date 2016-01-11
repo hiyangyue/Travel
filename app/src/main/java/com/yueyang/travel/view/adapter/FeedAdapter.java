@@ -1,6 +1,8 @@
 package com.yueyang.travel.view.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +16,9 @@ import com.yueyang.travel.Utils.GlideUtils;
 import com.yueyang.travel.Utils.ParseUtils;
 import com.yueyang.travel.manager.SocialManager;
 import com.yueyang.travel.manager.WallManager;
+import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.model.bean.Post;
+import com.yueyang.travel.view.activity.CommentActivity;
 import com.yueyang.travel.view.wiget.CircleImageView;
 
 import org.json.JSONException;
@@ -62,6 +66,17 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 isLike(post,holder.feedLike);
+            }
+        });
+
+        holder.feedComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, CommentActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.SEND_POST_ID,post.postId);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
             }
         });
     }
@@ -115,6 +130,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         }
     }
 
+
     @Override
     public int getItemCount() {
         return postList.size();
@@ -134,8 +150,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         ImageView feedImage;
         @Bind(R.id.feed_like)
         ImageView feedLike;
-        @Bind(R.id.feed_commit)
-        ImageView feedCommit;
+        @Bind(R.id.feed_comment)
+        ImageView feedComment;
 
         public ViewHolder(View itemView) {
             super(itemView);

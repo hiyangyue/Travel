@@ -13,6 +13,8 @@ public class Constants {
     public final static int REQUEST_GET_POST = 2;
     public final static int REQUEST_PICK_PHOTO = 3;
 
+    public final static String SEND_POST_ID = "post_id";
+
 
 
 
