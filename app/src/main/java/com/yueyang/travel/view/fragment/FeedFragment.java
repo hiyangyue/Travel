@@ -12,7 +12,6 @@ import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,10 +46,9 @@ public class FeedFragment extends Fragment {
 
     @Bind(R.id.feed_recycler)
     RecyclerView feedRecycler;
-    @Bind(R.id.fabButton)
-    FloatingActionButton fab;
     @Bind(R.id.progress_bar)
     ContentLoadingProgressBar progressBar;
+    private FloatingActionButton fab;
 
     private String mCurrentPhotoPath;
     private FeedAdapter feedAdapter;
@@ -105,6 +103,7 @@ public class FeedFragment extends Fragment {
 
 
     private void setUpFab() {
+        fab = (FloatingActionButton)getActivity().findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

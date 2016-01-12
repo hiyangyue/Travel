@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/preference_category_title">
+        <Preference
+            android:key="preference_exit"
+            android:title="@string/exit"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/preference_category_function">
+        <CheckBoxPreference
+            android:key="preference_wifi"
+            android:defaultValue="false"
+            android:title="@string/preference_wifi_title"
+            android:summary="@string/preference_wifi_summary"/>
+        <CheckBoxPreference
+            android:key="preference_notify"
+            android:defaultValue="false"
+            android:title="@string/preference_notify_title"
+            android:summary="@string/preference_notify_summary"/>
+        <Preference
+            android:key="preference_cache"
+            android:title="@string/preference_cache_title"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/others">
+        <Preference
+            android:title="@string/preference_source_title" />
+        <Preference
+            android:key="preference_about"
+            android:title="@string/about"/>
+    </PreferenceCategory>
+</PreferenceScreen>

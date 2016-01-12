@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,7 +116,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             SocialManager.createLike(mContext, post.user, post, new SocialManager.LikeCallback() {
                 @Override
                 public void onFailure(JSONObject object) {
-                    Log.e("create_error","...");
+
                 }
 
                 @Override

@@ -11,6 +11,7 @@
     <string name="action_user">用户登入</string>
 
     <!--register && login-->
+    <string name="exit">退出</string>
     <string name="register">注册</string>
     <string name="register_success">注册成功 :)</string>
     <string name="register_error">服务器打了一个瞌睡~ :(</string>
@@ -30,4 +31,23 @@
     <string name="photo_detail">输入此刻的想法...</string>
     <string name="location_text">所在位置</string>
     <string name="btn_send">发送</string>
+
+    <!--Setting Preference-->
+    <string name="setting">设置</string>
+    <string name="others">其他</string>
+    <string name="about">关于</string>
+    <string name="preference_category_title">个人</string>
+    <string name="preference_category_function">功能</string>
+    <string name="preference_source_title">开放源代码许可</string>
+    <string name="preference_wifi_title">省流量模式</string>
+    <string name="preference_wifi_summary">仅在Wifi下加载</string>
+    <string name="preference_notify_title">不在接收通知</string>
+    <string name="preference_notify_summary">会错过有意思的内容哦</string>
+    <string name="preference_cache_title">清除缓存</string>
+
+
+
+
+
+
 </resources>

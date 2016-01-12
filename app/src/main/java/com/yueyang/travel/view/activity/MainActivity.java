@@ -3,11 +3,13 @@ package com.yueyang.travel.view.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -32,7 +34,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     @Bind(R.id.tab_layout)
     TabLayout tabLayout;
@@ -44,6 +46,8 @@ public class MainActivity extends AppCompatActivity
     NavigationView navView;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawer;
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
 
     private CircleImageView headerImg;
 
@@ -58,14 +62,22 @@ public class MainActivity extends AppCompatActivity
         setUpNav();
     }
 
-    private void setUpToolbar(){
+    private void setUpToolbar() {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+//            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
         }
     }
 
-    private void setUpNav(){
+    private void setUpNav() {
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
         navView.setNavigationItemSelectedListener(this);
         View headerView = navView.getHeaderView(0);
         TextView nickNameText = (TextView) headerView.findViewById(R.id.drawer_nickname);
@@ -89,6 +101,26 @@ public class MainActivity extends AppCompatActivity
         pager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(pager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1 || position == 2){
+                    fab.hide();
+                }else {
+                    fab.show();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -105,27 +137,26 @@ public class MainActivity extends AppCompatActivity
 
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.REQUEST_PICK_PHOTO
-                && resultCode == RESULT_OK && data != null){
+                && resultCode == RESULT_OK && data != null) {
 
-            final String imagePath = FileUtils.getRealPathFromURI(this,data.getData());
-            final Bitmap bitmap = BitmapUtils.compressPic(headerImg,imagePath);
+            final String imagePath = FileUtils.getRealPathFromURI(this, data.getData());
+            final Bitmap bitmap = BitmapUtils.compressPic(headerImg, imagePath);
             UserManager.getInstance(this).
                     updateMyPhoto(BitmapUtils.bitmap2byte(bitmap), new IAnSocialCallback() {
                         @Override
                         public void onSuccess(JSONObject jsonObject) {
                             headerImg.setImageBitmap(bitmap);
-                            SnackbarUtils.getSnackbar(drawer,getString(R.string.avatar_update_success));
+                            SnackbarUtils.getSnackbar(drawer, getString(R.string.avatar_update_success));
                         }
 
                         @Override
                         public void onFailure(JSONObject jsonObject) {
-                            SnackbarUtils.getSnackbar(drawer,getString(R.string.avatar_update_error));
+                            SnackbarUtils.getSnackbar(drawer, getString(R.string.avatar_update_error));
                         }
                     });
         }
 
     }
-
 
 
     @Override
@@ -136,7 +167,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -145,7 +175,10 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.nav_camera:
+            case R.id.nav_setting:
+                Intent intent = new Intent(this, SettingActivity.class);
+                startActivity(intent);
+                break;
             default:
                 break;
         }
