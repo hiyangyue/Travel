@@ -3,7 +3,6 @@ package com.yueyang.travel.Utils;
 import android.content.Context;
 import android.util.Log;
 
-import com.yueyang.travel.manager.UserManager;
 import com.yueyang.travel.model.bean.City;
 import com.yueyang.travel.model.bean.Comment;
 import com.yueyang.travel.model.bean.Desitination;
@@ -14,6 +13,8 @@ import com.yueyang.travel.model.bean.User;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.ParseException;
 
 /**
  * Created by Yang on 2015/12/10.
@@ -86,6 +87,7 @@ public class ParseUtils {
 
     public static Post getPost(String jsonString, Context context) throws JSONException {
 
+        Log.e("post_obj",jsonString.toString());
         JSONObject jsonObject = new JSONObject(jsonString);
         JSONObject responseObj = jsonObject.getJSONObject("response");
         JSONObject postObj = responseObj.getJSONObject("post");
@@ -94,13 +96,29 @@ public class ParseUtils {
         String postId = postObj.getString("id");
 
         //时间转换
-        String createString = postObj.getString("created_at");
-        long createAt = 2015-11-11;
+        String createAt = postObj.getString("created_at");
+        String time = DateUtils.getStandardTime(createAt);
+        Log.e("time",time);
+        String calucateTime = "";
+        try {
+            calucateTime = DateUtils.getDateString(DateUtils.calucateTime(time));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         JSONObject customObj = postObj.getJSONObject("customFields");
         String photoUrl = customObj.getString("photoUrls");
-        Log.e("post_url",photoUrl);
 
-        return new Post(photoUrl,createAt, UserManager.getInstance(context).getCurrentUser(),likeCount,content,postId);
+        JSONObject userObj = postObj.getJSONObject("user");
+        String userId = userObj.getString("id");
+        String nickName = userObj.getString("firstName");
+        String avatarUrl = "";
+        if (userObj.has("photo")){
+            avatarUrl = userObj.getJSONObject("photo").getString("url");
+        }
+        User user = new User(userId,nickName,avatarUrl);
+
+        return new Post(photoUrl,calucateTime,user,likeCount,content,postId);
     }
 
     public static Post getPostFromUser(JSONObject jsonObject) throws JSONException {
@@ -110,6 +128,15 @@ public class ParseUtils {
         int likeCount = jsonObject.getInt("likeCount");
         String createAt = jsonObject.getString("created_at");
 
+        String time = DateUtils.getStandardTime(createAt);
+        String calucateTime = "";
+        try {
+            calucateTime = DateUtils.getDateString(DateUtils.calucateTime(time));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
         JSONObject customFields = jsonObject.getJSONObject("customFields");
         String photoUrl = customFields.getString("photoUrls");
         JSONObject userObject = jsonObject.getJSONObject("user");
@@ -118,11 +145,11 @@ public class ParseUtils {
         String nickName = userObject.getString("firstName");
         String headerImgUrl = null;
         if (userObject.has("photo")){
-            headerImgUrl = userObject.getString("photo");
+            JSONObject photoObj = userObject.getJSONObject("photo");
+            headerImgUrl = photoObj.getString("url");
         }
         User user = new User(userId,username,headerImgUrl,nickName);
-
-        return new Post(photoUrl,2015-9,user,likeCount,content,id);
+        return new Post(photoUrl,calucateTime,user,likeCount,content,id);
     }
 
     public static String getLikeId(JSONObject jsonObject) throws JSONException {
@@ -136,7 +163,12 @@ public class ParseUtils {
         return likeId;
     }
 
-    //添加Commment
+    public static boolean isHasLike(JSONObject jsonObject) throws JSONException{
+        JSONObject responseObj = jsonObject.getJSONObject("response");
+        JSONArray likesArray = responseObj.getJSONArray("likes");
+        return likesArray.isNull(0);
+    }
+
     public static Comment getComment(JSONObject jsonObject) throws JSONException{
         JSONObject responseObj = jsonObject.getJSONObject("response");
         JSONObject commentObj = responseObj.getJSONObject("comment");
@@ -172,17 +204,5 @@ public class ParseUtils {
         User commentUser = new User(userId,nickName,avatarUrl);
         return new Comment(commendId,content,commentUser);
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

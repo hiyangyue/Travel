@@ -59,11 +59,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             GlideUtils.loadImg(mContext,post.user.userPhotoUrl,holder.feedHeaderImage);
         }
 
+
+        isLike(post,holder.feedLike);
         holder.feedLike.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                isLike(post,holder.feedLike);
+                addLike(post,holder.feedLike);
             }
         });
 
@@ -79,20 +81,44 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         });
     }
 
-    private void isLike(final Post post, final ImageView likeImg){
-        if (post.likeCount > 0){
+    private void isLike(Post post, final ImageView likeImg){
+        SocialManager.getLikeIdByUser(mContext, post.postId, new SocialManager.FetchLikeyByIdCallback() {
+            @Override
+            public void onFailure(JSONObject jsonObject) {
 
-            SocialManager.getLikeIdByUser(mContext, post.postId, new SocialManager.FetchLikeyByIdCallback() {
-                @Override
-                public void onFailure(JSONObject jsonObject) {
+            }
 
+            @Override
+            public void onSuccess(JSONObject jsonObject) {
+                try {
+                    boolean hasLike = ParseUtils.isHasLike(jsonObject);
+                    if (hasLike){
+                        likeImg.setImageResource(R.drawable.icon_like_red);
+                    }else {
+                        likeImg.setImageResource(R.drawable.icon_like_grey);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+            }
+        });
+    }
 
-                @Override
-                public void onSuccess(final JSONObject jsonObject) {
-                    try {
-                        String likeId = ParseUtils.getLikeId(jsonObject);
-                        if (likeId != null){
+    private void addLike(final Post post, final ImageView likeImg){
+        SocialManager.createLike(mContext, post.user, post, new SocialManager.LikeCallback() {
+            @Override
+            public void onFailure(JSONObject object) {
+                SocialManager.getLikeIdByUser(mContext, post.postId, new SocialManager.FetchLikeyByIdCallback() {
+                    @Override
+                    public void onFailure(JSONObject jsonObject) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(JSONObject jsonObject) {
+                        String likeId = null;
+                        try {
+                            likeId = ParseUtils.getLikeId(jsonObject);
                             SocialManager.deleteLike(mContext, likeId, post, new SocialManager.LikeCallback() {
                                 @Override
                                 public void onFailure(JSONObject object) {
@@ -101,32 +127,24 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
                                 @Override
                                 public void onSuccess(JSONObject object) {
-
+                                    likeImg.setImageResource(R.drawable.icon_like_grey);
                                 }
                             });
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
-                }
-            });
+                });
+            }
 
-        }else {
-            SocialManager.createLike(mContext, post.user, post, new SocialManager.LikeCallback() {
-                @Override
-                public void onFailure(JSONObject object) {
+            @Override
+            public void onSuccess(JSONObject object) {
+                likeImg.setImageResource(R.drawable.icon_like_red);
+            }
+        });
 
-                }
-
-                @Override
-                public void onSuccess(JSONObject object) {
-                    likeImg.setImageResource(R.drawable.icon_like_grey);
-                }
-            });
-        }
     }
-
 
     @Override
     public int getItemCount() {

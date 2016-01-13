@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/test_md_bg"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="bottom"
     android:orientation="horizontal"
@@ -17,8 +17,8 @@
         android:layout_width="57dp"
         android:layout_height="57dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@drawable/default_account"
-        app:civ_border_width="2dp"
+        android:src="@drawable/icon_default_avatar"
+        app:civ_border_width="1dp"
         app:civ_border_overlay="true"
         app:civ_border_color="@color/white"/>
 

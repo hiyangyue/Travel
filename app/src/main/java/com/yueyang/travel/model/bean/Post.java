@@ -10,7 +10,7 @@ public class Post{
 
     public String photoUrls;
 
-    public long createdAt;
+    public String createdAt;
 
     public User user;
 
@@ -20,7 +20,7 @@ public class Post{
 
     public int commentCount;
 
-    public Post(String photoUrls,long createdAt,User user,int likeCount,String content,String postId){
+    public Post(String photoUrls,String createdAt,User user,int likeCount,String content,String postId){
         this.photoUrls = photoUrls;
         this.createdAt = createdAt;
         this.user = user;
@@ -41,7 +41,7 @@ public class Post{
         return photoUrls;
     }
 
-    public long getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 

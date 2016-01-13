@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <com.yueyang.travel.view.wiget.CircleImageView
         android:id="@+id/commit_avatar"
-        android:src="@drawable/test_bg"
+        android:src="@drawable/icon_default_avatar"
         android:layout_width="@dimen/margin_30"
         android:layout_height="@dimen/margin_30"
         android:layout_margin="@dimen/margin_15" />
