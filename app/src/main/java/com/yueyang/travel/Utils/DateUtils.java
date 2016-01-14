@@ -23,8 +23,6 @@ public class DateUtils {
 
         currentCalendar.setTime(dateFormat.parse(currentTimeStr));
         createAtCalendar.setTime(dateFormat.parse(createAt));
-        Log.e("current","...." + currentCalendar.getTimeInMillis());
-        Log.e("create","..." + createAtCalendar.getTimeInMillis());
 
         return (currentCalendar.getTimeInMillis() - createAtCalendar.getTimeInMillis()) / (1000 * 60 * 60);
     }
@@ -35,7 +33,6 @@ public class DateUtils {
     }
 
     public static String getDateString(long hour){
-        Log.e("hour","..." + hour);
         if(hour < 1){
             if (hour * 60 < 1){
                 return "刚刚";

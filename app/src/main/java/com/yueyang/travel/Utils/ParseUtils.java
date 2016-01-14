@@ -1,6 +1,5 @@
 package com.yueyang.travel.Utils;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.yueyang.travel.model.bean.City;
@@ -85,9 +84,8 @@ public class ParseUtils {
         return new City(id,cityName,enCityName,photoUrl,cityBeenStr,cityRepresent);
     }
 
-    public static Post getPost(String jsonString, Context context) throws JSONException {
+    public static Post getPost(String jsonString) throws JSONException {
 
-        Log.e("post_obj",jsonString.toString());
         JSONObject jsonObject = new JSONObject(jsonString);
         JSONObject responseObj = jsonObject.getJSONObject("response");
         JSONObject postObj = responseObj.getJSONObject("post");

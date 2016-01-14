@@ -30,7 +30,9 @@
     <string name="photo_detail">输入此刻的想法...</string>
     <string name="location_text">所在位置</string>
     <string name="btn_send">发送</string>
-    
+    <string name="add_like">点赞成功</string>
+    <string name="cancel_like">取赞成功</string>
+
     <!--Setting Preference-->
     <string name="setting">设置</string>
     <string name="others">其他</string>

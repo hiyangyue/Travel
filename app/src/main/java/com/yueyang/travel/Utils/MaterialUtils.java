@@ -62,4 +62,13 @@ public class MaterialUtils {
                 });
     }
 
+    public static void setToolbarPattle(final ImageView img, final CollapsingToolbarLayout toolbar){
+        Bitmap bitmap = ((BitmapDrawable) img.getBackground()).getBitmap();
+        Palette palette = Palette.generate(bitmap);
+        if (palette.getMutedSwatch() != null){
+            toolbar.setStatusBarScrimColor(palette.getMutedSwatch().getRgb());
+            toolbar.setContentScrimColor(palette.getMutedSwatch().getRgb());
+        }
+    }
+
 }

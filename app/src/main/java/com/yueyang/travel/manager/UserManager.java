@@ -57,7 +57,6 @@ public class UserManager extends Observable {
         return currentUser;
     }
 
-
     public void fetchUserDataByClientId(final String clientId) {
         final Map<String, Object> params = new HashMap<String, Object>();
         params.put("clientId", clientId);

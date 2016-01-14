@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.yueyang.travel.R;
 import com.yueyang.travel.Utils.GlideUtils;
 import com.yueyang.travel.Utils.ParseUtils;
+import com.yueyang.travel.Utils.SnackbarUtils;
 import com.yueyang.travel.manager.SocialManager;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.model.bean.Post;
@@ -47,7 +48,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         final Post post = postList.get(position);
         holder.feedName.setText(post.getUser().nickname);
@@ -65,7 +66,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
             @Override
             public void onClick(View v) {
-                addLike(post,holder.feedLike);
+                addLike(holder.itemView,post,holder.feedLike);
             }
         });
 
@@ -104,7 +105,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         });
     }
 
-    private void addLike(final Post post, final ImageView likeImg){
+    private void addLike(final View view, final Post post, final ImageView likeImg){
         SocialManager.createLike(mContext, post.user, post, new SocialManager.LikeCallback() {
             @Override
             public void onFailure(JSONObject object) {
@@ -128,6 +129,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                                 @Override
                                 public void onSuccess(JSONObject object) {
                                     likeImg.setImageResource(R.drawable.icon_like_grey);
+                                    SnackbarUtils.getSnackbar(view,view.getResources().getString(R.string.cancel_like));
                                 }
                             });
                         } catch (JSONException e) {
@@ -141,6 +143,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             @Override
             public void onSuccess(JSONObject object) {
                 likeImg.setImageResource(R.drawable.icon_like_red);
+                SnackbarUtils.getSnackbar(view,view.getResources().getString(R.string.add_like));
             }
         });
 
@@ -151,7 +154,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         return postList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.feed_header_image)
         CircleImageView feedHeaderImage;
@@ -164,7 +167,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         @Bind(R.id.feed_image)
         ImageView feedImage;
         @Bind(R.id.feed_like)
-        ImageView feedLike;
+        public ImageView feedLike;
         @Bind(R.id.feed_comment)
         ImageView feedComment;
 

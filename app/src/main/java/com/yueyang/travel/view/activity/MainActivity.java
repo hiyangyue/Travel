@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity
     private void setUpToolbar() {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-//            getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
         }
     }
@@ -86,17 +85,15 @@ public class MainActivity extends AppCompatActivity
         headerImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, Constants.REQUEST_PICK_PHOTO);
+                Intent intent = new Intent(MainActivity.this,UserProfileActivity.class);
+                startActivity(intent);
             }
         });
 
     }
 
     private void setUpViewPager() {
-        HomePagerAdapter adapter = new HomePagerAdapter(this, getSupportFragmentManager());
+        HomePagerAdapter adapter = new HomePagerAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(pager);

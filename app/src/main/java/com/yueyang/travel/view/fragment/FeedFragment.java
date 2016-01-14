@@ -9,7 +9,6 @@ import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.ContentLoadingProgressBar;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -85,9 +84,10 @@ public class FeedFragment extends Fragment {
                     break;
                 case Constants.REQUEST_GET_POST:
                     try {
-                        Post post = ParseUtils.getPost(data.getExtras().getString(Constants.RESULT_POST),getContext());
+                        Post post = ParseUtils.getPost(data.getExtras().getString(Constants.RESULT_POST));
                         postList.add(post);
-                        feedAdapter.notifyDataSetChanged();
+                        feedAdapter.notifyItemInserted(0);
+                        feedRecycler.scrollToPosition(0);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -129,7 +129,6 @@ public class FeedFragment extends Fragment {
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        feedRecycler.setItemAnimator(new DefaultItemAnimator());
         feedRecycler.setLayoutManager(layoutManager);
         feedRecycler.setAdapter(feedAdapter);
     }

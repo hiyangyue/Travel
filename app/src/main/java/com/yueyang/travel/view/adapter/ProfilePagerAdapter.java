@@ -5,35 +5,30 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.yueyang.travel.view.fragment.DesitinationFragment;
-import com.yueyang.travel.view.fragment.FeedFragment;
-import com.yueyang.travel.view.fragment.RecommendFragment;
 
 /**
- * Created by Yang on 2015/12/10.
+ * Created by Yang on 2016/1/14.
  */
-public class HomePagerAdapter extends FragmentPagerAdapter {
+public class ProfilePagerAdapter extends FragmentPagerAdapter {
 
-    private String mTabs[] = { "推荐" , "目的地" ,"发现" };
+    private String mTabs[] = { "动态" , "关注" , "粉丝" };
 
-    public HomePagerAdapter(FragmentManager fm) {
+    public ProfilePagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
     @Override
     public Fragment getItem(int position) {
-
         switch (position){
-            case 2:
-                return new RecommendFragment();
+            case 0:
+                return new DesitinationFragment();
             case 1:
                 return new DesitinationFragment();
-            case 0:
-                return new FeedFragment();
+            case 2:
+                return new DesitinationFragment();
             default:
                 return null;
         }
-
-
     }
 
     @Override
