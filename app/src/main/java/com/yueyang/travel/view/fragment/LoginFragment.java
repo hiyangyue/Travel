@@ -3,6 +3,7 @@ package com.yueyang.travel.view.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.ProgressBar;
 
 import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
+import com.yueyang.travel.Utils.ParseUtils;
 import com.yueyang.travel.Utils.SnackbarUtils;
 import com.yueyang.travel.manager.SpfHelper;
 import com.yueyang.travel.manager.UserManager;
@@ -67,10 +69,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                             public void onSuccess(JSONObject jsonObject) {
                                 hideProgress();
                                 SnackbarUtils.getSnackbar(loginBtn, getString(R.string.login_success));
-                                JSONObject userJson = null;
                                 try {
-                                    userJson = jsonObject.getJSONObject("response").getJSONObject("user");
-                                    User user = new User(userJson);
+                                    User user = ParseUtils.getUserFromRegister(jsonObject);
                                     afterLogin(user,userNameEt.getText().toString(),userPassEt.getText().toString());
                                 } catch (JSONException e) {
                                     e.printStackTrace();

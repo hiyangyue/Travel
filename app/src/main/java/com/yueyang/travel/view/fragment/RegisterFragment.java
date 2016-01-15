@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
+import com.yueyang.travel.Utils.ParseUtils;
 import com.yueyang.travel.Utils.SnackbarUtils;
 import com.yueyang.travel.manager.IMManager;
 import com.yueyang.travel.manager.SpfHelper;
@@ -73,11 +74,8 @@ public class RegisterFragment extends Fragment {
                             @Override
                             public void onSuccess(JSONObject jsonObject) {
                                 SnackbarUtils.getSnackbar(registerBtn, getString(R.string.register_success));
-                                JSONObject userJson = null;
                                 try {
-                                    userJson = jsonObject.getJSONObject("response").getJSONObject("user");
-                                    User user = new User(userJson);
-                                    user.update();
+                                    User user = ParseUtils.getUserFromRegister(jsonObject);
                                     afterRegister(user, userNameEt.getText().toString(), userPassEt.getText().toString(),userNickEt.getText().toString());
                                 } catch (JSONException e) {
                                     e.printStackTrace();

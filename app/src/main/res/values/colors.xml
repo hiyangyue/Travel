@@ -6,12 +6,10 @@
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-
-
+    <color name="view_under_line">#cccccc</color>
     <!--pink-->
     <color name="ping300">#F06292</color>
-
-
+    <!--grey-->
     <color name="grey_bg">#EEEEEE</color>
     <color name="grey500">#9E9E9E</color>
     <color name="grey800">#424242</color>

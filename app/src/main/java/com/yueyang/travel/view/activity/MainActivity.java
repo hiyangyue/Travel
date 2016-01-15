@@ -1,7 +1,6 @@
 package com.yueyang.travel.view.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -17,18 +16,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
-import com.yueyang.travel.Utils.BitmapUtils;
-import com.yueyang.travel.Utils.FileUtils;
-import com.yueyang.travel.Utils.SnackbarUtils;
 import com.yueyang.travel.manager.SpfHelper;
 import com.yueyang.travel.manager.UserManager;
 import com.yueyang.travel.model.Constants;
+import com.yueyang.travel.model.bean.User;
 import com.yueyang.travel.view.adapter.HomePagerAdapter;
 import com.yueyang.travel.view.wiget.CircleImageView;
-
-import org.json.JSONObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -72,7 +66,7 @@ public class MainActivity extends AppCompatActivity
     private void setUpNav() {
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
@@ -86,6 +80,12 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,UserProfileActivity.class);
+                Bundle bundle = new Bundle();
+                User user = UserManager.getInstance(MainActivity.this).getCurrentUser();
+                bundle.putString(Constants.USER_ID, user.userId);
+                bundle.putString(Constants.USER_NICKNAME,user.nickname);
+                bundle.putString(Constants.USER_AVATAR_URL,user.userPhotoUrl);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -130,33 +130,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Constants.REQUEST_PICK_PHOTO
-                && resultCode == RESULT_OK && data != null) {
-
-            final String imagePath = FileUtils.getRealPathFromURI(this, data.getData());
-            final Bitmap bitmap = BitmapUtils.compressPic(headerImg, imagePath);
-            UserManager.getInstance(this).
-                    updateMyPhoto(BitmapUtils.bitmap2byte(bitmap), new IAnSocialCallback() {
-                        @Override
-                        public void onSuccess(JSONObject jsonObject) {
-                            headerImg.setImageBitmap(bitmap);
-                            SnackbarUtils.getSnackbar(drawer, getString(R.string.avatar_update_success));
-                        }
-
-                        @Override
-                        public void onFailure(JSONObject jsonObject) {
-                            SnackbarUtils.getSnackbar(drawer, getString(R.string.avatar_update_error));
-                        }
-                    });
-        }
-
-    }
-
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -172,9 +145,17 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.nav_setting:
-                Intent intent = new Intent(this, SettingActivity.class);
+            case R.id.nav_post:
+                Intent postIntent = new Intent(this, UserPostActivity.class);
+                startActivity(postIntent);
+                break;
+            case R.id.nav_follow:
+                Intent intent = new Intent(this,UserListActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.nav_setting:
+                Intent settingIntent = new Intent(this, SettingActivity.class);
+                startActivity(settingIntent);
                 break;
             default:
                 break;

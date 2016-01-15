@@ -5,15 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.yueyang.travel.R;
-import com.yueyang.travel.view.fragment.SettingFragment;
+import com.yueyang.travel.view.fragment.UserPostFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Yang on 2016/1/12.
+ * Created by Yang on 2016/1/14.
  */
-public class SettingActivity extends AppCompatActivity{
+public class UserPostActivity extends AppCompatActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -24,15 +24,17 @@ public class SettingActivity extends AppCompatActivity{
         setContentView(R.layout.base_container);
         ButterKnife.bind(this);
 
+        setUpToolbar();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_container,new UserPostFragment())
+                .commit();
+    }
+
+    private void setUpToolbar(){
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(getResources().getString(R.string.setting));
-        }
-
-        getFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, new SettingFragment()).commit();
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getResources().getString(R.string.post_title));
     }
 
 }

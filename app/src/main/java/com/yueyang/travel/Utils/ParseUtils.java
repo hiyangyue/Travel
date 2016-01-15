@@ -14,6 +14,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Yang on 2015/12/10.
@@ -82,6 +84,63 @@ public class ParseUtils {
         String cityRepresent = dataObj.getString("representative");
 
         return new City(id,cityName,enCityName,photoUrl,cityBeenStr,cityRepresent);
+    }
+
+    public static User getUserFromRegister(JSONObject jsonObject) throws JSONException{
+        JSONObject responseObj = jsonObject.getJSONObject("response");
+        JSONObject userObj = responseObj.getJSONObject("user");
+        String userId = userObj.getString("id");
+        String nickName = userObj.getString("firstName");
+        String userName = userObj.getString("username");
+        String avatarUrl = "";
+        if (userObj.has("photo")){
+            JSONObject photoObj = userObj.getJSONObject("photo");
+            avatarUrl = photoObj.getString("url");
+        }
+        return new User(userId,userName,avatarUrl,nickName);
+    }
+
+    public static List<User> getFriendListByUserId(JSONObject jsonObject) throws JSONException{
+        List<User> userList = new ArrayList<>();
+        JSONObject responseObj = jsonObject.getJSONObject("response");
+        JSONArray friendArray = responseObj.getJSONArray("friends");
+        for (int i = 0; i < friendArray.length() ; i ++){
+            JSONObject friendObj = friendArray.getJSONObject(i);
+            String userId = friendObj.getString("id");
+            String nickName = friendObj.getString("firstName");
+            String avatarUrl = null;
+            if (friendObj.has("photo")){
+                JSONObject photoObj = friendObj.getJSONObject("photo");
+                if (photoObj.has("url")){
+                    avatarUrl = photoObj.getString("url");
+                }
+            }
+            userList.add(new User(userId,nickName,avatarUrl));
+        }
+
+        return userList;
+    }
+
+    public static List<User> getFollowsByUserId(JSONObject jsonObject) throws JSONException{
+        List<User> userList = new ArrayList<>();
+        JSONObject responseObj = jsonObject.getJSONObject("response");
+        JSONArray followersArray = responseObj.getJSONArray("followers");
+        for (int i = 0 ; i < followersArray.length() ; i ++){
+            JSONObject userObj = followersArray.getJSONObject(i);
+            String userId = userObj.getString("id");
+            String nickName = userObj.getString("firstName");
+            String avatarUrl = null;
+            if (userObj.has("photo")){
+                JSONObject photoObj = userObj.getJSONObject("photo");
+                if (photoObj.has("url")){
+                    avatarUrl = photoObj.getString("url");
+                }
+            }
+
+            userList.add(new User(userId,nickName,avatarUrl));
+        }
+
+        return userList;
     }
 
     public static Post getPost(String jsonString) throws JSONException {

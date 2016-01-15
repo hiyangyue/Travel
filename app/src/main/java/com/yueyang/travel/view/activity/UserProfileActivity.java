@@ -19,7 +19,6 @@ import com.yueyang.travel.Utils.FileUtils;
 import com.yueyang.travel.Utils.GlideUtils;
 import com.yueyang.travel.Utils.MaterialUtils;
 import com.yueyang.travel.Utils.SnackbarUtils;
-import com.yueyang.travel.manager.SpfHelper;
 import com.yueyang.travel.manager.UserManager;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.view.adapter.ProfilePagerAdapter;
@@ -50,12 +49,17 @@ public class UserProfileActivity extends AppCompatActivity {
     @Bind(R.id.profile_nickName)
     TextView profileNickName;
 
+    private String userId;
+    private String avatarUrl;
+    private String nickName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         ButterKnife.bind(this);
 
+        init();
         setUpToolbar();
         setUpViewPager();
         initUserInfo();
@@ -88,6 +92,12 @@ public class UserProfileActivity extends AppCompatActivity {
 
     }
 
+    private void init(){
+        userId = getIntent().getExtras().getString(Constants.USER_ID);
+        nickName = getIntent().getExtras().getString(Constants.USER_NICKNAME);
+        avatarUrl = getIntent().getExtras().getString(Constants.USER_AVATAR_URL);
+    }
+
     private void setUpToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -96,7 +106,7 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     private void setUpViewPager() {
-        ProfilePagerAdapter adapter = new ProfilePagerAdapter(getSupportFragmentManager());
+        ProfilePagerAdapter adapter = new ProfilePagerAdapter(getSupportFragmentManager(),userId);
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(pager);
@@ -104,8 +114,7 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     private void initUserInfo(){
-        profileNickName.setText(SpfHelper.getInstance(this).getMyNickname());
-        String avatarUrl = UserManager.getInstance(this).getCurrentUser().userPhotoUrl;
+        profileNickName.setText(nickName);
         if (avatarUrl != null){
             GlideUtils.loadImg(this,avatarUrl,profileAvatar);
         }

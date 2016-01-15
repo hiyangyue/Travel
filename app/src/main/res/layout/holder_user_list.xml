@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:gravity="center_vertical">
+
+    <com.yueyang.travel.view.wiget.CircleImageView
+        android:id="@+id/user_list_avatar"
+        android:src="@drawable/icon_default_avatar"
+        android:layout_width="@dimen/list_item_avatar_size"
+        android:layout_height="@dimen/list_item_avatar_size"
+        android:layout_marginEnd="16dp"/>
+
+    <TextView
+        android:id="@+id/user_list_nickname"
+        android:text="Mikey Yang"
+        android:layout_toEndOf="@+id/user_list_avatar"
+        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceListItem"/>
+
+    <View
+        android:layout_below="@+id/user_list_avatar"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:background="@color/view_under_line" />
+
+</RelativeLayout>

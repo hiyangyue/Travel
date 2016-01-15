@@ -71,7 +71,20 @@
 
         <activity android:name=".view.activity.UserProfileActivity"
             android:parentActivityName=".view.activity.MainActivity">
-            !-- 父activity的meta-data，用来支持4.0以下版本 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.activity.MainActivity" />
+        </activity>
+
+        <activity android:name=".view.activity.UserPostActivity"
+            android:parentActivityName=".view.activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.activity.MainActivity" />
+        </activity>
+
+        <activity android:name=".view.activity.UserListActivity"
+            android:parentActivityName=".view.activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activity.MainActivity" />

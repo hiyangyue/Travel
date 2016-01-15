@@ -29,6 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_gravity="bottom"
-        android:background="#cccccc" />
+        android:background="@color/view_under_line" />
 </RelativeLayout>
 

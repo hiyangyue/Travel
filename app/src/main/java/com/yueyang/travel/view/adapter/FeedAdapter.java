@@ -83,7 +83,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     }
 
     private void isLike(Post post, final ImageView likeImg){
-        SocialManager.getLikeIdByUser(mContext, post.postId, new SocialManager.FetchLikeyByIdCallback() {
+        SocialManager.getLikeIdByUser(mContext, post.postId, new SocialManager.FetchLikeByIdCallback() {
             @Override
             public void onFailure(JSONObject jsonObject) {
 
@@ -109,7 +109,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         SocialManager.createLike(mContext, post.user, post, new SocialManager.LikeCallback() {
             @Override
             public void onFailure(JSONObject object) {
-                SocialManager.getLikeIdByUser(mContext, post.postId, new SocialManager.FetchLikeyByIdCallback() {
+                SocialManager.getLikeIdByUser(mContext, post.postId, new SocialManager.FetchLikeByIdCallback() {
                     @Override
                     public void onFailure(JSONObject jsonObject) {
 

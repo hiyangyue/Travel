@@ -3,8 +3,10 @@ package com.yueyang.travel.view.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import com.yueyang.travel.view.fragment.DesitinationFragment;
+import com.yueyang.travel.view.fragment.UserListFragment;
 
 /**
  * Created by Yang on 2016/1/14.
@@ -12,9 +14,11 @@ import com.yueyang.travel.view.fragment.DesitinationFragment;
 public class ProfilePagerAdapter extends FragmentPagerAdapter {
 
     private String mTabs[] = { "动态" , "关注" , "粉丝" };
+    private String userId;
 
-    public ProfilePagerAdapter(FragmentManager fm) {
+    public ProfilePagerAdapter(FragmentManager fm,String userId) {
         super(fm);
+        this.userId = userId;
     }
 
     @Override
@@ -23,9 +27,9 @@ public class ProfilePagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new DesitinationFragment();
             case 1:
-                return new DesitinationFragment();
+                return UserListFragment.getInstance(true,userId);
             case 2:
-                return new DesitinationFragment();
+                return UserListFragment.getInstance(false,userId);
             default:
                 return null;
         }

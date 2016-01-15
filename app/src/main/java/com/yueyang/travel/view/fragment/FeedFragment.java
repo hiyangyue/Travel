@@ -18,7 +18,9 @@ import android.view.ViewGroup;
 import com.yueyang.travel.R;
 import com.yueyang.travel.Utils.FileUtils;
 import com.yueyang.travel.Utils.ParseUtils;
+import com.yueyang.travel.Utils.SnackbarUtils;
 import com.yueyang.travel.manager.SocialManager;
+import com.yueyang.travel.manager.SpfHelper;
 import com.yueyang.travel.manager.UserManager;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.model.bean.Post;
@@ -134,18 +136,20 @@ public class FeedFragment extends Fragment {
     }
 
     private void initData(final Context context){
-        UserManager.getInstance(context).getMyLocalFriends(new UserManager.FetchUserCallback() {
+
+        UserManager.getInstance(context).fetchFriendList(SpfHelper.getInstance(context).getMyUserId(), new UserManager.FetchUserListCallback() {
             @Override
-            public void onFinish(List<User> data) {
+            public void onSuccess(List<User> userList) {
                 Set<String> friendSet = new HashSet<>();
-                for(User friend : data){
-                    friendSet.add(friend.userId);
+                friendSet.add(UserManager.getInstance(context).getCurrentUser().userId);
+                for(User user : userList){
+                    friendSet.add(user.userId);
                 }
 
                 SocialManager.fetchAllPosts(getContext(), friendSet, page, new SocialManager.FetchPostsCallback() {
                     @Override
                     public void onFailure(String errorMsg) {
-
+                        SnackbarUtils.getSnackbar(feedRecycler,getResources().getString(R.string.login_error));
                     }
 
                     @Override
@@ -156,7 +160,13 @@ public class FeedFragment extends Fragment {
                     }
                 });
             }
+
+            @Override
+            public void onError(String errorMessage) {
+                SnackbarUtils.getSnackbar(feedRecycler,getResources().getString(R.string.login_error));
+            }
         });
+
 
     }
 

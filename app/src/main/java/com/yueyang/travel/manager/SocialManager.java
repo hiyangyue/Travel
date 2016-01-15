@@ -136,11 +136,91 @@ public class SocialManager {
         mPhotoUploader.startUpload();
     }
 
+    public static void fetchUserPost(final Context context,final String userId,final int page, final FetchPostsCallback callback){
+
+        AnSocial anSocial = ((IMppApp) context.getApplicationContext()).anSocial;
+        Map<String, Object> params = new HashMap<>();
+        params.put("wall_id", context.getResources().getString(R.string.wall_id));
+        params.put("user_id", userId);
+        params.put("page", page);
+        params.put("limit", 100);
+        params.put("sort", "-created_at");
+
+        try {
+            anSocial.sendRequest("posts/query.json", AnSocialMethod.GET, params, new IAnSocialCallback(){
+                @Override
+                public void onFailure(final JSONObject arg0) {
+                    callback.onFailure(arg0.toString());
+                }
+                @Override
+                public void onSuccess(JSONObject arg0) {
+
+
+                    try {
+                        final List<Post> posts = new ArrayList<Post>();
+                        JSONArray postArray = arg0.getJSONObject("response").getJSONArray("posts");
+                        for(int i =0;i<postArray.length();i++){
+                            JSONObject postJson = postArray.getJSONObject(i);
+                            Post post = ParseUtils.getPostFromUser(postJson);
+                            posts.add(post);
+                        }
+
+                        callback.onFinish(posts);
+                    } catch (final JSONException e) {
+                        e.printStackTrace();
+
+                    }
+                }
+            });
+        } catch (final ArrownockException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void fetchPostByUserLike(final Context context,final String userId,final int page, final FetchPostsCallback callback){
+
+        AnSocial anSocial = ((IMppApp) context.getApplicationContext()).anSocial;
+        Map<String, Object> params = new HashMap<>();
+        params.put("wall_id", context.getResources().getString(R.string.wall_id));
+        params.put("like_user_id", userId);
+        params.put("page", page);
+        params.put("limit", 100);
+        params.put("sort", "-created_at");
+
+        try {
+            anSocial.sendRequest("posts/query.json", AnSocialMethod.GET, params, new IAnSocialCallback(){
+                @Override
+                public void onFailure(final JSONObject arg0) {
+                    callback.onFailure(arg0.toString());
+                }
+                @Override
+                public void onSuccess(JSONObject arg0) {
+
+                    try {
+                        final List<Post> posts = new ArrayList<Post>();
+                        JSONArray postArray = arg0.getJSONObject("response").getJSONArray("posts");
+                        for(int i =0;i<postArray.length();i++){
+                            JSONObject postJson = postArray.getJSONObject(i);
+                            Post post = ParseUtils.getPostFromUser(postJson);
+                            posts.add(post);
+                        }
+
+                        callback.onFinish(posts);
+                    } catch (final JSONException e) {
+                        e.printStackTrace();
+
+                    }
+                }
+            });
+        } catch (final ArrownockException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public static void fetchAllPosts(final Context context,final Set<String> friendSet,final int page, final FetchPostsCallback callback){
 
         String userIds ="";
-
-        friendSet.add(UserManager.getInstance(context).getCurrentUser().userId);
 
         for(String friendUserId : friendSet){
             userIds += friendUserId + ",";
@@ -186,7 +266,7 @@ public class SocialManager {
 
     }
 
-    public static void getLikeIdByUser(Context context, String postId, final FetchLikeyByIdCallback callback){
+    public static void getLikeIdByUser(Context context, String postId, final FetchLikeByIdCallback callback){
         Map<String,Object> params = new HashMap<>();
         params.put("object_type","Post");
         params.put("object_id",postId);
@@ -207,8 +287,8 @@ public class SocialManager {
         } catch (ArrownockException e) {
             e.printStackTrace();
         }
-
     }
+
 
     public static void createLike(Context context,User user, final Post post, final LikeCallback callback){
 
@@ -334,25 +414,24 @@ public class SocialManager {
     }
 
 
-    public  interface FetchLikeyByIdCallback{
-        public void onFailure(JSONObject jsonObject);
-        public void onSuccess(JSONObject jsonObject);
+    public  interface FetchLikeByIdCallback{
+        void onFailure(JSONObject jsonObject);
+        void onSuccess(JSONObject jsonObject);
     }
 
-
     public interface FetchPostsCallback{
-        public void onFailure(String errorMsg);
-        public void onFinish(List<Post> data);
+        void onFailure(String errorMsg);
+        void onFinish(List<Post> data);
     }
 
     public interface FetchCommentCallback {
-        public void onFailure();
-        public void onSuccess(List<Comment> data);
+        void onFailure();
+        void onSuccess(List<Comment> data);
     }
 
     public interface LikeCallback{
-        public void onFailure(JSONObject object);
-        public void onSuccess(JSONObject object);
+        void onFailure(JSONObject object);
+        void onSuccess(JSONObject object);
     }
 
 }

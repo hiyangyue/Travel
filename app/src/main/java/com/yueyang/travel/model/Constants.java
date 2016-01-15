@@ -8,28 +8,16 @@ public class Constants {
     //take photo
     public final static String PHOTO_PATH = "photo_path";
     public final static String RESULT_POST = "result_post";
-
     public final static int REQUEST_TAKE_PHOTO = 1;
     public final static int REQUEST_GET_POST = 2;
     public final static int REQUEST_PICK_PHOTO = 3;
-
     public final static String SEND_POST_ID = "post_id";
 
+    //user
+    public final static String USER_ID = "user_id";
+    public final static String USER_NICKNAME = "nick_name";
+    public final static String USER_AVATAR_URL = "avatar_url";
+    public final static String IS_FOLLOW = "is_follow";
 
-
-
-    public final static String FRIEND_REQUEST_KEY_TYPE = "type";
-    public final static String FRIEND_REQUEST_KEY_USERNAME = "username";
-    public final static String FRIEND_REQUEST_TYPE_SEND = "send";
-    public final static String FRIEND_REQUEST_TYPE_APPROVE = "approve";
-
-    public final static String INTENT_EXTRA_KEY_CLIENT = "client";
-    public final static String INTENT_EXTRA_KEY_ROOM = "room";
-    public final static String INTENT_EXTRA_KEY_POST_ID = "post";
-    public final static String INTENT_EXTRA_KEY_CHAT = "chat";
-    public final static String INTENT_EXTRA_KEY_TOPIC = "topic";
-    public final static String INTENT_EXTRA_KEY_TOPIC_EDIT_TYPE = "topic_edit_type";
-    public final static String INTENT_EXTRA_KEY_TOPIC_EDIT_FILTER_MEMBERS = "topic_edit_filter_members";
     public final static String INTENT_EXTRA_KEY_PAYLOAD = "payload";
-
 }

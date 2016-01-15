@@ -9,8 +9,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Yang on 2015/12/18.
@@ -42,33 +40,6 @@ public class User extends Model implements Serializable {
         this.userName = userName;
         this.userPhotoUrl = userPhotoUrl;
         this.nickname = nickname;
-    }
-
-    public User(JSONObject json){
-        parseJSON(json);
-    }
-
-    public void addFriend(String targetClientId,boolean isMutual){
-        Friend friend = new Friend();
-        friend.userClientId = clientId;
-        friend.targetClientId = targetClientId;
-        friend.isMutual = isMutual;
-        friend.update();
-    }
-
-    public List<User> friends(){
-        List<User> users = new ArrayList<User>();
-        List<Friend> fs = new Select().from(Friend.class).where("userClientId = \""+clientId+"\" and isMutual = 1").execute();
-        for(Friend f :fs){
-            User user = new Select().from(User.class).where("clientId = ?",f.targetClientId).executeSingle();
-            users.add(user);
-        }
-        return users;
-    }
-
-    public boolean isFriend(String targetClientId){
-        List<Friend> fs = new Select().from(Friend.class).where("userClientId = \""+clientId+"\" and targetClientId = \""+targetClientId+"\" and isMutual = 1").execute();
-        return fs.size()>0;
     }
 
     public User update() {
