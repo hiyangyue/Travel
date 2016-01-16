@@ -1,5 +1,6 @@
 package com.yueyang.travel.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yueyang.travel.R;
@@ -15,6 +17,7 @@ import com.yueyang.travel.Utils.SnackbarUtils;
 import com.yueyang.travel.manager.UserManager;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.model.bean.User;
+import com.yueyang.travel.view.activity.UserProfileActivity;
 import com.yueyang.travel.view.wiget.CircleImageView;
 
 import java.util.ArrayList;
@@ -37,11 +40,11 @@ public class UserListFragment extends Fragment {
     private boolean isFollow;
     private String userId;
 
-    public static UserListFragment getInstance(boolean isFollow,String userId){
+    public static UserListFragment getInstance(boolean isFollow, String userId) {
         UserListFragment fragment = new UserListFragment();
         Bundle args = new Bundle();
-        args.putBoolean(Constants.IS_FOLLOW,isFollow);
-        args.putString(Constants.USER_ID,userId);
+        args.putBoolean(Constants.IS_FOLLOW, isFollow);
+        args.putString(Constants.USER_ID, userId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,9 +55,9 @@ public class UserListFragment extends Fragment {
         ButterKnife.bind(this, view);
         init();
         initRecyclerView();
-        if (isFollow){
+        if (isFollow) {
             getFriendList(userId);
-        }else {
+        } else {
             getFollowList(userId);
         }
         return view;
@@ -66,7 +69,7 @@ public class UserListFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    private void init(){
+    private void init() {
         userId = getArguments().getString(Constants.USER_ID);
         isFollow = getArguments().getBoolean(Constants.IS_FOLLOW);
     }
@@ -81,7 +84,7 @@ public class UserListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    private void getFriendList(String userId){
+    private void getFriendList(String userId) {
         UserManager.getInstance(getActivity()).fetchFriendList(userId, new UserManager.FetchUserListCallback() {
             @Override
             public void onSuccess(List<User> userList) {
@@ -91,12 +94,12 @@ public class UserListFragment extends Fragment {
 
             @Override
             public void onError(String errorMessage) {
-                SnackbarUtils.getSnackbar(recyclerView,getResources().getString(R.string.login_error));
+                SnackbarUtils.getSnackbar(recyclerView, getResources().getString(R.string.login_error));
             }
         });
     }
 
-    private void getFollowList(String userId){
+    private void getFollowList(String userId) {
         UserManager.getInstance(getActivity()).fetchFollowers(userId, new UserManager.FetchUserListCallback() {
             @Override
             public void onSuccess(List<User> userList) {
@@ -106,7 +109,7 @@ public class UserListFragment extends Fragment {
 
             @Override
             public void onError(String errorMessage) {
-                SnackbarUtils.getSnackbar(recyclerView,getResources().getString(R.string.login_error));
+                SnackbarUtils.getSnackbar(recyclerView, getResources().getString(R.string.login_error));
             }
         });
     }
@@ -127,11 +130,23 @@ public class UserListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            User user = userList.get(position);
+            final User user = userList.get(position);
             holder.userNickname.setText(user.nickname);
-            if (user.userPhotoUrl != null){
-                GlideUtils.loadImg(getContext(),user.userPhotoUrl,holder.userListAvatar);
+            if (user.userPhotoUrl != null) {
+                GlideUtils.loadImg(getContext(), user.userPhotoUrl, holder.userListAvatar);
             }
+            holder.userListRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), UserProfileActivity.class);
+                    Bundle args = new Bundle();
+                    args.putString(Constants.USER_ID,user.userId);
+                    args.putString(Constants.USER_AVATAR_URL,user.userPhotoUrl);
+                    args.putString(Constants.USER_NICKNAME,user.nickname);
+                    intent.putExtras(args);
+                    startActivity(intent);
+                }
+            });
         }
 
         @Override
@@ -145,10 +160,12 @@ public class UserListFragment extends Fragment {
             CircleImageView userListAvatar;
             @Bind(R.id.user_list_nickname)
             TextView userNickname;
+            @Bind(R.id.user_list_rl)
+            RelativeLayout userListRl;
 
             public ViewHolder(View itemView) {
                 super(itemView);
-                ButterKnife.bind(this,itemView);
+                ButterKnife.bind(this, itemView);
             }
         }
 

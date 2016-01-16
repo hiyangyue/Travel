@@ -3,34 +3,33 @@ package com.yueyang.travel.view.activity;
 import android.os.Bundle;
 
 import com.yueyang.travel.R;
-import com.yueyang.travel.manager.UserManager;
-import com.yueyang.travel.view.fragment.UserListFragment;
+import com.yueyang.travel.manager.SpfHelper;
+import com.yueyang.travel.view.fragment.UserPostFragment;
 
 /**
- * Created by Yang on 2016/1/15.
+ * Created by Yang on 2016/1/14.
  */
-public class UserListActivity extends BaseActivity {
+public class UserPostNavActivity extends BaseNavActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.base_container);
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_container,UserListFragment.getInstance(true, UserManager.getInstance(this).getCurrentUser().userId))
+                .add(R.id.fragment_container,UserPostFragment.getInstance(SpfHelper.getInstance(this).getMyUserId()))
                 .commit();
     }
 
+
     @Override
     public int getLayoutResource() {
-        return R.layout.base_container;
+        return R.layout.base_nav;
     }
 
     @Override
     public void initToolbar() {
         super.initToolbar();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getResources().getString(R.string.post_title));
     }
 }

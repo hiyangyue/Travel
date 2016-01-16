@@ -2,10 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
+
+        <item android:id="@+id/nav_home"
+            android:checked="true"
+            android:icon="@drawable/icon_home"
+            android:title="@string/nav_home"/>
+
         <item
             android:id="@+id/nav_follow"
             android:icon="@drawable/ic_menu_camera"
-            android:title="关注的人" />
+            android:title="@string/nav_follow" />
         <item
             android:id="@+id/nav_post"
             android:icon="@drawable/ic_menu_gallery"

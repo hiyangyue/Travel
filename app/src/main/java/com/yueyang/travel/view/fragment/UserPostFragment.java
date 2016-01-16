@@ -37,6 +37,7 @@ public class UserPostFragment extends Fragment {
         UserPostFragment fragment = new UserPostFragment();
         Bundle bundle = new Bundle();
         bundle.putString(Constants.USER_ID,userId);
+        fragment.setArguments(bundle);
         return fragment;
     }
 

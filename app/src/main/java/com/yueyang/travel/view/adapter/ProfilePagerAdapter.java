@@ -3,10 +3,9 @@ package com.yueyang.travel.view.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 
-import com.yueyang.travel.view.fragment.DesitinationFragment;
 import com.yueyang.travel.view.fragment.UserListFragment;
+import com.yueyang.travel.view.fragment.UserPostFragment;
 
 /**
  * Created by Yang on 2016/1/14.
@@ -25,7 +24,7 @@ public class ProfilePagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return new DesitinationFragment();
+                return UserPostFragment.getInstance(userId);
             case 1:
                 return UserListFragment.getInstance(true,userId);
             case 2:

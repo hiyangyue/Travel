@@ -34,6 +34,12 @@
     <string name="cancel_like">取赞成功</string>
     <string name="post_title">我的动态</string>
     <string name="follow_title">关注的人</string>
+    <string name="commit_title">评论</string>
+
+    <!--nav-->
+    <string name="nav_home">首页</string>
+    <string name="nav_follow">我的关注</string>
+
 
     <!--Setting Preference-->
     <string name="setting">设置</string>

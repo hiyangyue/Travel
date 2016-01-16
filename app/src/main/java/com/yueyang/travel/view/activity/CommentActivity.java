@@ -1,7 +1,6 @@
 package com.yueyang.travel.view.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,7 +30,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Yang on 2016/1/10.
  */
-public class CommentActivity extends AppCompatActivity implements View.OnClickListener{
+public class CommentActivity extends BaseActivity implements View.OnClickListener{
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -51,10 +50,21 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comment);
         ButterKnife.bind(this);
         init();
         getAllComments();
+    }
+
+    @Override
+    public int getLayoutResource() {
+        return R.layout.activity_comment;
+    }
+
+    @Override
+    public void initToolbar() {
+        super.initToolbar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(R.string.commit_title);
     }
 
     private void init(){

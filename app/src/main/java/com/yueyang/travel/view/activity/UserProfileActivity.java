@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,10 +30,8 @@ import butterknife.ButterKnife;
 /**
  * Created by Yang on 2016/1/14.
  */
-public class UserProfileActivity extends AppCompatActivity {
+public class UserProfileActivity extends BaseActivity {
 
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
     @Bind(R.id.tabs)
     TabLayout tabLayout;
     @Bind(R.id.collapse_toolbar)
@@ -56,14 +52,25 @@ public class UserProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
         ButterKnife.bind(this);
 
         init();
-        setUpToolbar();
+        MaterialUtils.setToolbarPattle(profileBg, collapseToolbar);
         setUpViewPager();
         initUserInfo();
         updateUserAvatar(profileAvatar);
+    }
+
+    @Override
+    public int getLayoutResource() {
+        return R.layout.activity_user_profile;
+    }
+
+    @Override
+    public void initToolbar() {
+        super.initToolbar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @Override
@@ -96,13 +103,6 @@ public class UserProfileActivity extends AppCompatActivity {
         userId = getIntent().getExtras().getString(Constants.USER_ID);
         nickName = getIntent().getExtras().getString(Constants.USER_NICKNAME);
         avatarUrl = getIntent().getExtras().getString(Constants.USER_AVATAR_URL);
-    }
-
-    private void setUpToolbar() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        MaterialUtils.setToolbarPattle(profileBg, collapseToolbar);
     }
 
     private void setUpViewPager() {
