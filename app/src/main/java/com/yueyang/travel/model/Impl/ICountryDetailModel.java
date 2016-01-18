@@ -6,7 +6,7 @@ import com.yueyang.travel.model.callBack.DesDetailCallBack;
 /**
  * Created by Yang on 2015/12/17.
  */
-public interface IDesDetailModel {
+public interface ICountryDetailModel {
 
     void loadBg(int cityId,BgCallBack callBack);
 

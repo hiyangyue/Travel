@@ -2,8 +2,8 @@ package com.yueyang.travel.presenter;
 
 import android.util.Log;
 
-import com.yueyang.travel.model.Impl.IDesDetailImpl;
-import com.yueyang.travel.model.Impl.IDesDetailModel;
+import com.yueyang.travel.model.Impl.ICountryDetailImpl;
+import com.yueyang.travel.model.Impl.ICountryDetailModel;
 import com.yueyang.travel.model.bean.City;
 import com.yueyang.travel.model.callBack.BgCallBack;
 import com.yueyang.travel.model.callBack.DesDetailCallBack;
@@ -16,12 +16,12 @@ import java.util.List;
  */
 public class DesDetailPresenter {
 
-    private IDesDetailModel desDetailModel;
+    private ICountryDetailModel desDetailModel;
     private IDesDetailView desDetailView;
 
     public DesDetailPresenter(IDesDetailView desDetailView) {
         this.desDetailView = desDetailView;
-        desDetailModel = new IDesDetailImpl();
+        desDetailModel = new ICountryDetailImpl();
     }
 
     public void loadBg(){

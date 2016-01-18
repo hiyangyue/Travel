@@ -9,12 +9,11 @@ import com.yueyang.travel.view.fragment.UserListFragment;
 /**
  * Created by Yang on 2016/1/15.
  */
-public class UserListActivity extends BaseActivity {
+public class UserListActivity extends BaseNavActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.base_container);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -24,13 +23,12 @@ public class UserListActivity extends BaseActivity {
 
     @Override
     public int getLayoutResource() {
-        return R.layout.base_container;
+        return R.layout.base_nav;
     }
 
     @Override
     public void initToolbar() {
         super.initToolbar();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getResources().getString(R.string.post_title));
     }
 }

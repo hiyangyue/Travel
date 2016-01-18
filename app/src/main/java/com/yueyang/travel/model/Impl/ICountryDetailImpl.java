@@ -1,5 +1,7 @@
 package com.yueyang.travel.model.Impl;
 
+import android.util.Log;
+
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.yueyang.travel.Utils.ParseUtils;
 import com.yueyang.travel.Utils.TravelApi;
@@ -15,7 +17,7 @@ import cz.msebera.android.httpclient.Header;
 /**
  * Created by Yang on 2015/12/17.
  */
-public class IDesDetailImpl implements IDesDetailModel {
+public class ICountryDetailImpl implements ICountryDetailModel {
 
     @Override
     public void loadBg(int countryId, final BgCallBack callBack) {

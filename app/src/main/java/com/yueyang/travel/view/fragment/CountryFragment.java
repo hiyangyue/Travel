@@ -33,7 +33,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Yang on 2015/12/16.
  */
-public class DesDetailFragment extends Fragment implements IDesDetailView{
+public class CountryFragment extends Fragment implements IDesDetailView{
 
     @Bind(R.id.header)
     ImageView header;

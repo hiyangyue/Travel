@@ -40,6 +40,10 @@ public class MainActivity extends BaseNavActivity{
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(pager);
+        for (int i = 0 ; i < tabLayout.getTabCount() ; i ++){
+            tabLayout.getTabAt(i).setIcon(R.drawable.selector_home);
+        }
+
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

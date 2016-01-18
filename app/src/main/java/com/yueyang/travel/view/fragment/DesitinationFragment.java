@@ -14,7 +14,6 @@ import com.yueyang.travel.model.bean.Desitination;
 import com.yueyang.travel.presenter.DesitinationPresenter;
 import com.yueyang.travel.view.IDestinationView;
 import com.yueyang.travel.view.adapter.DesitinationAdapter;
-import com.yueyang.travel.view.wiget.GridSpacingItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +54,7 @@ public class DesitinationFragment extends Fragment implements IDestinationView{
         final GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerDesitination.setLayoutManager(mLayoutManager);
         recyclerDesitination.setHasFixedSize(true);
-        recyclerDesitination.addItemDecoration(new GridSpacingItemDecoration(2, 20, true));
+//        recyclerDesitination.addItemDecoration(new GridSpacingItemDecoration(2, 20, true));
         recyclerDesitination.setItemAnimator(new DefaultItemAnimator());
 
         mItems = new ArrayList<>();

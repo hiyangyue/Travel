@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 
 import com.yueyang.travel.R;
-import com.yueyang.travel.view.fragment.DesDetailFragment;
+import com.yueyang.travel.view.fragment.CountryFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,7 +41,7 @@ public class DesDetailActivity extends AppCompatActivity {
             return;
         }
 
-        DesDetailFragment detailFragment = new DesDetailFragment();
+        CountryFragment detailFragment = new CountryFragment();
         detailFragment.setArguments(getIntent().getExtras());
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container,detailFragment)
