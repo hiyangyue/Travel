@@ -31,9 +31,9 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
         switch (position){
             case 2:
                 return new RecommendFragment();
-            case 0:
-                return new DesitinationFragment();
             case 1:
+                return new DesitinationFragment();
+            case 0:
                 return new FeedFragment();
             default:
                 return null;

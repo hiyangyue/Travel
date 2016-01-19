@@ -35,6 +35,12 @@ public class MainActivity extends BaseNavActivity{
         return R.layout.activity_main;
     }
 
+    @Override
+    protected void initToolbar() {
+        super.initToolbar();
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
     private void setUpViewPager() {
         HomePagerAdapter adapter = new HomePagerAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);

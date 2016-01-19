@@ -5,6 +5,7 @@ import android.util.Log;
 import com.yueyang.travel.model.bean.City;
 import com.yueyang.travel.model.bean.Comment;
 import com.yueyang.travel.model.bean.Desitination;
+import com.yueyang.travel.model.bean.HotPlace;
 import com.yueyang.travel.model.bean.Post;
 import com.yueyang.travel.model.bean.Topic;
 import com.yueyang.travel.model.bean.User;
@@ -34,6 +35,24 @@ public class ParseUtils {
         int like = object.getInt("likes");
         int views = object.getInt("views");
 
+    }
+
+    public static List<HotPlace> getHotPlaces(String hotUrl) throws JSONException {
+
+        List<HotPlace> hotPlaceList = new ArrayList<>();
+
+        JSONObject jsonObject = new JSONObject(hotUrl);
+        JSONArray dataArray = jsonObject.getJSONArray("data");
+        for (int i = 0 ; i < dataArray.length() ; i ++){
+            JSONObject object = dataArray.getJSONObject(i);
+            String placePhoto = object.getString("photo");
+            String title = object.getString("title");
+            String avatarUrl = object.getString("avatar");
+            String viewUrl = object.getString("view_url");
+            hotPlaceList.add(new HotPlace(avatarUrl,title,placePhoto,viewUrl));
+        }
+
+        return hotPlaceList;
     }
 
     public static Topic getTopics(String bannerUrl,int position) throws JSONException {

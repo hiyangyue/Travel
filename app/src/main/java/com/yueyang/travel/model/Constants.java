@@ -5,6 +5,9 @@ package com.yueyang.travel.model;
  */
 public class Constants {
 
+    //transition
+    public final static String TRANSITION_BG = "transition_bg";
+
     //take photo
     public final static String PHOTO_PATH = "photo_path";
     public final static String RESULT_POST = "result_post";

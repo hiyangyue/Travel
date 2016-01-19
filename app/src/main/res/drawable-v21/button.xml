@@ -1,0 +1,11 @@
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="?android:colorControlHighlight">
+
+    <item android:state_selected="true"
+        android:drawable="@drawable/shape_btn_click"/>
+
+    <item android:state_activated="true"
+        android:drawable="@drawable/shape_btn_click"/>
+
+    <item android:drawable="@drawable/shape_btn_normal" />
+</ripple>

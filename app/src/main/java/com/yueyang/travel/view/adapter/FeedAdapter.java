@@ -1,8 +1,10 @@
 package com.yueyang.travel.view.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import com.yueyang.travel.manager.SocialManager;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.model.bean.Post;
 import com.yueyang.travel.view.activity.CommentActivity;
+import com.yueyang.travel.view.activity.PhotoDetailActivity;
 import com.yueyang.travel.view.wiget.CircleImageView;
 
 import org.json.JSONException;
@@ -59,6 +62,16 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         if (post.user.userPhotoUrl != null){
             GlideUtils.loadImg(mContext,post.user.userPhotoUrl,holder.feedHeaderImage);
         }
+
+        holder.feedImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, PhotoDetailActivity.class);
+                ActivityOptionsCompat options = ActivityOptionsCompat
+                        .makeSceneTransitionAnimation((Activity) mContext,holder.feedImage,"test");
+                mContext.startActivity(intent,options.toBundle());
+            }
+        });
 
 
         isLike(post,holder.feedLike);

@@ -5,6 +5,7 @@ import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.yueyang.travel.model.bean.City;
 import com.yueyang.travel.model.bean.Desitination;
+import com.yueyang.travel.model.bean.HotPlace;
 import com.yueyang.travel.model.bean.Topic;
 
 import java.util.List;
@@ -20,8 +21,8 @@ public class TravelApi {
             "http://pic.qyer.com/public/mobileapp/homebanner/2015/12/10/14497136835251/w800",
     };
 
-    public static final String POPULAR_NOTE
-            = "http://open.qyer.com/qyer/recommands/trip?client_id=qyer_android&client_secret=9fcaae8aefc4f9ac4915&type=index&page=2&count=10";
+    public static final String HOT_PLACE
+            = "http://open.qyer.com/qyer/recommands/trip?client_id=qyer_android&client_secret=9fcaae8aefc4f9ac4915&type=index&page=2&count=5";
 
     public static final String POPULAR_TOPIC
             = "http://open.qyer.com/qyer/recommands/entry?client_id=qyer_android&client_secret=9fcaae8aefc4f9ac4915";
@@ -65,6 +66,10 @@ public class TravelApi {
         }
 
         public static void getDesDetail(String url,RequestParams params,BaseJsonHttpResponseHandler<List<City>> handler){
+            client.get(url,params,handler);
+        }
+
+        public static void getHotPlaces(String url, RequestParams params, BaseJsonHttpResponseHandler<List<HotPlace>> handler){
             client.get(url,params,handler);
         }
 

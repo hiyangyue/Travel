@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:layout_width="250dp"
+    android:layout_height="200dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="1dp"
+    app:cardElevation="2dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:id="@+id/holder_hot_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/holder_hot_bg"
+            android:src="@drawable/test_profile"
+            android:scaleType="centerCrop"
+            android:layout_weight="3"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+
+        <com.yueyang.travel.view.wiget.CircleImageView
+            android:id="@+id/holder_hot_avatar"
+            android:src="@drawable/icon_default_avatar"
+            app:civ_border_color="@color/white"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_below="@+id/holder_hot_bg"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+
+        <TextView
+            android:id="@+id/holder_hot_title"
+            android:text="2015圣诞节，去瑞典寻找圣诞老人"
+            android:layout_toEndOf="@+id/holder_hot_avatar"
+            android:layout_marginTop="@dimen/margin_15"
+            android:layout_marginStart="@dimen/margin_5"
+            android:layout_below="@+id/holder_hot_bg"
+            android:textSize="20sp"
+            android:layout_centerHorizontal="true"
+            android:lines="1"
+            android:maxLength="12"
+            android:ellipsize="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

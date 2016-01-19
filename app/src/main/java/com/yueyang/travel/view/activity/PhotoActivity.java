@@ -47,7 +47,7 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photo);
+        setContentView(R.layout.activity_take_photo);
         ButterKnife.bind(this);
 
         init();
