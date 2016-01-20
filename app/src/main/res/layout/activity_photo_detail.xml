@@ -65,16 +65,17 @@
 
     <ImageView
         android:id="@+id/photo_detail_comment"
-        android:src="@drawable/icon_commit"
+        android:src="@drawable/icon_comment"
         android:layout_marginBottom="@dimen/margin_20"
         android:layout_alignParentBottom="true"
         android:layout_toStartOf="@+id/photo_detail_like"
+        android:layout_marginRight="@dimen/margin_10"
         android:layout_width="40dp"
         android:layout_height="40dp" />
     
     <ImageView
         android:id="@+id/photo_detail_like"
-        android:src="@drawable/icon_like_red"
+        android:src="@drawable/icon_heart_white"
         android:layout_marginBottom="@dimen/margin_20"
         android:layout_marginEnd="@dimen/margin_10"
         android:layout_alignParentBottom="true"

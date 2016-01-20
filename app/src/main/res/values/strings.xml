@@ -31,6 +31,9 @@
     <string name="drawer_default_text">点击头像登入</string>
     <string name="avatar_update_success">头像更新成功</string>
     <string name="avatar_update_error">头像更新成功</string>
+
+    <!--snackBar-->
+    <string name="no_received">系统还没有可以分享的应用哦</string>
     
     <!--others-->
     <string name="friend_request_rejected">拒绝</string>
@@ -46,6 +49,7 @@
     <!--nav-->
     <string name="nav_home">首页</string>
     <string name="nav_follow">我的关注</string>
+    <string name="action_share">分享</string>
 
 
     <!--Setting Preference-->
