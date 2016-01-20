@@ -58,8 +58,7 @@
         <activity android:name=".view.activity.PhotoActivity"
             android:parentActivityName=".view.activity.MainActivity"/>
 
-        <activity android:name=".view.activity.CommentActivity"
-            android:parentActivityName=".view.activity.MainActivity"/>
+        <activity android:name=".view.activity.CommentActivity"/>
 
         <activity android:name=".view.activity.SettingActivity"
             android:parentActivityName=".view.activity.MainActivity">
@@ -84,6 +83,13 @@
         </activity>
 
         <activity android:name=".view.activity.UserListActivity"
+            android:parentActivityName=".view.activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.activity.MainActivity" />
+        </activity>
+
+        <activity android:name=".view.activity.PhotoDetailActivity"
             android:parentActivityName=".view.activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout"
+    android:background="@color/black"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,22 +12,26 @@
         android:minHeight="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black"
+        android:background="@android:color/transparent"
         app:titleTextColor="@color/white"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <ImageView
-        android:id="@+id/photo_detail_iv"
+        android:id="@+id/photo_detail_photo"
+        android:transitionName="@string/transitions_photo"
         android:layout_centerInParent="true"
         android:scaleType="centerCrop"
+        android:maxHeight="400dp"
+        android:src="@drawable/test_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <com.yueyang.travel.view.wiget.CircleImageView
         android:src="@drawable/icon_default_avatar"
+        android:transitionName="@string/transitions_avatar"
         android:id="@+id/photo_detail_avatar"
         android:layout_marginStart="@dimen/margin_20"
-        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_marginBottom="@dimen/margin_20"
         android:layout_alignParentBottom="true"
         android:layout_width="40dp"
         android:layout_height="40dp" />
@@ -34,12 +40,13 @@
         android:layout_toRightOf="@+id/photo_detail_avatar"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_marginBottom="@dimen/margin_20"
         android:layout_width="wrap_content"
         android:layout_height="40dp">
 
         <TextView
             android:id="@+id/photo_detail_nickname"
+            android:transitionName="@string/transitions_nickname"
             android:layout_marginStart="@dimen/margin_5"
             android:textStyle="bold"
             android:textColor="@color/white"
@@ -48,11 +55,33 @@
 
         <TextView
             android:id="@+id/photo_detail_time"
+            android:transitionName="@string/transitions_time"
             android:layout_marginStart="@dimen/margin_5"
             android:layout_below="@+id/photo_detail_nickname"
             android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/photo_detail_comment"
+        android:src="@drawable/icon_commit"
+        android:layout_marginBottom="@dimen/margin_20"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/photo_detail_like"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+    
+    <ImageView
+        android:id="@+id/photo_detail_like"
+        android:src="@drawable/icon_like_red"
+        android:layout_marginBottom="@dimen/margin_20"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+
+
 
 </RelativeLayout>

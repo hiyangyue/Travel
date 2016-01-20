@@ -10,6 +10,13 @@
     <string name="action_search">Search</string>
     <string name="action_user">用户登入</string>
 
+    <!--transitions-->
+    <string name="transitions_avatar">avatar</string>
+    <string name="transitions_photo">photo</string>
+    <string name="transitions_nickname">nickname</string>
+    <string name="transitions_time">time</string>
+    <string name="transitions_comment">comment</string>
+
     <!--register && login-->
     <string name="exit">退出</string>
     <string name="register">注册</string>

@@ -3,8 +3,10 @@ package com.yueyang.travel.view.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,9 +69,31 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, PhotoDetailActivity.class);
-                ActivityOptionsCompat options = ActivityOptionsCompat
-                        .makeSceneTransitionAnimation((Activity) mContext,holder.feedImage,"test");
-                mContext.startActivity(intent,options.toBundle());
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.TRANSITIONS_AVATAR,post.user.userPhotoUrl);
+                bundle.putString(Constants.TRANSITIONS_NICK_NAME,post.getUser().nickname);
+                bundle.putString(Constants.TRANSITIONS_PHOTO,post.photoUrls);
+                bundle.putString(Constants.TRANSITIONS_TIME,String.valueOf(post.createdAt));
+                bundle.putString(Constants.TRANSITIONS_CONTENT,post.content);
+                bundle.putString(Constants.TRANSITIONS_POST_ID,post.postId);
+                intent.putExtras(bundle);
+
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
+                    Pair<View,String> p1 =
+                            Pair.create((View)holder.feedHeaderImage,mContext.getString(R.string.transitions_avatar));
+                    Pair<View,String> p2 =
+                            Pair.create((View)holder.feedName,mContext.getString(R.string.transitions_nickname));
+                    Pair<View,String> p3 =
+                            Pair.create((View)holder.feedTime,mContext.getString(R.string.transitions_time));
+                    Pair<View,String> p4 =
+                            Pair.create((View)holder.feedImage,mContext.getString(R.string.transitions_photo));
+                    ActivityOptionsCompat options = ActivityOptionsCompat
+                            .makeSceneTransitionAnimation((Activity)mContext,p1,p2,p3,p4);
+                    mContext.startActivity(intent,options.toBundle());
+                }else {
+                    mContext.startActivity(intent);
+                }
+
             }
         });
 

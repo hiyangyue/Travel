@@ -15,6 +15,7 @@
         <com.yueyang.travel.view.wiget.CircleImageView
             android:id="@+id/feed_header_image"
             android:src="@drawable/icon_default_avatar"
+            android:transitionName="@string/transitions_avatar"
             android:layout_width="@dimen/margin_20"
             android:layout_height="@dimen/margin_20"
             android:layout_marginTop="@dimen/margin_10"
@@ -22,6 +23,7 @@
 
         <TextView
             android:id="@+id/feed_name"
+            android:transitionName="@string/transitions_nickname"
             android:layout_toRightOf="@+id/feed_header_image"
             android:gravity="center_vertical"
             android:layout_marginStart="@dimen/margin_10"
@@ -38,6 +40,7 @@
 
         <ImageView
             android:id="@+id/feed_image"
+            android:transitionName="@string/transitions_photo"
             android:layout_below="@+id/feed_content"
             android:adjustViewBounds="true"
             android:maxHeight="200dp"
@@ -47,6 +50,7 @@
 
         <TextView
             android:id="@+id/feed_time"
+            android:transitionName="@string/transitions_time"
             android:gravity="end|center_vertical"
             android:layout_marginTop="@dimen/margin_10"
             android:layout_below="@+id/feed_image"
@@ -65,6 +69,7 @@
 
         <ImageView
             android:id="@+id/feed_comment"
+            android:transitionName="@string/transitions_comment"
             android:layout_below="@+id/feed_image"
             android:layout_alignParentEnd="true"
             android:layout_margin="@dimen/margin_10"

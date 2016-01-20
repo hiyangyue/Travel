@@ -6,7 +6,12 @@ package com.yueyang.travel.model;
 public class Constants {
 
     //transition
-    public final static String TRANSITION_BG = "transition_bg";
+    public final static String TRANSITIONS_PHOTO = "transition_photo";
+    public final static String TRANSITIONS_AVATAR = "transitions_avatar";
+    public final static String TRANSITIONS_NICK_NAME = "transitions_nickname";
+    public final static String TRANSITIONS_TIME = "transitions_time";
+    public final static String TRANSITIONS_CONTENT = "transitions_content";
+    public final static String TRANSITIONS_POST_ID = "transitions_post_id";
 
     //take photo
     public final static String PHOTO_PATH = "photo_path";
