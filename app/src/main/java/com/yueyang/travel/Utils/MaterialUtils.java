@@ -36,7 +36,7 @@ public class MaterialUtils {
                         Bitmap bitmap = ((BitmapDrawable) img.getDrawable()).getBitmap();
                         Palette palette = Palette.generate(bitmap);
                         if (palette.getMutedSwatch() != null) {
-                            rl.setBackgroundColor(palette.getMutedSwatch().getRgb());
+                            rl.setBackgroundColor(palette.getDarkMutedSwatch().getRgb());
                         }
 
                     }

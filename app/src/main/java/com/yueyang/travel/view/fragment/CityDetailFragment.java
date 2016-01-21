@@ -1,16 +1,11 @@
 package com.yueyang.travel.view.fragment;
 
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.yueyang.travel.R;
 
@@ -22,28 +17,19 @@ import butterknife.ButterKnife;
  */
 public class CityDetailFragment extends Fragment {
 
-
-    @Bind(R.id.des_detail_title)
-    TextView desDetailTitle;
-    @Bind(R.id.des_detail_subtitle)
-    TextView desDetailSubtitle;
-    @Bind(R.id.anim_toolbar)
-    Toolbar animToolbar;
-    @Bind(R.id.collapsing_toolbar)
-    CollapsingToolbarLayout collapsingToolbar;
-    @Bind(R.id.recycler_des_detail)
-    RecyclerView recyclerDesDetail;
+    @Bind(R.id.recycler_view)
+    RecyclerView recyclerView;
 
     private int cityId;
-    private String cityPhotoUrl,cnName,enName;
+    private String cityPhotoUrl, cnName, enName;
 
-    public static CityDetailFragment getInstance(int cityId,String cityPhotoUrl,String cnName,String enName) {
+    public static CityDetailFragment getInstance(int cityId, String cityPhotoUrl, String cnName, String enName) {
         CityDetailFragment detailFragment = new CityDetailFragment();
         Bundle args = new Bundle();
         args.putInt("city_id", cityId);
         args.putString("photo_url", cityPhotoUrl);
         args.putString("cnName", cnName);
-        args.putString("enName",enName);
+        args.putString("enName", enName);
         detailFragment.setArguments(args);
         return detailFragment;
     }
@@ -51,45 +37,28 @@ public class CityDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        cityId = getArguments().getInt("city_id");
-        cityPhotoUrl = getArguments().getString("photo_url");
-        cnName = getArguments().getString("cnName");
-        enName = getArguments().getString("enName");
+        init();
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_des_detail, container, false);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_city_detail, container, false);
         ButterKnife.bind(this, view);
         init();
         return view;
     }
-
-    private void init() {
-        ((AppCompatActivity) getActivity()).setSupportActionBar(animToolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        collapsingToolbar.setTitle(cnName);
-        desDetailTitle.setText(cnName);
-        desDetailSubtitle.setText(enName);
-//        GlideUtils.loadImg(getActivity(),cityPhotoUrl,header);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                getActivity().onBackPressed();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
+    
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    private void init() {
+        cityId = getArguments().getInt("city_id");
+        cityPhotoUrl = getArguments().getString("photo_url");
+        cnName = getArguments().getString("cnName");
+        enName = getArguments().getString("enName");
     }
 }

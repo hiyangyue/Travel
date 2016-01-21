@@ -18,7 +18,6 @@
                android:id="@+id/cityRl"
                android:layout_below="@+id/city_img"
                android:gravity="center_vertical"
-               android:background="#283339"
                android:layout_width="match_parent"
                android:layout_height="match_parent">
 
@@ -33,7 +32,7 @@
                <TextView
                    android:id="@+id/city_en_name"
                    android:layout_below="@+id/city_cn_name"
-                   android:textColor="#666769"
+                   android:textColor="@color/white"
                    android:layout_marginStart="@dimen/margin_10"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content" />
