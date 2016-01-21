@@ -14,7 +14,6 @@ import com.yueyang.travel.model.bean.Desitination;
 import com.yueyang.travel.presenter.DesitinationPresenter;
 import com.yueyang.travel.view.IDestinationView;
 import com.yueyang.travel.view.adapter.DesitinationAdapter;
-import com.yueyang.travel.view.wiget.GridSpacingItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +24,13 @@ import butterknife.ButterKnife;
 /**
  * Created by Yang on 2015/12/12.
  */
-public class DesitinationFragment extends Fragment implements IDestinationView{
+public class DesitinationFragment extends Fragment implements IDestinationView {
 
     @Bind(R.id.recycler_desitination)
     RecyclerView recyclerDesitination;
-    private DesitinationAdapter adapter;
+
     private List<Object> mItems;
+    private DesitinationAdapter adapter;
     private DesitinationPresenter presenter;
 
     @Override
@@ -41,6 +41,7 @@ public class DesitinationFragment extends Fragment implements IDestinationView{
         ButterKnife.bind(this, view);
         initRecyclerView();
         initPresenter();
+
         return view;
     }
 
@@ -50,20 +51,20 @@ public class DesitinationFragment extends Fragment implements IDestinationView{
         ButterKnife.unbind(this);
     }
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
 
         final GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerDesitination.setLayoutManager(mLayoutManager);
         recyclerDesitination.setHasFixedSize(true);
-        recyclerDesitination.addItemDecoration(new GridSpacingItemDecoration(2, 20, true));
+//        recyclerDesitination.addItemDecoration(new GridSpacingItemDecoration(2, 20, true));
         recyclerDesitination.setItemAnimator(new DefaultItemAnimator());
 
         mItems = new ArrayList<>();
-        adapter = new DesitinationAdapter(getActivity(),mItems);
+        adapter = new DesitinationAdapter(getActivity(), mItems);
         recyclerDesitination.setAdapter(adapter);
     }
 
-    private void initPresenter(){
+    private void initPresenter() {
         presenter = new DesitinationPresenter(this);
         presenter.loadDesitinations();
     }

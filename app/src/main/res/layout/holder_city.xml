@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_width="wrap_content"
+    android:layout_height="220dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
@@ -11,42 +11,40 @@
         <ImageView
             android:id="@+id/city_img"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/test_bg"/>
-
-        <TextView
-            android:id="@+id/city_cn_name"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:layout_marginStart="@dimen/margin_10"
-            android:layout_above="@+id/city_en_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/city_en_name"
-            android:layout_alignBottom="@+id/city_img"
-            android:textColor="@color/white"
-            android:layout_marginStart="@dimen/margin_10"
-            android:layout_marginBottom="@dimen/margin_10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="170dp"
+            android:scaleType="centerCrop" />
 
            <RelativeLayout
                android:id="@+id/cityRl"
-               android:layout_below="@+id/city_en_name"
+               android:layout_below="@+id/city_img"
+               android:gravity="center_vertical"
+               android:background="#283339"
                android:layout_width="match_parent"
                android:layout_height="match_parent">
+
                <TextView
-                   android:id="@+id/city_been_str"
-                   android:layout_centerVertical="true"
-                   android:layout_marginTop="@dimen/margin_10"
-                   android:layout_marginStart="@dimen/margin_10"
+                   android:id="@+id/city_cn_name"
                    android:textColor="@color/white"
+                   android:textStyle="bold"
+                   android:layout_marginStart="@dimen/margin_10"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content" />
+
+               <TextView
+                   android:id="@+id/city_en_name"
+                   android:layout_below="@+id/city_cn_name"
+                   android:textColor="#666769"
+                   android:layout_marginStart="@dimen/margin_10"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+               <!--<TextView-->
+                   <!--android:id="@+id/city_been_str"-->
+                   <!--android:layout_centerVertical="true"-->
+                   <!--android:layout_marginTop="@dimen/margin_10"-->
+                   <!--android:layout_marginStart="@dimen/margin_10"-->
+                   <!--android:textColor="@color/white"-->
+                   <!--android:layout_width="wrap_content"-->
+                   <!--android:layout_height="wrap_content" />-->
            </RelativeLayout>
 
     </RelativeLayout>

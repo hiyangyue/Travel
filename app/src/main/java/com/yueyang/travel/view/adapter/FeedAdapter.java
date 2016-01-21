@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +79,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 bundle.putString(Constants.TRANSITIONS_POST_ID,post.postId);
                 intent.putExtras(bundle);
 
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                     Pair<View,String> p1 =
                             Pair.create((View)holder.feedHeaderImage,mContext.getString(R.string.transitions_avatar));
                     Pair<View,String> p2 =

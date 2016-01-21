@@ -2,10 +2,13 @@ package com.yueyang.travel.Utils;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.os.Build;
 import android.view.Display;
 import android.view.WindowManager;
+
+import com.yueyang.travel.R;
 
 /**
  * Created by Yang on 2016/1/13.
@@ -13,6 +16,16 @@ import android.view.WindowManager;
 public class DistanceUtils {
     private static int screenWidth = 0;
     private static int screenHeight = 0;
+
+    public static int getToolbarHeight(Context context) {
+        final TypedArray styledAttributes = context.getTheme().obtainStyledAttributes(
+                new int[]{R.attr.actionBarSize});
+        int toolbarHeight = (int) styledAttributes.getDimension(0, 0);
+        styledAttributes.recycle();
+
+        return toolbarHeight;
+    }
+
 
     public static int dpToPx(int dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);

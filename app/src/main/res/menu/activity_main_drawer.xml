@@ -6,18 +6,6 @@
         <item android:id="@+id/nav_home"
             android:checked="true"
             android:title="@string/nav_home"/>
-
-        <item
-            android:id="@+id/nav_follow"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/nav_follow" />
-        <item
-            android:id="@+id/nav_post"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="帖子" />
-        <item
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="赞过" />
     </group>
 
     <group
@@ -26,6 +14,10 @@
             android:id="@+id/nav_setting"
             android:icon="@drawable/icon_setting"
             android:title="@string/setting" />
+
+       <item
+            android:id="@+id/nav_des"
+            android:title="目的地" />
     </group>
 
 </menu>

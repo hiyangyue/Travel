@@ -2,7 +2,6 @@ package com.yueyang.travel.view.fragment;
 
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,11 +12,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yueyang.travel.R;
-import com.yueyang.travel.Utils.MaterialUtils;
 import com.yueyang.travel.model.bean.City;
 import com.yueyang.travel.presenter.DesDetailPresenter;
 import com.yueyang.travel.view.IDesDetailView;
@@ -35,8 +32,8 @@ import butterknife.ButterKnife;
  */
 public class CountryFragment extends Fragment implements IDesDetailView{
 
-    @Bind(R.id.header)
-    ImageView header;
+//    @Bind(R.id.header)
+//    ImageView header;
     @Bind(R.id.des_detail_title)
     TextView desDetailTitle;
     @Bind(R.id.des_detail_subtitle)
@@ -47,14 +44,22 @@ public class CountryFragment extends Fragment implements IDesDetailView{
     CollapsingToolbarLayout collapsingToolbar;
     @Bind(R.id.recycler_des_detail)
     RecyclerView recyclerDesDetail;
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
 
     private int countryId;
     private String cnName,enName;
     private List<City> cityList;
     private DesDetailAdapter adapter;
     private DesDetailPresenter presenter;
+
+    public static CountryFragment newInstance(int countryId,String cnName,String enName){
+        CountryFragment fragment = new CountryFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("country_id",countryId);
+        bundle.putString("cn_name",cnName);
+        bundle.putString("en_name",enName);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,13 +75,11 @@ public class CountryFragment extends Fragment implements IDesDetailView{
     }
 
     private void getBundleData(){
-        Bundle bundle = getActivity().getIntent().getExtras();
-        countryId = bundle.getInt("country_id");
-        enName = bundle.getString("en_name");
-        cnName = bundle.getString("cn_name");
+        countryId = getArguments().getInt("country_id");
+        enName = getArguments().getString("en_name");
+        cnName = getArguments().getString("cn_name");
 
         presenter = new DesDetailPresenter(this);
-        presenter.loadBg();
     }
 
     private void initToolbar() {
@@ -90,10 +93,10 @@ public class CountryFragment extends Fragment implements IDesDetailView{
     }
 
     private void initRecyclerView(){
-        final GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 3);
+        final GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(),2);
         recyclerDesDetail.setLayoutManager(mLayoutManager);
         recyclerDesDetail.setHasFixedSize(true);
-        recyclerDesDetail.addItemDecoration(new GridSpacingItemDecoration(3, 30, true));
+        recyclerDesDetail.addItemDecoration(new GridSpacingItemDecoration(2, 30, true));
         recyclerDesDetail.setItemAnimator(new DefaultItemAnimator());
 
         cityList = new ArrayList<>();
@@ -123,7 +126,7 @@ public class CountryFragment extends Fragment implements IDesDetailView{
 
     @Override
     public void loadBg(String url) {
-        MaterialUtils.setToolbarPattle(getActivity(), header, url, collapsingToolbar);
+//        MaterialUtils.setToolbarPattle(getActivity(), header, url, collapsingToolbar);
     }
 
     @Override

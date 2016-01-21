@@ -12,9 +12,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yueyang.travel.R;
-import com.yueyang.travel.Utils.MaterialUtils;
-import com.yueyang.travel.view.fragment.CityDetailFragment;
+import com.yueyang.travel.Utils.GlideUtils;
 import com.yueyang.travel.model.bean.City;
+import com.yueyang.travel.view.fragment.CityDetailFragment;
 
 import java.util.List;
 
@@ -45,8 +45,9 @@ public class DesDetailAdapter extends RecyclerView.Adapter<DesDetailAdapter.View
         City city = cityList.get(position);
         holder.cityCnName.setText(city.getCityName());
         holder.cityEnName.setText(city.getEnCityName());
-        holder.cityBeenStr.setText(city.getCityBeenStr());
-        MaterialUtils.setPattle(mContext, holder.cityImg, city.getCityImgUrl(), holder.cityRl);
+//        holder.cityBeenStr.setText(city.getCityBeenStr());
+        GlideUtils.loadImg(mContext,city.getCityImgUrl(),holder.cityImg);
+//        MaterialUtils.setPattle(mContext, holder.cityImg, city.getCityImgUrl(), holder.cityRl);
     }
 
     @Override
@@ -62,8 +63,8 @@ public class DesDetailAdapter extends RecyclerView.Adapter<DesDetailAdapter.View
         TextView cityCnName;
         @Bind(R.id.city_en_name)
         TextView cityEnName;
-        @Bind(R.id.city_been_str)
-        TextView cityBeenStr;
+//        @Bind(R.id.city_been_str)
+//        TextView cityBeenStr;
         @Bind(R.id.cityRl)
         RelativeLayout cityRl;
 

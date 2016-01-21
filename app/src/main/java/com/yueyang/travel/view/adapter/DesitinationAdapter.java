@@ -13,8 +13,8 @@ import android.widget.TextView;
 
 import com.yueyang.travel.R;
 import com.yueyang.travel.Utils.MaterialUtils;
-import com.yueyang.travel.view.activity.DesDetailActivity;
 import com.yueyang.travel.model.bean.Desitination;
+import com.yueyang.travel.view.activity.DesDetailActivity;
 
 import java.util.List;
 
@@ -96,11 +96,16 @@ public class DesitinationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 @Override
                 public void onClick(View v) {
 
-                    Desitination desitination = (Desitination) mItems.get(getLayoutPosition());
+                    Desitination des = (Desitination) mItems.get(getLayoutPosition());
+//                    FragmentTransaction ft =
+//                            ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction();
+//                    ft.addToBackStack(null);
+//                    ft.replace(R.id.fragment_container,
+//                            CountryFragment.newInstance(des.getId(),des.getCnName(),des.getEnName())).co;
                     Bundle bundle = new Bundle();
-                    bundle.putInt("country_id",desitination.getId());
-                    bundle.putString("cn_name",desitination.getCnName());
-                    bundle.putString("en_name",desitination.getEnName());
+                    bundle.putInt("country_id",des.getId());
+                    bundle.putString("cn_name",des.getCnName());
+                    bundle.putString("en_name",des.getEnName());
                     Intent intent = new Intent(mContext, DesDetailActivity.class);
                     intent.putExtras(bundle);
                     mContext.startActivity(intent);

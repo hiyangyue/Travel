@@ -27,6 +27,7 @@ public class DesDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_des_detail);
         ButterKnife.bind(this);
+        getBundleData();
         initFragment(savedInstanceState);
     }
 
@@ -36,15 +37,23 @@ public class DesDetailActivity extends AppCompatActivity {
         ButterKnife.unbind(this);
     }
 
+    private void getBundleData(){
+        Bundle bundle = getIntent().getExtras();
+        countryId = bundle.getInt("country_id");
+        enName = bundle.getString("en_name");
+        cnName = bundle.getString("cn_name");
+
+    }
+
     private void initFragment(Bundle saveInstanceState){
         if (saveInstanceState != null){
             return;
         }
 
-        CountryFragment detailFragment = new CountryFragment();
-        detailFragment.setArguments(getIntent().getExtras());
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container,detailFragment)
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(null)
+                .add(R.id.fragment_container,CountryFragment.newInstance(countryId,cnName,enName))
                 .commit();
     }
 

@@ -1,9 +1,7 @@
 package com.yueyang.travel.view.fragment;
 
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -12,11 +10,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yueyang.travel.R;
-import com.yueyang.travel.Utils.GlideUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,8 +23,6 @@ import butterknife.ButterKnife;
 public class CityDetailFragment extends Fragment {
 
 
-    @Bind(R.id.header)
-    ImageView header;
     @Bind(R.id.des_detail_title)
     TextView desDetailTitle;
     @Bind(R.id.des_detail_subtitle)
@@ -37,12 +31,8 @@ public class CityDetailFragment extends Fragment {
     Toolbar animToolbar;
     @Bind(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbar;
-    @Bind(R.id.appbar)
-    AppBarLayout appbar;
     @Bind(R.id.recycler_des_detail)
     RecyclerView recyclerDesDetail;
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
 
     private int cityId;
     private String cityPhotoUrl,cnName,enName;
@@ -82,7 +72,7 @@ public class CityDetailFragment extends Fragment {
         collapsingToolbar.setTitle(cnName);
         desDetailTitle.setText(cnName);
         desDetailSubtitle.setText(enName);
-        GlideUtils.loadImg(getActivity(),cityPhotoUrl,header);
+//        GlideUtils.loadImg(getActivity(),cityPhotoUrl,header);
     }
 
     @Override
