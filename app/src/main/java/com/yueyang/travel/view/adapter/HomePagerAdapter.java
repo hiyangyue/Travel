@@ -29,6 +29,8 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
 
         switch (position){
+            case 3:
+                return new FeedFragment();
             case 2:
                 return new RecommendFragment();
             case 1:
@@ -44,11 +46,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
-//    @Override
-//    public CharSequence getPageTitle(int position) {
-//        return mTabs[position];
-//    }
 }

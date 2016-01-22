@@ -34,9 +34,10 @@ public class MaterialUtils {
                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                         super.onResourceReady(resource, glideAnimation);
                         Bitmap bitmap = ((BitmapDrawable) img.getDrawable()).getBitmap();
-                        Palette palette = Palette.generate(bitmap);
-                        if (palette.getMutedSwatch() != null) {
-                            rl.setBackgroundColor(palette.getDarkMutedSwatch().getRgb());
+                        Palette palette= Palette.from(bitmap).generate();
+                        Palette.Swatch swatch = palette.getDarkMutedSwatch();
+                        if (swatch != null){
+                            rl.setBackgroundColor(swatch.getRgb());
                         }
 
                     }

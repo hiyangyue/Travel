@@ -12,7 +12,6 @@ import com.yueyang.travel.view.fragment.UserPostFragment;
  */
 public class ProfilePagerAdapter extends FragmentPagerAdapter {
 
-//    private String mTabs[] = { "动态" , "关注" , "粉丝" };
     private String userId;
 
     public ProfilePagerAdapter(FragmentManager fm,String userId) {
@@ -39,8 +38,4 @@ public class ProfilePagerAdapter extends FragmentPagerAdapter {
         return 3;
     }
 
-//    @Override
-//    public CharSequence getPageTitle(int position) {
-//        return mTabs[position];
-//    }
 }
