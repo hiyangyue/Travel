@@ -48,7 +48,7 @@ public class CityDetailFragment extends Fragment {
         init();
         return view;
     }
-    
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

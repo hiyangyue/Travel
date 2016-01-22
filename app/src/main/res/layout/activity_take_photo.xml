@@ -31,7 +31,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_margin="@dimen/margin_5"
-            android:src="@drawable/icon_location"/>
+            android:src="@drawable/icon_location_grey"/>
 
         <TextView
             android:id="@+id/location_text"

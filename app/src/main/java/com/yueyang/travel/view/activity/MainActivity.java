@@ -46,8 +46,10 @@ public class MainActivity extends BaseNavActivity{
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(pager);
+
+        int[] icons = { R.drawable.selector_home,R.drawable.selector_location,R.drawable.selector_identity };
         for (int i = 0 ; i < tabLayout.getTabCount() ; i ++){
-            tabLayout.getTabAt(i).setIcon(R.drawable.selector_home);
+            tabLayout.getTabAt(i).setIcon(icons[i]);
         }
 
         tabLayout.setTabMode(TabLayout.MODE_FIXED);

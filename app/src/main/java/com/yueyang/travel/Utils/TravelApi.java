@@ -42,10 +42,6 @@ public class TravelApi {
         return "http://open.qyer.com/place/city/get_city_list?client_id=qyer_android&client_secret=9fcaae8aefc4f9ac4915&v=1&page=1&countryid=" + countryId;
     }
 
-//    http://open.qyer.com/qyer/footprint/mguide_list?client_id=qyer_android&client_secret=9fcaae8aefc4f9ac4915&v=1&type=city&id=50&count=20&page=1
-//    public static final String DESITINATION =
-//            "http://app6.117go.com/demo27/php/plaza.php?length=18&submit=getPlazaPics";
-
     /**
      * Created by Yang on 2015/12/17.
      */

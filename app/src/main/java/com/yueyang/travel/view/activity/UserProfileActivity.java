@@ -3,9 +3,9 @@ package com.yueyang.travel.view.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,7 +15,6 @@ import com.yueyang.travel.R;
 import com.yueyang.travel.Utils.BitmapUtils;
 import com.yueyang.travel.Utils.FileUtils;
 import com.yueyang.travel.Utils.GlideUtils;
-import com.yueyang.travel.Utils.MaterialUtils;
 import com.yueyang.travel.Utils.SnackbarUtils;
 import com.yueyang.travel.manager.UserManager;
 import com.yueyang.travel.model.Constants;
@@ -32,14 +31,10 @@ import butterknife.ButterKnife;
  */
 public class UserProfileActivity extends BaseActivity {
 
-    @Bind(R.id.tabs)
+    @Bind(R.id.tab_layout)
     TabLayout tabLayout;
-    @Bind(R.id.collapse_toolbar)
-    CollapsingToolbarLayout collapseToolbar;
-    @Bind(R.id.viewpager)
+    @Bind(R.id.view_pager)
     ViewPager pager;
-    @Bind(R.id.profile_bg)
-    ImageView profileBg;
     @Bind(R.id.profile_avatar)
     CircleImageView profileAvatar;
     @Bind(R.id.profile_nickName)
@@ -55,7 +50,6 @@ public class UserProfileActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         init();
-        MaterialUtils.setToolbarPattle(profileBg, collapseToolbar);
         setUpViewPager();
         initUserInfo();
         updateUserAvatar(profileAvatar);
@@ -110,7 +104,10 @@ public class UserProfileActivity extends BaseActivity {
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(pager);
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        int[] icons = { R.drawable.selector_home,R.drawable.selector_location,R.drawable.selector_identity,R.drawable.selector_location,R.drawable.selector_identity };
+        for (int i = 0 ; i < tabLayout.getTabCount() ; i ++){
+            tabLayout.getTabAt(i).setIcon(icons[i]);
+        }
     }
 
     private void initUserInfo(){
