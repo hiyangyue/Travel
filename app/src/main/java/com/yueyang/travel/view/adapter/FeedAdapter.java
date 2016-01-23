@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +57,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
         final Post post = postList.get(position);
         holder.feedName.setText(post.getUser().nickname);
-        holder.feedTime.setText(String.valueOf(post.createdAt));
+//        holder.feedTime.setText(String.valueOf(post.createdAt));
         holder.feedContent.setText(post.getContent());
 
         GlideUtils.loadImg(mContext,post.photoUrls,holder.feedImage);
@@ -84,12 +83,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                             Pair.create((View)holder.feedHeaderImage,mContext.getString(R.string.transitions_avatar));
                     Pair<View,String> p2 =
                             Pair.create((View)holder.feedName,mContext.getString(R.string.transitions_nickname));
-                    Pair<View,String> p3 =
-                            Pair.create((View)holder.feedTime,mContext.getString(R.string.transitions_time));
+//                    Pair<View,String> p3 =
+//                            Pair.create((View)holder.feedTime,mContext.getString(R.string.transitions_time));
                     Pair<View,String> p4 =
                             Pair.create((View)holder.feedImage,mContext.getString(R.string.transitions_photo));
                     ActivityOptionsCompat options = ActivityOptionsCompat
-                            .makeSceneTransitionAnimation((Activity)mContext,p1,p2,p3,p4);
+                            .makeSceneTransitionAnimation((Activity)mContext,p1,p2,p4);
                     mContext.startActivity(intent,options.toBundle());
                 }else {
                     mContext.startActivity(intent);
@@ -198,8 +197,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         CircleImageView feedHeaderImage;
         @Bind(R.id.feed_name)
         TextView feedName;
-        @Bind(R.id.feed_time)
-        TextView feedTime;
+//        @Bind(R.id.feed_time)
+//        TextView feedTime;
         @Bind(R.id.feed_content)
         TextView feedContent;
         @Bind(R.id.feed_image)

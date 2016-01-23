@@ -16,9 +16,14 @@
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp">
+
+            <ImageView
+                android:id="@+id/blur_img"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <RelativeLayout
                 android:id="@+id/profile_rl"
@@ -26,48 +31,42 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <RelativeLayout
-                    android:id="@+id/profile_avatar_rl"
-                    android:gravity="center_horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.yueyang.travel.view.wiget.CircleImageView
-                        android:id="@+id/profile_avatar"
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/test_profile"
-                        android:textColor="@android:color/white"
-                        app:civ_border_width="2dp"
-                        app:civ_border_color="@android:color/white" />
+                <com.yueyang.travel.view.wiget.CircleImageView
+                    android:id="@+id/profile_avatar"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="76dp"
+                    android:layout_height="76dp"
+                    android:src="@drawable/test_profile"
+                    android:textColor="@android:color/white"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@android:color/white" />
 
-                    <TextView
-                        android:text="Mikey Yang"
-                        android:id="@+id/profile_nickName"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/profile_avatar"
-                        android:textSize="32sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:text="Android Developer"
-                        android:layout_marginLeft="10dp"
-                        android:layout_below="@+id/profile_nickName"
-                        android:layout_toRightOf="@+id/profile_avatar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </RelativeLayout>
-
-                <include layout="@layout/profile_follow"
-                    android:layout_below="@+id/profile_avatar_rl"
+                <TextView
+                    android:text="Mikey Yang"
+                    android:id="@+id/profile_nickName"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/profile_avatar"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </RelativeLayout>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
+                <TextView
+                    android:text="Android Developer"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/profile_nickName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <!--<include layout="@layout/profile_follow"-->
+                    <!--android:layout_below="@+id/profile_avatar_rl"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"/>-->
+            </RelativeLayout>
 
 
             <android.support.v7.widget.Toolbar
@@ -100,7 +99,6 @@
         android:layout_width="wrap_content"
         android:src="@drawable/icon_heart_white"
         android:clickable="true"
-        app:layout_anchor="@id/profile_avatar_rl"
         app:layout_anchorGravity="bottom|right|end" />
     <!--app:layout_anchor="@id/profile_rl"-->
 

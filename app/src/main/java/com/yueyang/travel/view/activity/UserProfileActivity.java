@@ -2,10 +2,10 @@ package com.yueyang.travel.view.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
 import com.yueyang.travel.Utils.BitmapUtils;
+import com.yueyang.travel.Utils.BlurUtils;
 import com.yueyang.travel.Utils.FileUtils;
 import com.yueyang.travel.Utils.GlideUtils;
 import com.yueyang.travel.Utils.SnackbarUtils;
@@ -39,6 +40,8 @@ public class UserProfileActivity extends BaseActivity {
     CircleImageView profileAvatar;
     @Bind(R.id.profile_nickName)
     TextView profileNickName;
+    @Bind(R.id.blur_img)
+    ImageView blurImg;
 
     private String userId;
     private String avatarUrl;
@@ -93,31 +96,38 @@ public class UserProfileActivity extends BaseActivity {
 
     }
 
-    private void init(){
+    private void init() {
         userId = getIntent().getExtras().getString(Constants.USER_ID);
         nickName = getIntent().getExtras().getString(Constants.USER_NICKNAME);
         avatarUrl = getIntent().getExtras().getString(Constants.USER_AVATAR_URL);
     }
 
     private void setUpViewPager() {
-        ProfilePagerAdapter adapter = new ProfilePagerAdapter(getSupportFragmentManager(),userId);
+        ProfilePagerAdapter adapter = new ProfilePagerAdapter(getSupportFragmentManager(), userId);
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(pager);
-        int[] icons = { R.drawable.selector_home,R.drawable.selector_location,R.drawable.selector_identity,R.drawable.selector_location,R.drawable.selector_identity };
-        for (int i = 0 ; i < tabLayout.getTabCount() ; i ++){
+        int[] icons = {R.drawable.selector_home, R.drawable.selector_location, R.drawable.selector_identity, R.drawable.selector_location, R.drawable.selector_identity};
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
             tabLayout.getTabAt(i).setIcon(icons[i]);
         }
     }
 
-    private void initUserInfo(){
+    private void initUserInfo() {
         profileNickName.setText(nickName);
-        if (avatarUrl != null){
-            GlideUtils.loadImg(this,avatarUrl,profileAvatar);
+        if (avatarUrl != null) {
+            GlideUtils.loadImg(this, avatarUrl, profileAvatar);
         }
+
+        BitmapDrawable drawable = (BitmapDrawable) profileAvatar.getDrawable();
+        Bitmap bitmap = drawable.getBitmap();
+        Bitmap blurred = BlurUtils.blurRenderScript(this, bitmap, 25);
+        blurImg.setImageBitmap(blurred);
+
+
     }
 
-    private void updateUserAvatar(ImageView avatarImg){
+    private void updateUserAvatar(ImageView avatarImg) {
         avatarImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

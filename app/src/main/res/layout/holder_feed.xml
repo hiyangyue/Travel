@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView android:layout_height="wrap_content"
+<android.support.v7.widget.CardView
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="2dp"
@@ -9,74 +10,90 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="240dp"
         xmlns:android="http://schemas.android.com/apk/res/android">
-
-        <com.yueyang.travel.view.wiget.CircleImageView
-            android:id="@+id/feed_header_image"
-            android:src="@drawable/icon_default_avatar"
-            android:transitionName="@string/transitions_avatar"
-            android:layout_width="@dimen/margin_20"
-            android:layout_height="@dimen/margin_20"
-            android:layout_marginTop="@dimen/margin_10"
-            android:layout_marginStart="@dimen/margin_10" />
-
-        <TextView
-            android:id="@+id/feed_name"
-            android:transitionName="@string/transitions_nickname"
-            android:layout_toRightOf="@+id/feed_header_image"
-            android:gravity="center_vertical"
-            android:layout_marginStart="@dimen/margin_10"
-            android:textSize="22sp"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/margin_30" />
-
-        <TextView
-            android:id="@+id/feed_content"
-            android:layout_below="@+id/feed_header_image"
-            android:layout_margin="@dimen/margin_10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <ImageView
             android:id="@+id/feed_image"
             android:transitionName="@string/transitions_photo"
-            android:layout_below="@+id/feed_content"
             android:adjustViewBounds="true"
-            android:maxHeight="200dp"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="200dp" />
 
         <TextView
-            android:id="@+id/feed_time"
-            android:transitionName="@string/transitions_time"
-            android:gravity="end|center_vertical"
-            android:layout_marginTop="@dimen/margin_10"
-            android:layout_below="@+id/feed_image"
-            android:layout_marginEnd="@dimen/margin_10"
-            android:layout_marginStart="@dimen/margin_10"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/margin_20" />
-
-        <ImageView
-            android:id="@+id/feed_like"
-            android:layout_below="@+id/feed_image"
-            android:layout_toLeftOf="@+id/feed_comment"
-            android:layout_marginTop="@dimen/margin_10"
-            android:layout_width="@dimen/margin_20"
-            android:layout_height="@dimen/margin_20" />
-
-        <ImageView
-            android:id="@+id/feed_comment"
-            android:transitionName="@string/transitions_comment"
-            android:layout_below="@+id/feed_image"
-            android:layout_alignParentEnd="true"
+            android:id="@+id/feed_content"
+            android:layout_alignBottom="@+id/feed_image"
+            android:textColor="@color/white"
+            android:textSize="18sp"
             android:layout_margin="@dimen/margin_10"
-            android:layout_marginBottom="@dimen/margin_5"
-            android:layout_width="@dimen/margin_20"
-            android:layout_height="@dimen/margin_20"
-            android:src="@drawable/icon_commit"/>
+            android:maxWidth="300dp"
+            android:maxLines="3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+      <RelativeLayout
+          android:layout_alignParentBottom="true"
+          android:background="@color/grey100"
+          android:layout_width="match_parent"
+          android:layout_height="40dp">
+
+          <com.yueyang.travel.view.wiget.CircleImageView
+              android:id="@+id/feed_header_image"
+              android:src="@drawable/icon_default_avatar"
+              android:layout_margin="10dp"
+              android:transitionName="@string/transitions_avatar"
+              android:layout_width="35dp"
+              android:layout_height="35dp" />
+
+          <TextView
+              android:id="@+id/feed_name"
+              android:textColor="@color/grey_text"
+              android:transitionName="@string/transitions_nickname"
+              android:layout_toRightOf="@+id/feed_header_image"
+              android:layout_alignParentBottom="true"
+              android:gravity="center_vertical"
+              android:layout_marginStart="@dimen/margin_10"
+              android:textSize="18sp"
+              android:layout_width="wrap_content"
+              android:layout_height="40dp" />
+
+          <!--<TextView-->
+              <!--android:id="@+id/feed_time"-->
+              <!--android:transitionName="@string/transitions_time"-->
+              <!--android:gravity="end|center_vertical"-->
+              <!--android:layout_marginTop="@dimen/margin_10"-->
+              <!--android:layout_marginEnd="@dimen/margin_10"-->
+              <!--android:layout_marginStart="@dimen/margin_10"-->
+              <!--android:layout_width="wrap_content"-->
+              <!--android:layout_height="@dimen/margin_20" />-->
+
+          <ImageView
+              android:id="@+id/feed_like"
+              android:layout_toLeftOf="@+id/feed_comment"
+              android:layout_marginTop="@dimen/margin_10"
+              android:layout_width="@dimen/margin_20"
+              android:layout_height="@dimen/margin_20" />
+
+          <ImageView
+              android:id="@+id/feed_comment"
+              android:transitionName="@string/transitions_comment"
+              android:layout_toLeftOf="@+id/feed_share"
+              android:layout_margin="@dimen/margin_10"
+              android:layout_marginBottom="@dimen/margin_5"
+              android:layout_width="@dimen/margin_20"
+              android:layout_height="@dimen/margin_20"
+              android:src="@drawable/icon_bookmark_grey"/>
+
+          <ImageView
+              android:id="@+id/feed_share"
+              android:layout_alignParentEnd="true"
+              android:layout_marginTop="@dimen/margin_10"
+              android:layout_marginEnd="@dimen/margin_10"
+              android:layout_width="@dimen/margin_20"
+              android:layout_height="@dimen/margin_20"
+              android:src="@drawable/icon_share_grey"/>
+      </RelativeLayout>
 
     </RelativeLayout>
 
