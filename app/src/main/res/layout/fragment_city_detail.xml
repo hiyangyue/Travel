@@ -29,66 +29,9 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:behavior_overlapTop="108dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <android.support.v7.widget.CardView
-                app:elevation="2dp"
-                android:layout_margin="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_margin="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:text="城市概况"
-                        android:textSize="22sp"
-                        android:layout_marginBottom="5dp"
-                        android:textColor="@color/colorPrimary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:layout_marginBottom="@dimen/margin_5"
-                        android:text="香港，是张爱玲笔下那座华丽摩登的悲情之城，是王家卫电影里那点纸醉金迷的风情万种，是艾敬“我的1997”那一曲中的花花世 界，是TVB镜头前不断流转的市井气息。150多年的英国殖民地风尚和源远流长的东方传统文化的激烈碰撞造就了这个“亚洲国际都会”的传奇。而今，这座“钢筋水泥的森林”依旧矗立在中国的最东南，用它独特的魅力带给所有旅行者无数的惊喜。"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:text="更多实用信息 >"
-                        android:layout_gravity="right"
-                        android:textSize="18sp"
-                        android:textColor="@color/colorPrimary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                app:elevation="2dp"
-                android:layout_margin="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </android.support.v7.widget.CardView>
-
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>

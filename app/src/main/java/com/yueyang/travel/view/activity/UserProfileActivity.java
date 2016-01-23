@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -107,10 +108,22 @@ public class UserProfileActivity extends BaseActivity {
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(pager);
-        int[] icons = {R.drawable.selector_home, R.drawable.selector_location, R.drawable.selector_identity, R.drawable.selector_location, R.drawable.selector_identity};
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
-            tabLayout.getTabAt(i).setIcon(icons[i]);
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            tab.setCustomView(getTabView(i));
         }
+    }
+
+    private String[] tabTitles = { "Feed" , "Followers" , "Fans" };
+    private String[] nums = { "118" , "90" , "22"};
+
+    public View getTabView(int position) {
+        View v = LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        TextView tv = (TextView) v.findViewById(R.id.tab_title);
+        tv.setText(tabTitles[position]);
+        TextView num = (TextView) v.findViewById(R.id.tab_num);
+        num.setText(nums[position]);
+        return v;
     }
 
     private void initUserInfo() {
@@ -123,8 +136,6 @@ public class UserProfileActivity extends BaseActivity {
         Bitmap bitmap = drawable.getBitmap();
         Bitmap blurred = BlurUtils.blurRenderScript(this, bitmap, 25);
         blurImg.setImageBitmap(blurred);
-
-
     }
 
     private void updateUserAvatar(ImageView avatarImg) {

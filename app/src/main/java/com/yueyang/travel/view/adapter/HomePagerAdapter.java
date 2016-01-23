@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.yueyang.travel.R;
 import com.yueyang.travel.view.fragment.DesitinationFragment;
 import com.yueyang.travel.view.fragment.FeedFragment;
+import com.yueyang.travel.view.fragment.ExploreFragment;
 import com.yueyang.travel.view.fragment.RecommendFragment;
 
 /**
@@ -29,13 +30,13 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
 
         switch (position){
-            case 3:
-                return new FeedFragment();
+            case 0:
+                return new ExploreFragment();
             case 2:
                 return new RecommendFragment();
             case 1:
                 return new DesitinationFragment();
-            case 0:
+            case 3:
                 return new FeedFragment();
             default:
                 return null;

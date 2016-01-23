@@ -26,6 +26,9 @@ public class Constants {
     public final static String USER_NICKNAME = "nick_name";
     public final static String USER_AVATAR_URL = "avatar_url";
     public final static String IS_FOLLOW = "is_follow";
-
     public final static String INTENT_EXTRA_KEY_PAYLOAD = "payload";
+
+    //web
+    public final static String WEB_URL = "web_url";
+    public final static String WEB_TITLE = "web_title";
 }

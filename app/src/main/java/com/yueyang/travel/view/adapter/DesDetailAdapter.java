@@ -46,8 +46,7 @@ public class DesDetailAdapter extends RecyclerView.Adapter<DesDetailAdapter.View
         City city = cityList.get(position);
         holder.cityCnName.setText(city.getCityName());
         holder.cityEnName.setText(city.getEnCityName());
-//        holder.cityBeenStr.setText(city.getCityBeenStr());
-        GlideUtils.loadImg(mContext,city.getCityImgUrl(),holder.cityImg);
+        GlideUtils.loadImg(mContext, city.getCityImgUrl(), holder.cityImg);
         MaterialUtils.setPattle(mContext, holder.cityImg, city.getCityImgUrl(), holder.cityRl);
     }
 
@@ -64,10 +63,10 @@ public class DesDetailAdapter extends RecyclerView.Adapter<DesDetailAdapter.View
         TextView cityCnName;
         @Bind(R.id.city_en_name)
         TextView cityEnName;
-//        @Bind(R.id.city_been_str)
-//        TextView cityBeenStr;
         @Bind(R.id.cityRl)
         RelativeLayout cityRl;
+//        @Bind(R.id.city_been_str)
+//        TextView cityBeenStr;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -78,11 +77,11 @@ public class DesDetailAdapter extends RecyclerView.Adapter<DesDetailAdapter.View
                 public void onClick(View v) {
                     City city = cityList.get(getLayoutPosition());
                     CityDetailFragment cityDetailFragment = CityDetailFragment
-                            .getInstance(city.getCityId(),city.getCityImgUrl(),city.getCityName(),city.getEnCityName());
+                            .getInstance(city.getCityId(), city.getCityImgUrl(), city.getCityName(), city.getEnCityName());
                     FragmentTransaction ft =
-                            ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction();
+                            ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction();
                     ft.addToBackStack(null);
-                    ft.replace(R.id.fragment_container,cityDetailFragment).commit();
+                    ft.replace(R.id.fragment_container, cityDetailFragment).commit();
 
                 }
             });

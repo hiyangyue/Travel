@@ -1,9 +1,9 @@
 package com.yueyang.travel.view.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import com.yueyang.travel.R;
 import com.yueyang.travel.Utils.GlideUtils;
+import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.model.bean.Topic;
+import com.yueyang.travel.view.activity.WebActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,9 +102,17 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 break;
             case TYPE_TOPIC:
                 TopicHolder topicHolder = (TopicHolder) holder;
-                Topic topic = (Topic) mItems.get(position);
-                Log.e("topic_url", topic.getImgUrl());
-                GlideUtils.loadImg(mContext,topic.getImgUrl(), topicHolder.topicImg);
+                final Topic topic = (Topic) mItems.get(position);
+                GlideUtils.loadImg(mContext, topic.getImgUrl(), topicHolder.topicImg);
+                topicHolder.topicImg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, WebActivity.class);
+                        intent.putExtra(Constants.WEB_URL, topic.getNoteUrl());
+                        intent.putExtras(intent);
+                        mContext.startActivity(intent);
+                    }
+                });
                 break;
             default:
                 break;

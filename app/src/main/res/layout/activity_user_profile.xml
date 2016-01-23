@@ -36,6 +36,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_width="76dp"
                     android:layout_height="76dp"
+                    android:transitionName="@string/transitions_avatar"
                     android:src="@drawable/test_profile"
                     android:textColor="@android:color/white"
                     app:civ_border_width="2dp"
@@ -44,6 +45,7 @@
                 <TextView
                     android:text="Mikey Yang"
                     android:id="@+id/profile_nickName"
+                    android:transitionName="@string/transitions_nickname"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/profile_avatar"
                     android:textSize="32sp"
@@ -55,17 +57,11 @@
 
                 <TextView
                     android:text="Android Developer"
-                    android:layout_marginTop="10dp"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/profile_nickName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <!--<include layout="@layout/profile_follow"-->
-                    <!--android:layout_below="@+id/profile_avatar_rl"-->
-                    <!--android:layout_gravity="center_horizontal"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"/>-->
             </RelativeLayout>
 
 
@@ -94,12 +90,5 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:src="@drawable/icon_heart_white"
-        android:clickable="true"
-        app:layout_anchorGravity="bottom|right|end" />
-    <!--app:layout_anchor="@id/profile_rl"-->
 
 </android.support.design.widget.CoordinatorLayout>
