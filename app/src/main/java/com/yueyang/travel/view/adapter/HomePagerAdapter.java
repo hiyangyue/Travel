@@ -30,9 +30,9 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
 
         switch (position){
-            case 0:
-                return new ExploreFragment();
             case 2:
+                return new ExploreFragment();
+            case 0:
                 return new RecommendFragment();
             case 1:
                 return new DesitinationFragment();

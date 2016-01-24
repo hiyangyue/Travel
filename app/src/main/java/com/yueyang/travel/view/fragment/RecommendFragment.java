@@ -48,13 +48,12 @@ public class RecommendFragment extends Fragment implements IRecommendView{
         mItems.add("1");
         mItems.add("2");
         mItems.add("2");
-        mItems.add("2");
 
         final GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
         mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                if (position == 0 | position == 1 | position == 2 | position == 4
+                if (position == 0 | position == 1 | position == 2 |position == 3
                         | RecommendAdapter.isHeader(position)) {
                     return mLayoutManager.getSpanCount();
                 } else {

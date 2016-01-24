@@ -15,9 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            android:fitsSystemWindows="true"
-            app:expandedTitleMarginStart="48dp"
-            app:expandedTitleMarginEnd="64dp">
+            android:fitsSystemWindows="true">
 
             <ImageView
                 android:id="@+id/blur_img"
@@ -37,7 +35,7 @@
                     android:layout_width="76dp"
                     android:layout_height="76dp"
                     android:transitionName="@string/transitions_avatar"
-                    android:src="@drawable/test_profile"
+                    android:src="@drawable/test_profile_3"
                     android:textColor="@android:color/white"
                     app:civ_border_width="2dp"
                     app:civ_border_color="@android:color/white" />

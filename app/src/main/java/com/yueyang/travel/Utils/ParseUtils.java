@@ -3,6 +3,7 @@ package com.yueyang.travel.Utils;
 import android.util.Log;
 
 import com.yueyang.travel.model.bean.City;
+import com.yueyang.travel.model.bean.CityDetail;
 import com.yueyang.travel.model.bean.Comment;
 import com.yueyang.travel.model.bean.Desitination;
 import com.yueyang.travel.model.bean.HotPlace;
@@ -65,6 +66,24 @@ public class ParseUtils {
         String noteUrl = object.getString("url");
 
         return new Topic(imgUrl,noteUrl);
+    }
+
+
+
+    public static List<CityDetail> getCityDetail(String cityDetialUrl,int position) throws JSONException{
+        List<CityDetail> cityDetailList = new ArrayList<>();
+        JSONObject jsonObject = new JSONObject(cityDetialUrl);
+        JSONArray dataArray = jsonObject.getJSONArray("data");
+        for (int i = 0 ; i < position ; i ++){
+            JSONObject cityObject = dataArray.getJSONObject(i);
+            int id = cityObject.getInt("id");
+            String photo = cityObject.getString("photo");
+            String title = cityObject.getString("title");
+            String description = cityObject.getString("description");
+            cityDetailList.add(new CityDetail(id,photo,title,description));
+        }
+
+        return cityDetailList;
     }
 
     public static Desitination getDesitination(String desitinationUrl,int position) throws JSONException{

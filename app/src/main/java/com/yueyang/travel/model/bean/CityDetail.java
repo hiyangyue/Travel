@@ -10,4 +10,26 @@ public class CityDetail {
     private String title;
     private String description;
 
+    public CityDetail(int id, String photoUrl, String title, String description) {
+        this.id = id;
+        this.photoUrl = photoUrl;
+        this.title = title;
+        this.description = description;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

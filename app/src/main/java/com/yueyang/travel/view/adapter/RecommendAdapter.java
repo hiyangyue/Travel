@@ -27,7 +27,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private Context mContext;
     private List<Object> mItems;
     private final int TYPE_PAGER = 0;
-    private final int TYPE_FIND = 1;
+//    private final int TYPE_FIND = 1;
     private final int TYPE_BORDER = 2;
     private final int TYPE_HEADER = 3;
     private final int TYPE_TOPIC = 4;
@@ -49,10 +49,10 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 View pagerView = inflater.inflate(R.layout.holder_pager,parent,false);
                 viewHolder = new PagerHolder(pagerView);
                 break;
-            case TYPE_FIND:
-                View findView = inflater.inflate(R.layout.holder_find,parent,false);
-                viewHolder = new FindHolder(findView);
-                break;
+//            case TYPE_FIND:
+//                View findView = inflater.inflate(R.layout.holder_find,parent,false);
+//                viewHolder = new FindHolder(findView);
+//                break;
             case TYPE_BORDER:
                 View borderView = inflater.inflate(R.layout.holder_border,parent,false);
                 viewHolder = new BorderHolder(borderView);
@@ -128,13 +128,11 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public int getItemViewType(int position) {
         if (position == 0){
             return TYPE_PAGER;
-        }else if (position == 1){
-            return TYPE_FIND;
-        }else if (position == 2){
+        } else if (position == 1){
             return TYPE_BORDER;
         }else if (isHeader(position)){
             return TYPE_HEADER;
-        }else if(position == 4 | position == 5| position == 6){
+        }else if(position == 3 | position == 4| position == 5){
             return TYPE_TOPIC;
         }else {
             return -1;
@@ -142,7 +140,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public static boolean isHeader(int position){
-        return position == 3;
+        return position == 2;
     }
 
     public class PagerHolder extends RecyclerView.ViewHolder{

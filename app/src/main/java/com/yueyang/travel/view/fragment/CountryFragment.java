@@ -2,9 +2,11 @@ package com.yueyang.travel.view.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,25 +28,25 @@ import butterknife.ButterKnife;
 /**
  * Created by Yang on 2015/12/16.
  */
-public class CountryFragment extends Fragment implements IDesDetailView{
+public class CountryFragment extends Fragment implements IDesDetailView {
 
-//    @Bind(R.id.header)
-//    ImageView header;
     @Bind(R.id.recycler_des_detail)
     RecyclerView recyclerDesDetail;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
 
     private int countryId;
-    private String cnName,enName;
+    private String cnName, enName;
     private List<City> cityList;
     private DesDetailAdapter adapter;
     private DesDetailPresenter presenter;
 
-    public static CountryFragment newInstance(int countryId,String cnName,String enName){
+    public static CountryFragment newInstance(int countryId, String cnName, String enName) {
         CountryFragment fragment = new CountryFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("country_id",countryId);
-        bundle.putString("cn_name",cnName);
-        bundle.putString("en_name",enName);
+        bundle.putInt("country_id", countryId);
+        bundle.putString("cn_name", cnName);
+        bundle.putString("en_name", enName);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -62,7 +64,7 @@ public class CountryFragment extends Fragment implements IDesDetailView{
         return view;
     }
 
-    private void getBundleData(){
+    private void getBundleData() {
         countryId = getArguments().getInt("country_id");
         enName = getArguments().getString("en_name");
         cnName = getArguments().getString("cn_name");
@@ -71,19 +73,21 @@ public class CountryFragment extends Fragment implements IDesDetailView{
     }
 
     private void initToolbar() {
-
-
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(cnName);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(enName);
     }
 
-    private void initRecyclerView(){
-        final GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(),2);
+    private void initRecyclerView() {
+        final GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerDesDetail.setLayoutManager(mLayoutManager);
         recyclerDesDetail.setHasFixedSize(true);
         recyclerDesDetail.addItemDecoration(new GridSpacingItemDecoration(2, 30, true));
         recyclerDesDetail.setItemAnimator(new DefaultItemAnimator());
 
         cityList = new ArrayList<>();
-        adapter = new DesDetailAdapter(getActivity(),cityList);
+        adapter = new DesDetailAdapter(getActivity(), cityList);
         recyclerDesDetail.setAdapter(adapter);
 
         presenter.loadCityList();
@@ -92,9 +96,9 @@ public class CountryFragment extends Fragment implements IDesDetailView{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
-                getActivity().onBackPressed();
+                getActivity().finish();
                 break;
         }
 

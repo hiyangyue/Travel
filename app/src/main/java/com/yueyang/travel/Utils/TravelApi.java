@@ -4,6 +4,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.yueyang.travel.model.bean.City;
+import com.yueyang.travel.model.bean.CityDetail;
 import com.yueyang.travel.model.bean.Desitination;
 import com.yueyang.travel.model.bean.HotPlace;
 import com.yueyang.travel.model.bean.Topic;
@@ -35,7 +36,7 @@ public class TravelApi {
     }
 
     public static final String getDesCityDetail(int cityId){
-        return "http://open.qyer.com/qyer/footprint/city_detail?client_id=qyer_android&client_secret=9fcaae8aefc4f9ac4915&city_id=" + cityId;
+        return "http://open.qyer.com/qyer/footprint/mguide_list?client_id=qyer_android&client_secret=9fcaae8aefc4f9ac4915&type=city&id="  + cityId + "&count=20&page=1";
     }
 
     public static final String getCityList(int countryId){
@@ -66,6 +67,10 @@ public class TravelApi {
         }
 
         public static void getHotPlaces(String url, RequestParams params, BaseJsonHttpResponseHandler<List<HotPlace>> handler){
+            client.get(url,params,handler);
+        }
+
+        public static void getCityDetaill(String url,RequestParams params,BaseJsonHttpResponseHandler<List<CityDetail>> handler){
             client.get(url,params,handler);
         }
 
