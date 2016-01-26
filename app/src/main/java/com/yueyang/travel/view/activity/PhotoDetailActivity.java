@@ -6,7 +6,6 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.transition.Explode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -58,13 +57,12 @@ public class PhotoDetailActivity extends BaseActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        hideSystemBar();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setEnterTransition(new Explode());
+
         ButterKnife.bind(this);
         init();
     }
@@ -82,15 +80,21 @@ public class PhotoDetailActivity extends BaseActivity{
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_photo,menu);
+        getMenuInflater().inflate(R.menu.menu_photo, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_share){
-            shareImage();
+        switch (item.getItemId()){
+            case android.R.id.home:
+                supportFinishAfterTransition();
+                return true;
+            case R.id.action_share:
+                shareImage(photoUrl);
+                return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -118,27 +122,18 @@ public class PhotoDetailActivity extends BaseActivity{
         return super.onTouchEvent(event);
     }
 
-    private void hideSystemBar() {
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-    }
 
     private void init() {
         final Bundle bundle = getIntent().getExtras();
-        photoUrl = bundle.getString(Constants.TRANSITIONS_AVATAR);
+        photoUrl = bundle.getString(Constants.TRANSITIONS_PHOTO);
         nickname = bundle.getString(Constants.TRANSITIONS_NICK_NAME);
         avatarUrl = bundle.getString(Constants.TRANSITIONS_AVATAR);
         createTime = bundle.getString(Constants.TRANSITIONS_TIME);
         content = bundle.getString(Constants.TRANSITIONS_CONTENT);
 
-//        if (photoUrl != null){
-//            GlideUtils.loadImg(this,photoUrl,photoDetailPhoto);
-//        }
+        if (photoUrl != null){
+            GlideUtils.loadImg(this,photoUrl,photoDetailPhoto);
+        }
         if (avatarUrl != null) {
             GlideUtils.loadImg(this, avatarUrl, photoDetailAvatar);
         }
@@ -164,7 +159,7 @@ public class PhotoDetailActivity extends BaseActivity{
         startActivity(intent);
     }
 
-    private void shareImage(){
+    public void shareImage(String photoUrl){
         Glide.with(this).load(photoUrl)
                 .asBitmap()
                 .into(new SimpleTarget<Bitmap>() {

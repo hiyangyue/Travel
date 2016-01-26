@@ -10,11 +10,10 @@ import butterknife.ButterKnife;
 /**
  * Created by Yang on 2016/1/21.
  */
-public class CountryActivity extends BaseNavActivity {
+public class CountryActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.base_nav2);
         ButterKnife.bind(this);
 
         getSupportFragmentManager().beginTransaction()
@@ -23,7 +22,7 @@ public class CountryActivity extends BaseNavActivity {
     }
 
     @Override
-    protected int getLayoutResource() {
+    public int getLayoutResource() {
         return R.layout.base_nav;
     }
 }

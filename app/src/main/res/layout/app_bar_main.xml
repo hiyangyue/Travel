@@ -30,7 +30,7 @@
                 android:id="@+id/toolbar_avatar"
                 android:layout_gravity="right"
                 android:src="@drawable/test_profile"
-                android:transitionName="@string/transitions_avatar"
+                android:transitionName="test_avatar"
                 android:layout_marginEnd="@dimen/margin_20"
                 android:layout_width="30dp"
                 android:layout_height="30dp" />
@@ -39,8 +39,8 @@
                 android:id="@+id/toolbar_nickname"
                 android:textStyle="bold"
                 android:layout_gravity="right"
+                android:transitionName="test_name"
                 android:layout_marginRight="@dimen/margin_10"
-                android:transitionName="@string/transitions_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

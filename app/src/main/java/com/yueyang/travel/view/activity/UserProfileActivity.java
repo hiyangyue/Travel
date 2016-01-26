@@ -6,8 +6,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.transition.Explode;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -50,7 +53,12 @@ public class UserProfileActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+
         super.onCreate(savedInstanceState);
+        getWindow().setEnterTransition(new Explode());
+        getWindow().setExitTransition(new Explode());
         ButterKnife.bind(this);
 
         init();
@@ -96,6 +104,18 @@ public class UserProfileActivity extends BaseActivity {
         }
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                supportFinishAfterTransition();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     private void init() {
         userId = getIntent().getExtras().getString(Constants.USER_ID);

@@ -55,6 +55,7 @@ public class FeedFragment extends Fragment {
     private FeedAdapter feedAdapter;
     private List<Post> postList;
     private int page = 1;
+    private final static int CAMERA_RQ = 6969;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -110,6 +111,7 @@ public class FeedFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePhotoIntent.resolveActivity(getActivity().getPackageManager()) != null) {
                     try {

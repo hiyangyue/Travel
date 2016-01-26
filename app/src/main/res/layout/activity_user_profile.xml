@@ -34,7 +34,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_width="76dp"
                     android:layout_height="76dp"
-                    android:transitionName="@string/transitions_avatar"
                     android:src="@drawable/test_profile_3"
                     android:textColor="@android:color/white"
                     app:civ_border_width="2dp"
@@ -43,7 +42,6 @@
                 <TextView
                     android:text="Mikey Yang"
                     android:id="@+id/profile_nickName"
-                    android:transitionName="@string/transitions_nickname"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/profile_avatar"
                     android:textSize="32sp"

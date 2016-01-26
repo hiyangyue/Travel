@@ -1,12 +1,9 @@
 package com.yueyang.travel.view.activity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
@@ -25,7 +22,7 @@ import com.yueyang.travel.view.wiget.CircleImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseNavActivity implements View.OnClickListener{
+public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Bind(R.id.tab_layout)
     TabLayout tabLayout;
@@ -48,41 +45,44 @@ public class MainActivity extends BaseNavActivity implements View.OnClickListene
         ButterKnife.bind(this);
         setUpViewPager();
 
-        toolbarAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        toolbarAvatar.setOnClickListener(this);
+
+    }
+
+    @Override
+    public int getLayoutResource() {
+        return R.layout.app_bar_main;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.toolbar_avatar:
                 Intent intent = new Intent(MainActivity.this,UserProfileActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString(Constants.USER_ID, SpfHelper.getInstance(MainActivity.this).getMyUserId());
                 bundle.putString(Constants.USER_NICKNAME, SpfHelper.getInstance(MainActivity.this).getMyNickname());
                 bundle.putString(Constants.USER_AVATAR_URL, UserManager.getInstance(MainActivity.this).getCurrentUser().userPhotoUrl);
                 intent.putExtras(bundle);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-                    Pair<View,String> p1 = Pair.create((View)toolbarNickname,getString(R.string.transitions_nickname));
-                    Pair<View,String> p2 = Pair.create((View)toolbarAvatar,getString(R.string.transitions_avatar));
-                    ActivityOptionsCompat options =
-                            ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, p1,p2);
-                    startActivity(intent,options.toBundle());
-                }
+
+                /**
+                 *  Share Elements bugs here
+                 */
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+//
+////                    Pair<View,String> p1 = Pair.create((View)toolbarNickname,"test_name");
+////                    Pair<View,String> p2 = Pair.create((View)toolbarAvatar,"test_avatar");
+////                    ActivityOptionsCompat options = ActivityOptionsCompat.
+////                            makeSceneTransitionAnimation(MainActivity.this,p1,p2);
+////
+////                    startActivity(intent,options.toBundle());
+//                }
 
                 startActivity(intent);
-            }
-        });
-
-
-
+                break;
+        }
     }
 
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.activity_main;
-    }
-
-    @Override
-    protected void initToolbar() {
-        super.initToolbar();
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-    }
 
     private void setUpViewPager() {
         HomePagerAdapter adapter = new HomePagerAdapter(getSupportFragmentManager());
@@ -153,28 +153,5 @@ public class MainActivity extends BaseNavActivity implements View.OnClickListene
         } else {
             MenuItemCompat.collapseActionView(searchMenuItem);
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-//        switch (v.getId()){
-//            case R.id.toolbar_avatar:
-//                Intent intent = new Intent(MainActivity.this,UserProfileActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putString(Constants.USER_ID, SpfHelper.getInstance(MainActivity.this).getMyUserId());
-//                bundle.putString(Constants.USER_NICKNAME, SpfHelper.getInstance(MainActivity.this).getMyNickname());
-//                bundle.putString(Constants.USER_AVATAR_URL, UserManager.getInstance(MainActivity.this).getCurrentUser().userPhotoUrl);
-//                intent.putExtras(bundle);
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-//                    Pair<View,String> p1 = Pair.create((View)toolbarNickname,getString(R.string.transitions_nickname));
-//                    Pair<View,String> p2 = Pair.create((View)toolbarAvatar,getString(R.string.transitions_avatar));
-//                    ActivityOptionsCompat options =
-//                            ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, p1,p2);
-//                    startActivity(intent,options.toBundle());
-//                }
-//
-//                startActivity(intent);
-//                break;
-//        }
     }
 }
