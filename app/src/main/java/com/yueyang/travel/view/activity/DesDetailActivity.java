@@ -2,12 +2,10 @@ package com.yueyang.travel.view.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.FrameLayout;
 
 import com.yueyang.travel.R;
 import com.yueyang.travel.view.fragment.CountryFragment;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -15,9 +13,6 @@ import butterknife.ButterKnife;
  */
 public class DesDetailActivity extends AppCompatActivity {
 
-
-    @Bind(R.id.fragment_container)
-    FrameLayout fragmentContainer;
 
     private String cnName,enName;
     private int countryId;
@@ -37,6 +32,11 @@ public class DesDetailActivity extends AppCompatActivity {
         ButterKnife.unbind(this);
     }
 
+    @Override
+    public void onBackPressed() {
+        this.finish();
+    }
+
     private void getBundleData(){
         Bundle bundle = getIntent().getExtras();
         countryId = bundle.getInt("country_id");
@@ -52,7 +52,6 @@ public class DesDetailActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .addToBackStack(null)
                 .add(R.id.fragment_container,CountryFragment.newInstance(countryId,cnName,enName))
                 .commit();
     }

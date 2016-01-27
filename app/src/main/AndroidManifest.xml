@@ -104,6 +104,8 @@
             android:value=".view.activity.MainActivity" />
         </activity>
 
+        <activity android:name=".view.activity.TestActivity"/>
+
     </application>
 
 </manifest>

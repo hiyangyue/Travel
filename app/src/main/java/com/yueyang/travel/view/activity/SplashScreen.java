@@ -35,22 +35,23 @@ public class SplashScreen extends AppCompatActivity {
         Animation animation = AnimationUtils.loadAnimation(SplashScreen.this, R.anim.splash);
         splashImage.startAnimation(animation);
         checkBundle();
-        signIn();
+//        signIn();
 
-//
-//        Thread timerThread = new Thread() {
-//            public void run() {
-//                try {
-//                    sleep(3000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                } finally {
-//                    signIn();
-//                }
-//            }
-//        };
-//        timerThread.start();
+        Thread timerThread = new Thread() {
+            public void run() {
+                try {
+                    sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    signIn();
+                }
+            }
+        };
+        timerThread.start();
     }
+
+
 
     private void signIn(){
         if (SpfHelper.getInstance(this).hasSignIn()){

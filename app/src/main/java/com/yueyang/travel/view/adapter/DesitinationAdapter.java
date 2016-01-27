@@ -97,18 +97,14 @@ public class DesitinationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 public void onClick(View v) {
 
                     Desitination des = (Desitination) mItems.get(getLayoutPosition());
-//                    FragmentTransaction ft =
-//                            ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction();
-//                    ft.addToBackStack(null);
-//                    ft.replace(R.id.fragment_container,
-//                            CountryFragment.newInstance(des.getId(),des.getCnName(),des.getEnName())).co;
                     Bundle bundle = new Bundle();
-                    bundle.putInt("country_id",des.getId());
-                    bundle.putString("cn_name",des.getCnName());
-                    bundle.putString("en_name",des.getEnName());
+                    bundle.putInt("country_id", des.getId());
+                    bundle.putString("cn_name", des.getCnName());
+                    bundle.putString("en_name", des.getEnName());
                     Intent intent = new Intent(mContext, DesDetailActivity.class);
                     intent.putExtras(bundle);
                     mContext.startActivity(intent);
+//                    ((AppCompatActivity)mContext).overridePendingTransition(R.anim.zoom_in,0);
                 }
             });
         }

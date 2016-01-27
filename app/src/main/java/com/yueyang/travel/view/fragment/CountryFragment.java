@@ -8,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -93,17 +92,17 @@ public class CountryFragment extends Fragment implements IDesDetailView {
         presenter.loadCityList();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                getActivity().finish();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                getActivity().finish();
+//                break;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void onDestroyView() {

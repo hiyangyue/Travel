@@ -55,6 +55,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
     @Override
+    public void initToolbar() {
+        super.initToolbar();
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.toolbar_avatar:

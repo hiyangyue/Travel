@@ -7,11 +7,20 @@
         <item name="android:colorControlHighlight">@color/colorPrimary</item>
         <!--transitions-->
         <item name="android:windowContentTransitions">true</item>
+
+        <!--animation-->
+        <item name="android:windowAnimationStyle">@style/ActivityInOutAnimation</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="ActivityInOutAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/zoom_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/right_slide_out</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
