@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.transition.Explode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.yueyang.travel.Utils.BlurUtils;
 import com.yueyang.travel.Utils.FileUtils;
 import com.yueyang.travel.Utils.GlideUtils;
 import com.yueyang.travel.Utils.SnackbarUtils;
+import com.yueyang.travel.manager.SpfHelper;
 import com.yueyang.travel.manager.UserManager;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.view.adapter.ProfilePagerAdapter;
@@ -47,10 +49,6 @@ public class UserProfileActivity extends BaseActivity {
     @Bind(R.id.blur_img)
     ImageView blurImg;
 
-    private String userId;
-    private String avatarUrl;
-    private String nickName;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -61,9 +59,8 @@ public class UserProfileActivity extends BaseActivity {
         getWindow().setExitTransition(new Explode());
         ButterKnife.bind(this);
 
-        init();
-        setUpViewPager();
         initUserInfo();
+        setUpViewPager();
         updateUserAvatar(profileAvatar);
     }
 
@@ -92,8 +89,10 @@ public class UserProfileActivity extends BaseActivity {
                     updateMyPhoto(BitmapUtils.bitmap2byte(bitmap), new IAnSocialCallback() {
                         @Override
                         public void onSuccess(JSONObject jsonObject) {
+                            Log.e("success",jsonObject.toString());
                             profileAvatar.setImageBitmap(bitmap);
                             SnackbarUtils.getSnackbar(pager, getString(R.string.avatar_update_success));
+                            blur();
                         }
 
                         @Override
@@ -116,15 +115,8 @@ public class UserProfileActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    private void init() {
-        userId = getIntent().getExtras().getString(Constants.USER_ID);
-        nickName = getIntent().getExtras().getString(Constants.USER_NICKNAME);
-        avatarUrl = getIntent().getExtras().getString(Constants.USER_AVATAR_URL);
-    }
-
     private void setUpViewPager() {
-        ProfilePagerAdapter adapter = new ProfilePagerAdapter(getSupportFragmentManager(), userId);
+        ProfilePagerAdapter adapter = new ProfilePagerAdapter(getSupportFragmentManager(), SpfHelper.getInstance(this).getMyUserId());
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(pager);
@@ -147,15 +139,14 @@ public class UserProfileActivity extends BaseActivity {
     }
 
     private void initUserInfo() {
-        profileNickName.setText(nickName);
-        if (avatarUrl != null) {
-            GlideUtils.loadImg(this, avatarUrl, profileAvatar);
+        profileNickName.setText(SpfHelper.getInstance(this).getMyNickname());
+        if (SpfHelper.getInstance(this).getAvatar() != null) {
+            Log.e("2", SpfHelper.getInstance(this).getAvatar());
+            GlideUtils.loadImg(this, SpfHelper.getInstance(this).getAvatar(), profileAvatar);
+            blur();
         }
 
-        BitmapDrawable drawable = (BitmapDrawable) profileAvatar.getDrawable();
-        Bitmap bitmap = drawable.getBitmap();
-        Bitmap blurred = BlurUtils.blurRenderScript(this, bitmap, 25);
-        blurImg.setImageBitmap(blurred);
+
     }
 
     private void updateUserAvatar(ImageView avatarImg) {
@@ -168,6 +159,14 @@ public class UserProfileActivity extends BaseActivity {
                 startActivityForResult(intent, Constants.REQUEST_PICK_PHOTO);
             }
         });
+    }
+
+    private void blur(){
+//        Bitmap bitmap = ((BitmapDrawable) profileAvatar.getDrawable()).getBitmap();
+        BitmapDrawable drawable = (BitmapDrawable) profileAvatar.getDrawable();
+        Bitmap bitmap = drawable.getBitmap();
+        Bitmap blurred = BlurUtils.blurRenderScript(this, bitmap, 25);
+        blurImg.setImageBitmap(blurred);
     }
 }
 

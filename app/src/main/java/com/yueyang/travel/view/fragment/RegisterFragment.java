@@ -3,6 +3,7 @@ package com.yueyang.travel.view.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +97,7 @@ public class RegisterFragment extends Fragment {
             SpfHelper.getInstance(getContext()).saveUserInfo(name,
                     pass,
                     nickName,
-                    user.userId, user.clientId);
+                    user.userId, user.clientId, user.userPhotoUrl);
         }
         IMManager.getInstance(getContext()).connect(user.clientId);
         UserManager.getInstance(getContext()).setCurrentUser(user);

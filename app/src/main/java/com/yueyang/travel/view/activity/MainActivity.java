@@ -13,9 +13,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.yueyang.travel.R;
+import com.yueyang.travel.Utils.GlideUtils;
 import com.yueyang.travel.manager.SpfHelper;
-import com.yueyang.travel.manager.UserManager;
-import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.view.adapter.HomePagerAdapter;
 import com.yueyang.travel.view.wiget.CircleImageView;
 
@@ -43,10 +42,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
 
         ButterKnife.bind(this);
+        initUserInfo();
         setUpViewPager();
 
         toolbarAvatar.setOnClickListener(this);
-
     }
 
     @Override
@@ -65,12 +64,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         switch (v.getId()){
             case R.id.toolbar_avatar:
                 Intent intent = new Intent(MainActivity.this,UserProfileActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString(Constants.USER_ID, SpfHelper.getInstance(MainActivity.this).getMyUserId());
-                bundle.putString(Constants.USER_NICKNAME, SpfHelper.getInstance(MainActivity.this).getMyNickname());
-                bundle.putString(Constants.USER_AVATAR_URL, UserManager.getInstance(MainActivity.this).getCurrentUser().userPhotoUrl);
-                intent.putExtras(bundle);
-
                 /**
                  *  Share Elements bugs here
                  */
@@ -89,6 +82,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
+    private void initUserInfo(){
+        toolbarNickname.setText(SpfHelper.getInstance(this).getMyNickname());
+        if (SpfHelper.getInstance(this).getAvatar() != null){
+            GlideUtils.loadImg(this,SpfHelper.getInstance(this).getAvatar(),toolbarAvatar);
+        }
+    }
 
     private void setUpViewPager() {
         HomePagerAdapter adapter = new HomePagerAdapter(getSupportFragmentManager());

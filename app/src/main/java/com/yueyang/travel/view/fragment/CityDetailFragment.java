@@ -2,8 +2,10 @@ package com.yueyang.travel.view.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +41,8 @@ public class CityDetailFragment extends Fragment {
     TextView cityCnName;
     @Bind(R.id.city_en_name)
     TextView cityEnName;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
 
     private int cityId;
     private String cityPhotoUrl, cnName, enName;
@@ -61,6 +65,7 @@ public class CityDetailFragment extends Fragment {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_city_detail, container, false);
         ButterKnife.bind(this, view);
         init();
+        initToolbar();
         setUpRecyclerView();
         getData();
         return view;
@@ -83,6 +88,13 @@ public class CityDetailFragment extends Fragment {
         if (cityPhotoUrl != null) {
             GlideUtils.loadImg(getContext(), cityPhotoUrl, imageDetail);
         }
+
+    }
+
+    private void initToolbar() {
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void getData() {

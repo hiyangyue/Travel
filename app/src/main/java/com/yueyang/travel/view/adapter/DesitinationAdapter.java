@@ -103,8 +103,9 @@ public class DesitinationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     bundle.putString("en_name", des.getEnName());
                     Intent intent = new Intent(mContext, DesDetailActivity.class);
                     intent.putExtras(bundle);
+//                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((AppCompatActivity)mContext);
+//                    mContext.startActivity(intent,options.toBundle());
                     mContext.startActivity(intent);
-//                    ((AppCompatActivity)mContext).overridePendingTransition(R.anim.zoom_in,0);
                 }
             });
         }

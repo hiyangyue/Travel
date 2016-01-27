@@ -13,7 +13,6 @@ import butterknife.ButterKnife;
  */
 public class DesDetailActivity extends AppCompatActivity {
 
-
     private String cnName,enName;
     private int countryId;
 
@@ -34,7 +33,11 @@ public class DesDetailActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();
+        if (getFragmentManager().getBackStackEntryCount() > 0 ){
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     private void getBundleData(){
@@ -52,7 +55,7 @@ public class DesDetailActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_container,CountryFragment.newInstance(countryId,cnName,enName))
+                .add(R.id.fragment_container, CountryFragment.newInstance(countryId,cnName,enName))
                 .commit();
     }
 

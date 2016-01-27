@@ -19,6 +19,7 @@ public class SpfHelper {
     private static final String KEY_USER_USERID = "userid";
     private static final String KEY_USER_CLIENTID = "clientid";
     private static final String KEY_USER_NICKNAME = "nickname";
+    private static final String KEY_USER_AVATAR = "avatar";
 
     private SpfHelper(Context ct) {
         Account = ct.getSharedPreferences(ct.getString(R.string.app_name), 0);
@@ -37,18 +38,24 @@ public class SpfHelper {
         editor.putString(KEY_USER_PWD, "").commit();
         editor.putString(KEY_USER_USERID, "").commit();
         editor.putString(KEY_USER_CLIENTID, "").commit();
+        editor.putString(KEY_USER_AVATAR,"").commit();
     }
 
-    public void saveUserInfo(String username, String pwd,String nickname, String userId, String clientId) {
+    public void saveUserInfo(String username, String pwd,String nickname, String userId, String clientId,String avatar) {
         editor.putString(KEY_USER_USERNAME, username).commit();
         editor.putString(KEY_USER_PWD, pwd).commit();
         editor.putString(KEY_USER_USERID, userId).commit();
         editor.putString(KEY_USER_NICKNAME, nickname).commit();
         editor.putString(KEY_USER_CLIENTID, clientId).commit();
+        editor.putString(KEY_USER_AVATAR,avatar).commit();
     }
 
     public void updateNickname(String nickname){
         editor.putString(KEY_USER_NICKNAME, nickname).commit();
+    }
+
+    public void updateAvatar(String avatar){
+        editor.putString(KEY_USER_AVATAR,avatar).commit();
     }
 
 
@@ -74,6 +81,10 @@ public class SpfHelper {
 
     public String getMyNickname(){
         return Account.getString(KEY_USER_NICKNAME,"");
+    }
+
+    public String getAvatar(){
+        return Account.getString(KEY_USER_AVATAR,"");
     }
 
 }

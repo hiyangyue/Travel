@@ -92,18 +92,6 @@ public class CountryFragment extends Fragment implements IDesDetailView {
         presenter.loadCityList();
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                getActivity().finish();
-//                break;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

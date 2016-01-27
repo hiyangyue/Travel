@@ -3,7 +3,6 @@ package com.yueyang.travel.view.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,7 +89,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private void afterLogin(User user,String userName,String pass){
         if (!SpfHelper.getInstance(getContext()).hasSignIn()) {
             SpfHelper.getInstance(getContext()).saveUserInfo(userName,
-                    pass,user.nickname,user.userId, user.clientId);
+                    pass,user.nickname,user.userId, user.clientId,user.userPhotoUrl);
         }
         UserManager.getInstance(getContext()).setCurrentUser(user);
 

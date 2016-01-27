@@ -80,8 +80,9 @@ public class DesDetailAdapter extends RecyclerView.Adapter<DesDetailAdapter.View
                             .getInstance(city.getCityId(), city.getCityImgUrl(), city.getCityName(), city.getEnCityName());
                     FragmentTransaction ft =
                             ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction();
-                    ft.addToBackStack(null);
-                    ft.replace(R.id.fragment_container, cityDetailFragment).commit();
+                    ft.replace(R.id.fragment_container, cityDetailFragment)
+                            .addToBackStack(null)
+                            .commit();
 
                 }
             });
