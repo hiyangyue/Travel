@@ -1,5 +1,6 @@
 package com.yueyang.travel.view.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -109,11 +111,28 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
         });
     }
 
+    public void showSoftKeyboard(View view) {
+        if (view.requestFocus()) {
+            InputMethodManager imm = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+        }
+    }
+
+    private void hideKeyBroad(){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+    
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.comment_btn:
                 String content = commentTv.getText().toString();
+                commentTv.setText("");
                 SocialManager.createComment(this,
                         postId,
                         replyUserId,
@@ -122,6 +141,8 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
                         new IAnSocialCallback() {
                             @Override
                             public void onSuccess(JSONObject jsonObject) {
+
+                                hideKeyBroad();
                                 try {
                                     Comment comment = ParseUtils.getComment(jsonObject);
                                     commentList.add(comment);
@@ -136,6 +157,8 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
 
                             }
                         });
+
+//                commentTv.setText("");
         }
     }
 }

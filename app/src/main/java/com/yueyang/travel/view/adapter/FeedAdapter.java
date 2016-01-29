@@ -141,6 +141,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
             @Override
             public void onSuccess(JSONObject jsonObject) {
+
                 try {
                     boolean hasLike = ParseUtils.isHasLike(jsonObject);
                     if (hasLike) {
@@ -167,6 +168,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
                     @Override
                     public void onSuccess(JSONObject jsonObject) {
+
                         String likeId = null;
                         try {
                             likeId = ParseUtils.getLikeId(jsonObject);
