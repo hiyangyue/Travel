@@ -42,6 +42,14 @@ public class User extends Model implements Serializable {
         this.nickname = nickname;
     }
 
+    public User(String userId, String userName, String userPhotoUrl, String nickname,String clientId) {
+        this.userId = userId;
+        this.userName = userName;
+        this.userPhotoUrl = userPhotoUrl;
+        this.nickname = nickname;
+        this.clientId = clientId;
+    }
+
     public User update() {
         User userExisit = new Select().from(User.class)
                 .where("clientId = ? ", clientId).executeSingle();

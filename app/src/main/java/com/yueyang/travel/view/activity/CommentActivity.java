@@ -126,7 +126,7 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
-    
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -157,8 +157,6 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
 
                             }
                         });
-
-//                commentTv.setText("");
         }
     }
 }

@@ -130,12 +130,13 @@ public class ParseUtils {
         String userId = userObj.getString("id");
         String nickName = userObj.getString("firstName");
         String userName = userObj.getString("username");
+        String clientId = userObj.getString("clientId");
         String avatarUrl = "";
         if (userObj.has("photo")){
             JSONObject photoObj = userObj.getJSONObject("photo");
             avatarUrl = photoObj.getString("url");
         }
-        return new User(userId,userName,avatarUrl,nickName);
+        return new User(userId,userName,avatarUrl,nickName,clientId);
     }
 
     public static List<User> getFriendListByUserId(JSONObject jsonObject) throws JSONException{
