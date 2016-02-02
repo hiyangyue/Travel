@@ -1,9 +1,9 @@
 package com.yueyang.travel.view.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +41,7 @@ public class RegisterFragment extends Fragment {
     @Bind(R.id.user_nick_et)
     EditText userNickEt;
 
+    private ProgressDialog progressDialog;
     private String payload;
 
     private void checkBundle() {
@@ -70,24 +71,30 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                UserManager.getInstance(getContext())
-                        .signUp(userNameEt.getText().toString(), userPassEt.getText().toString(), userNickEt.getText().toString(), new IAnSocialCallback() {
-                            @Override
-                            public void onSuccess(JSONObject jsonObject) {
-                                SnackbarUtils.getSnackbar(registerBtn, getString(R.string.register_success));
-                                try {
-                                    User user = ParseUtils.getUserFromRegister(jsonObject);
-                                    afterRegister(user, userNameEt.getText().toString(), userPassEt.getText().toString(),userNickEt.getText().toString());
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                if (validate()){
+                    showProgressDialog();
+                    UserManager.getInstance(getContext())
+                            .signUp(userNameEt.getText().toString(), userPassEt.getText().toString(), userNickEt.getText().toString(), new IAnSocialCallback() {
+                                @Override
+                                public void onSuccess(JSONObject jsonObject) {
+                                    hideProgressDialog();
+                                    SnackbarUtils.getSnackbar(registerBtn, getString(R.string.register_success));
+                                    try {
+                                        User user = ParseUtils.getUserFromRegister(jsonObject);
+                                        afterRegister(user, userNameEt.getText().toString(), userPassEt.getText().toString(), userNickEt.getText().toString());
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(JSONObject jsonObject) {
-                                SnackbarUtils.getSnackbar(registerBtn, getString(R.string.register_error));
-                            }
-                        });
+                                @Override
+                                public void onFailure(JSONObject jsonObject) {
+                                    hideProgressDialog();
+                                    SnackbarUtils.getSnackbar(registerBtn, getString(R.string.register_error));
+                                }
+                            });
+                }
+
             }
         });
     }
@@ -112,6 +119,54 @@ public class RegisterFragment extends Fragment {
         }
         startActivity(i);
         getActivity().finish();
+    }
+
+    private void showProgressDialog(){
+        progressDialog = new ProgressDialog(getActivity(),
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("注册中...");
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog(){
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    private boolean validate() {
+        boolean valid = true;
+
+        String name = userNameEt.getText().toString();
+        String password = userPassEt.getText().toString();
+        String nickName = userNickEt.getText().toString();
+
+        if (name.isEmpty() || name.length() < 3) {
+            userNameEt.setError("至少三个字母");
+            valid = false;
+        } else {
+            userNameEt.setError(null);
+        }
+
+        if (nickName.isEmpty()){
+            userNickEt.setError("昵称不能为空");
+            valid = false;
+        }else {
+            userNickEt.setError(null);
+        }
+
+        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
+            userPassEt.setError("密码长度建议在4~10个之间");
+            valid = false;
+        } else {
+           userPassEt.setError(null);
+        }
+
+        return valid;
     }
 
 }
