@@ -2,6 +2,7 @@ package com.yueyang.travel.view.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -33,6 +34,8 @@ public class CountryFragment extends Fragment implements IDesDetailView {
     RecyclerView recyclerDesDetail;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.progress_bar)
+    ContentLoadingProgressBar progressBar;
 
     private int countryId;
     private String cnName, enName;
@@ -73,9 +76,9 @@ public class CountryFragment extends Fragment implements IDesDetailView {
 
     private void initToolbar() {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(cnName);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(enName);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(cnName);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(enName);
     }
 
     private void initRecyclerView() {
@@ -90,6 +93,7 @@ public class CountryFragment extends Fragment implements IDesDetailView {
         recyclerDesDetail.setAdapter(adapter);
 
         presenter.loadCityList();
+        showProgressBar();
     }
 
     @Override
@@ -105,6 +109,7 @@ public class CountryFragment extends Fragment implements IDesDetailView {
 
     @Override
     public void loadCitys(List<City> cities) {
+        hideProgressBar();
         cityList.addAll(cities);
         adapter.notifyDataSetChanged();
     }
@@ -113,4 +118,13 @@ public class CountryFragment extends Fragment implements IDesDetailView {
     public int getCountryId() {
         return countryId;
     }
+
+    public void hideProgressBar(){
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    public void showProgressBar(){
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
 }

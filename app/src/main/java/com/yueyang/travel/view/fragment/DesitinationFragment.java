@@ -2,6 +2,7 @@ package com.yueyang.travel.view.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +30,8 @@ public class DesitinationFragment extends Fragment implements IDestinationView {
 
     @Bind(R.id.recycler_desitination)
     RecyclerView recyclerDesitination;
+    @Bind(R.id.progress_bar)
+    ContentLoadingProgressBar progressBar;
 
     private List<Object> mItems;
     private DesitinationAdapter adapter;
@@ -67,12 +70,22 @@ public class DesitinationFragment extends Fragment implements IDestinationView {
 
     private void initPresenter() {
         presenter = new DesitinationPresenter(this);
+        showProgressBar();
         presenter.loadDesitinations();
     }
 
     @Override
     public void loadDesitinations(List<Desitination> desitinations) {
+        hideProgressBar();
         mItems.addAll(desitinations);
         adapter.notifyDataSetChanged();
+    }
+
+    public void hideProgressBar(){
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    public void showProgressBar(){
+        progressBar.setVisibility(View.VISIBLE);
     }
 }

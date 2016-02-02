@@ -39,6 +39,7 @@ public class DesDetailPresenter {
     }
 
     public void loadCityList(){
+
         desDetailModel.loadCitys(desDetailView.getCountryId(), new DesDetailCallBack() {
             @Override
             public void onSuccess(List<City> cityList) {

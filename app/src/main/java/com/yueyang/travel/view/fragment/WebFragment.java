@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.ProgressBar;
 
 import com.yueyang.travel.R;
 import com.yueyang.travel.model.Constants;
@@ -22,10 +23,12 @@ public class WebFragment extends Fragment {
 
     @Bind(R.id.webView)
     WebView webView;
+    @Bind(R.id.progressbar)
+    ProgressBar progressBar;
 
     private String articleUrl;
 
-    public static WebFragment getInstance(String articleUrl){
+    public static WebFragment getInstance(String articleUrl) {
         WebFragment webFragment = new WebFragment();
         Bundle args = new Bundle();
         args.putString(Constants.WEB_URL, articleUrl);
@@ -36,9 +39,9 @@ public class WebFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.activity_web, container, false);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         articleUrl = getArguments().getString(Constants.WEB_URL);
-        if (articleUrl != null){
+        if (articleUrl != null) {
             initWebView();
         }
         return view;
@@ -51,7 +54,7 @@ public class WebFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    private void initWebView(){
+    private void initWebView() {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new ChromeClient());
 //        webView.setWebViewClient(new ViewClient());
@@ -64,12 +67,12 @@ public class WebFragment extends Fragment {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
-//            progressBar.setProgress(newProgress);
-//            if (newProgress == 100) {
-//                progressBar.setVisibility(View.GONE);
-//            } else if (newProgress != 100) {
-//                progressBar.setVisibility(View.VISIBLE);
-//            }
+            progressBar.setProgress(newProgress);
+            if (newProgress == 100) {
+                progressBar.setVisibility(View.GONE);
+            } else if (newProgress != 100) {
+                progressBar.setVisibility(View.VISIBLE);
+            }
         }
     }
 }

@@ -37,7 +37,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     EditText userPassEt;
     @Bind(R.id.login_btn)
     Button loginBtn;
-    
+
     private ProgressDialog progressDialog;
     private String payload;
 
@@ -137,7 +137,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             userNameEt.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
+        if (password.isEmpty()) {
             userPassEt.setError("密码不能为空");
             valid = false;
         } else {

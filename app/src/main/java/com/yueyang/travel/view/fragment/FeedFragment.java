@@ -55,7 +55,6 @@ public class FeedFragment extends Fragment {
     private FeedAdapter feedAdapter;
     private List<Post> postList;
     private int page = 1;
-    private final static int CAMERA_RQ = 6969;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -139,24 +138,28 @@ public class FeedFragment extends Fragment {
 
     private void initData(final Context context){
 
+        showProgressBar();
+
         UserManager.getInstance(context).fetchFriendList(SpfHelper.getInstance(context).getMyUserId(), new UserManager.FetchUserListCallback() {
             @Override
             public void onSuccess(List<User> userList) {
                 Set<String> friendSet = new HashSet<>();
                 friendSet.add(UserManager.getInstance(context).getCurrentUser().userId);
-                for(User user : userList){
+                for (User user : userList) {
                     friendSet.add(user.userId);
                 }
 
                 SocialManager.fetchAllPosts(getContext(), friendSet, page, new SocialManager.FetchPostsCallback() {
                     @Override
                     public void onFailure(String errorMsg) {
-                        SnackbarUtils.getSnackbar(feedRecycler,getResources().getString(R.string.login_error));
+                        hideProgressBar();
+                        SnackbarUtils.getSnackbar(feedRecycler, getResources().getString(R.string.login_error));
                     }
 
                     @Override
                     public void onFinish(List<Post> data) {
-                        page ++;
+                        hideProgressBar();
+                        page++;
                         postList.addAll(data);
                         feedAdapter.notifyDataSetChanged();
                     }
@@ -165,11 +168,19 @@ public class FeedFragment extends Fragment {
 
             @Override
             public void onError(String errorMessage) {
-                SnackbarUtils.getSnackbar(feedRecycler,getResources().getString(R.string.login_error));
+                SnackbarUtils.getSnackbar(feedRecycler, getResources().getString(R.string.login_error));
             }
         });
 
 
+    }
+
+    public void hideProgressBar(){
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    public void showProgressBar(){
+        progressBar.setVisibility(View.VISIBLE);
     }
 
 

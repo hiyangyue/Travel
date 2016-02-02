@@ -2,6 +2,7 @@ package com.yueyang.travel.view.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +44,8 @@ public class CityDetailFragment extends Fragment {
     TextView cityEnName;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.progress_bar)
+    ContentLoadingProgressBar progressBar;
 
     private int cityId;
     private String cityPhotoUrl, cnName, enName;
@@ -98,9 +101,13 @@ public class CityDetailFragment extends Fragment {
     }
 
     private void getData() {
+
+        showProgressBar();
+
         TravelApi.RestClient.getCityDetaill(TravelApi.getDesCityDetail(cityId), null, new BaseJsonHttpResponseHandler<List<CityDetail>>() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, List<CityDetail> response) {
+                hideProgressBar();
                 cityDetailList.addAll(response);
                 adapter.notifyDataSetChanged();
             }
@@ -121,12 +128,19 @@ public class CityDetailFragment extends Fragment {
 
         cityDetailList = new ArrayList<>();
         adapter = new CityDetailAdapter(getContext(), cityDetailList);
-
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
+    }
+
+    public void hideProgressBar(){
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    public void showProgressBar(){
+        progressBar.setVisibility(View.VISIBLE);
     }
 }
