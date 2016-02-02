@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
+            android:paddingTop="24dp"
             app:titleEnabled="false"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
             app:contentScrim="?attr/colorPrimary"

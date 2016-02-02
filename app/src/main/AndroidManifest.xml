@@ -11,6 +11,12 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
 
     <application
         android:name=".application.IMppApp"
@@ -18,7 +24,14 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/BaseMaterial">
+
+
+        <!-- 设置不同网络环境下的长连接保持心跳频率。(单位: 分钟) -->
+        <meta-data android:name="com.arrownock.push.KEEPALIVE_INTERVAL_WIFI" android:value="14" />
+        <meta-data android:name="com.arrownock.push.KEEPALIVE_INTERVAL_2G" android:value="4" />
+        <meta-data android:name="com.arrownock.push.KEEPALIVE_INTERVAL_3G" android:value="4" />
+
         <meta-data
             android:name="com.arrownock.APP_KEY"
             android:value="@string/app_key" />
@@ -41,12 +54,14 @@
             android:label="@string/app_name"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme">
+            android:theme="@style/MainTheme">
 
         </activity>
-        <activity android:name=".view.activity.LoginActivity" />
+        <activity android:name=".view.activity.LoginActivity"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".view.activity.DesDetailActivity"
+            android:theme="@style/MainTheme"
             android:parentActivityName=".view.activity.MainActivity">
 
             <!-- 父activity的meta-data，用来支持4.0以下版本 -->
@@ -58,7 +73,8 @@
         <activity android:name=".view.activity.PhotoActivity"
             android:parentActivityName=".view.activity.MainActivity"/>
 
-        <activity android:name=".view.activity.CommentActivity"/>
+        <activity android:name=".view.activity.CommentActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".view.activity.SettingActivity"
             android:parentActivityName=".view.activity.MainActivity">
@@ -69,7 +85,8 @@
         </activity>
 
         <activity android:name=".view.activity.UserProfileActivity"
-            android:parentActivityName=".view.activity.MainActivity">
+            android:parentActivityName=".view.activity.MainActivity"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activity.MainActivity" />
@@ -96,9 +113,11 @@
                 android:value=".view.activity.MainActivity" />
         </activity>
 
-        <activity android:name=".view.activity.CountryActivity"/>
+        <activity android:name=".view.activity.CountryActivity"
+            android:theme="@style/AppTheme"/>
         <activity android:name=".view.activity.WebActivity"
-            android:parentActivityName=".view.activity.MainActivity">
+            android:parentActivityName=".view.activity.MainActivity"
+            android:theme="@style/MainTheme">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".view.activity.MainActivity" />
@@ -106,6 +125,22 @@
 
         <activity android:name=".view.activity.TestActivity"/>
 
+
+        <service android:name="com.arrownock.push.PushService" />
+
+        <receiver android:name="com.arrownock.push.PushBroadcastReceiver"
+            android:enabled="true" android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="com.arrownock.push.PushService.MSG_ARRIVAL" />
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+            <!-- Value的内容与上述接收Activity相匹配，使得Arrownock推送将消息传递至该Activity -->
+            <meta-data
+                android:name="com.arrownock.push.BroadcastReceiver.ArrivalActivity"
+                android:value="com.you.app.package.ArrivalActivity" />
+        </receiver>
     </application>
 
 </manifest>

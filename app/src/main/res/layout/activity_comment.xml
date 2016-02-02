@@ -29,11 +29,11 @@
         android:background="@color/grey500" />
 
     <LinearLayout
+        android:id="@+id/comment_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:onClick="showSoftKeyboard"
-        android:paddingBottom="4dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:paddingTop="8dp">

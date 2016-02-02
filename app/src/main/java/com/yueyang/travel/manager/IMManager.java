@@ -1,14 +1,18 @@
 package com.yueyang.travel.manager;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.os.Handler;
+import android.util.Log;
 
 import com.arrownock.exception.ArrownockException;
 import com.arrownock.im.AnIM;
-import com.arrownock.im.AnIMMessage;
-import com.arrownock.im.callback.AnIMBinaryCallbackData;
+import com.arrownock.im.callback.AnIMCallbackAdapter;
+import com.arrownock.im.callback.AnIMMessageCallbackData;
+import com.arrownock.im.callback.AnIMMessageSentCallbackData;
+import com.arrownock.im.callback.AnIMNoticeCallbackData;
+import com.arrownock.im.callback.IAnIMPushBindingCallback;
 import com.yueyang.travel.R;
+import com.yueyang.travel.Utils.DBug;
+import com.yueyang.travel.application.IMppApp;
 
 import java.util.Observable;
 
@@ -18,26 +22,17 @@ import java.util.Observable;
 public class IMManager extends Observable {
     private static IMManager sIMManager;
     private AnIM anIM;
-    private Handler handler;
     private Context ct;
-    private AlertDialog mActionDialog;
 
-    private final static int RECONNECT_RATE = 1000;
     private String currentClientId;
 
     private boolean retryConnect = false;
 
-    public static String WELCOME_MESSAGE_ID = "100000000";
-
-    public enum UpdateType {
-        Topic, Chat, FriendRequest, Like
-    }
-
     private IMManager(Context ct) {
         this.ct = ct;
-        handler = new Handler();
         try {
             anIM = new AnIM(ct, ct.getString(R.string.app_key));
+            anIM.setCallback(callbackAdapter);
         } catch (ArrownockException e) {
             e.printStackTrace();
         }
@@ -57,10 +52,6 @@ public class IMManager extends Observable {
 
     public AnIM getAnIM() {
         return anIM;
-    }
-
-    public void enableRetryConnect(boolean bool) {
-        retryConnect = bool;
     }
 
     public void connect(String clientId) {
@@ -97,23 +88,41 @@ public class IMManager extends Observable {
         return currentClientId;
     }
 
-    public void notifyFriendRequest() {
-        setChanged();
-        notifyObservers(UpdateType.FriendRequest);
-    }
+    private AnIMCallbackAdapter callbackAdapter = new AnIMCallbackAdapter(){
 
-    private void handleLikeNotice(Object data) {
-        if (data instanceof AnIMBinaryCallbackData) {
-
-        } else if (data instanceof AnIMMessage) {
-
+        @Override
+        public void messageSent(AnIMMessageSentCallbackData data) {
+            DBug.e("IMManergerManager", data.getMsgId());
         }
-        notifyLike();
-    }
 
-    public void notifyLike() {
-        setChanged();
-        notifyObservers(UpdateType.Like);
+        @Override
+        public void receivedMessage(AnIMMessageCallbackData data) {
+            DBug.e("IMManergerManager", "2");
+            Log.e("message","....");
+        }
+
+        @Override
+        public void receivedNotice(AnIMNoticeCallbackData anIMNoticeCallbackData) {
+            DBug.e("IMManergerManager", "3t");
+            Log.e("received", ".............." + anIMNoticeCallbackData.toString());
+        }
+    };
+
+    public void bindAnPush() {
+        IMppApp app = (IMppApp) ct.getApplicationContext();
+        anIM.bindAnPushService(app.anPush.getAnID(), ct.getString(R.string.app_key), SpfHelper.getInstance(ct).getMyClientId(),
+                new IAnIMPushBindingCallback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.e("bind_push_success", "...");
+
+                    }
+
+                    @Override
+                    public void onError(ArrownockException arg0) {
+                        Log.e("bind_push_error", "...");
+                    }
+                });
     }
 
 
