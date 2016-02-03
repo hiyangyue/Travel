@@ -1,8 +1,8 @@
 package com.yueyang.travel.model.Impl;
 
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
-import com.yueyang.travel.Utils.ParseUtils;
-import com.yueyang.travel.Utils.TravelApi;
+import com.yueyang.travel.domin.Utils.ParseUtils;
+import com.yueyang.travel.domin.Utils.TravelApi;
 import com.yueyang.travel.model.bean.Desitination;
 import com.yueyang.travel.model.callBack.DesitinationCallback;
 

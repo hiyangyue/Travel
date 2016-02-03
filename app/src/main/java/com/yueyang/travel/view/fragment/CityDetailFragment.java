@@ -15,9 +15,9 @@ import android.widget.TextView;
 
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.yueyang.travel.R;
-import com.yueyang.travel.Utils.GlideUtils;
-import com.yueyang.travel.Utils.ParseUtils;
-import com.yueyang.travel.Utils.TravelApi;
+import com.yueyang.travel.domin.Utils.GlideUtils;
+import com.yueyang.travel.domin.Utils.ParseUtils;
+import com.yueyang.travel.domin.Utils.TravelApi;
 import com.yueyang.travel.model.bean.CityDetail;
 import com.yueyang.travel.view.adapter.CityDetailAdapter;
 import com.yueyang.travel.view.wiget.DividerItemDecoration;

@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.transition.Explode;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -18,13 +19,13 @@ import android.widget.TextView;
 
 import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
-import com.yueyang.travel.Utils.BitmapUtils;
-import com.yueyang.travel.Utils.BlurUtils;
-import com.yueyang.travel.Utils.FileUtils;
-import com.yueyang.travel.Utils.GlideUtils;
-import com.yueyang.travel.Utils.SnackbarUtils;
-import com.yueyang.travel.manager.SpfHelper;
-import com.yueyang.travel.manager.UserManager;
+import com.yueyang.travel.domin.Utils.BitmapUtils;
+import com.yueyang.travel.domin.Utils.BlurUtils;
+import com.yueyang.travel.domin.Utils.FileUtils;
+import com.yueyang.travel.domin.Utils.GlideUtils;
+import com.yueyang.travel.domin.Utils.SnackbarUtils;
+import com.yueyang.travel.domin.manager.SpfHelper;
+import com.yueyang.travel.domin.manager.UserManager;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.view.adapter.ProfilePagerAdapter;
 import com.yueyang.travel.view.wiget.CircleImageView;
@@ -94,7 +95,6 @@ public class UserProfileActivity extends BaseActivity {
                     updateMyPhoto(BitmapUtils.bitmap2byte(bitmap), new IAnSocialCallback() {
                         @Override
                         public void onSuccess(JSONObject jsonObject) {
-                            Log.e("success",jsonObject.toString());
                             profileAvatar.setImageBitmap(bitmap);
                             SnackbarUtils.getSnackbar(pager, getString(R.string.avatar_update_success));
                             blur();
@@ -110,12 +110,19 @@ public class UserProfileActivity extends BaseActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_setting, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 supportFinishAfterTransition();
                 return true;
+            case R.id.action_setting:
+                startActivity(new Intent(this,SettingActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

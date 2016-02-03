@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yueyang.travel.R;
-import com.yueyang.travel.Utils.GlideUtils;
+import com.yueyang.travel.domin.Utils.GlideUtils;
 import com.yueyang.travel.model.bean.HotPlace;
 import com.yueyang.travel.view.wiget.CircleImageView;
 

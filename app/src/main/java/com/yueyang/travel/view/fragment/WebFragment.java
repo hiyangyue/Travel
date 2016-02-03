@@ -20,7 +20,6 @@ import butterknife.ButterKnife;
  */
 public class WebFragment extends Fragment {
 
-
     @Bind(R.id.webView)
     WebView webView;
     @Bind(R.id.progressbar)
@@ -57,7 +56,6 @@ public class WebFragment extends Fragment {
     private void initWebView() {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new ChromeClient());
-//        webView.setWebViewClient(new ViewClient());
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setAppCacheEnabled(true);
         webView.loadUrl(articleUrl);

@@ -1,4 +1,4 @@
-package com.yueyang.travel.manager;
+package com.yueyang.travel.domin.manager;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,8 +11,8 @@ import com.arrownock.im.callback.AnIMMessageSentCallbackData;
 import com.arrownock.im.callback.AnIMNoticeCallbackData;
 import com.arrownock.im.callback.IAnIMPushBindingCallback;
 import com.yueyang.travel.R;
-import com.yueyang.travel.Utils.DBug;
-import com.yueyang.travel.application.IMppApp;
+import com.yueyang.travel.domin.Utils.DBug;
+import com.yueyang.travel.domin.application.IMppApp;
 
 import java.util.Observable;
 

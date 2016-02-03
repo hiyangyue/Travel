@@ -1,4 +1,4 @@
-package com.yueyang.travel.application;
+package com.yueyang.travel.domin.application;
 
 import android.app.Application;
 

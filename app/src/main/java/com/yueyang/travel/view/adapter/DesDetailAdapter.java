@@ -12,8 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yueyang.travel.R;
-import com.yueyang.travel.Utils.GlideUtils;
-import com.yueyang.travel.Utils.MaterialUtils;
+import com.yueyang.travel.domin.Utils.GlideUtils;
+import com.yueyang.travel.domin.Utils.MaterialUtils;
 import com.yueyang.travel.model.bean.City;
 import com.yueyang.travel.view.fragment.CityDetailFragment;
 

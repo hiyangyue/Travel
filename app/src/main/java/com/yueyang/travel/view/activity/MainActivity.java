@@ -13,8 +13,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.yueyang.travel.R;
-import com.yueyang.travel.Utils.GlideUtils;
-import com.yueyang.travel.manager.SpfHelper;
+import com.yueyang.travel.domin.Utils.GlideUtils;
+import com.yueyang.travel.domin.manager.SpfHelper;
 import com.yueyang.travel.view.adapter.HomePagerAdapter;
 import com.yueyang.travel.view.wiget.CircleImageView;
 

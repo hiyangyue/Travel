@@ -13,7 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yueyang.travel.R;
-import com.yueyang.travel.Utils.MaterialUtils;
+import com.yueyang.travel.domin.Utils.MaterialUtils;
 import com.yueyang.travel.model.bean.Desitination;
 import com.yueyang.travel.view.activity.DesDetailActivity;
 

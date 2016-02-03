@@ -1,4 +1,4 @@
-package com.yueyang.travel.Utils;
+package com.yueyang.travel.domin.Utils;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;

@@ -1,6 +1,4 @@
-package com.yueyang.travel.Utils;
-
-import android.util.Log;
+package com.yueyang.travel.domin.Utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

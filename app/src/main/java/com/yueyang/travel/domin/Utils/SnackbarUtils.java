@@ -1,4 +1,4 @@
-package com.yueyang.travel.Utils;
+package com.yueyang.travel.domin.Utils;
 
 import android.support.design.widget.Snackbar;
 import android.view.View;

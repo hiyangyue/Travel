@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yueyang.travel.R;
-import com.yueyang.travel.manager.SocialManager;
-import com.yueyang.travel.manager.UserManager;
+import com.yueyang.travel.domin.manager.SocialManager;
+import com.yueyang.travel.domin.manager.UserManager;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.model.bean.Post;
 import com.yueyang.travel.view.adapter.FeedAdapter;

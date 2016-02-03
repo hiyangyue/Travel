@@ -3,7 +3,7 @@ package com.yueyang.travel.view.activity;
 import android.os.Bundle;
 
 import com.yueyang.travel.R;
-import com.yueyang.travel.manager.SpfHelper;
+import com.yueyang.travel.domin.manager.SpfHelper;
 import com.yueyang.travel.view.fragment.UserPostFragment;
 
 /**

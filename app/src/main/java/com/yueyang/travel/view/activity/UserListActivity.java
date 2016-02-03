@@ -3,7 +3,7 @@ package com.yueyang.travel.view.activity;
 import android.os.Bundle;
 
 import com.yueyang.travel.R;
-import com.yueyang.travel.manager.UserManager;
+import com.yueyang.travel.domin.manager.UserManager;
 import com.yueyang.travel.view.fragment.UserListFragment;
 
 /**

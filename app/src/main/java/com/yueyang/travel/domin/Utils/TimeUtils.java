@@ -1,4 +1,4 @@
-package com.yueyang.travel.Utils;
+package com.yueyang.travel.domin.Utils;
 
 /**
  * Created by Yang on 2016/1/6.

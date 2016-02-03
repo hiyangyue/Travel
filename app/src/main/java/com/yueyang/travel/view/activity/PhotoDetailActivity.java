@@ -17,9 +17,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.yueyang.travel.R;
-import com.yueyang.travel.Utils.BitmapUtils;
-import com.yueyang.travel.Utils.GlideUtils;
-import com.yueyang.travel.Utils.SnackbarUtils;
+import com.yueyang.travel.domin.Utils.BitmapUtils;
+import com.yueyang.travel.domin.Utils.GlideUtils;
+import com.yueyang.travel.domin.Utils.SnackbarUtils;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.view.wiget.CircleImageView;
 

@@ -14,9 +14,9 @@ import android.widget.TextView;
 
 import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
-import com.yueyang.travel.Utils.BitmapUtils;
-import com.yueyang.travel.manager.SocialManager;
-import com.yueyang.travel.manager.UserManager;
+import com.yueyang.travel.domin.Utils.BitmapUtils;
+import com.yueyang.travel.domin.manager.SocialManager;
+import com.yueyang.travel.domin.manager.UserManager;
 import com.yueyang.travel.model.Constants;
 
 import org.json.JSONObject;

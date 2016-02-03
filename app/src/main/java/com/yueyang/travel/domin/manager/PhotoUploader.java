@@ -1,4 +1,4 @@
-package com.yueyang.travel.manager;
+package com.yueyang.travel.domin.manager;
 
 import android.content.Context;
 import android.os.Handler;

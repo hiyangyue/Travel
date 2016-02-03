@@ -1,7 +1,6 @@
-package com.yueyang.travel.manager;
+package com.yueyang.travel.domin.manager;
 
 import android.content.Context;
-import android.os.Handler;
 import android.util.Log;
 
 import com.arrownock.exception.ArrownockException;
@@ -9,8 +8,8 @@ import com.arrownock.social.AnSocial;
 import com.arrownock.social.AnSocialFile;
 import com.arrownock.social.AnSocialMethod;
 import com.arrownock.social.IAnSocialCallback;
-import com.yueyang.travel.Utils.ParseUtils;
-import com.yueyang.travel.application.IMppApp;
+import com.yueyang.travel.domin.Utils.ParseUtils;
+import com.yueyang.travel.domin.application.IMppApp;
 import com.yueyang.travel.model.bean.User;
 
 import org.json.JSONException;

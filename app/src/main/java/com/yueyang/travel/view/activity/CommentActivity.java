@@ -15,9 +15,9 @@ import android.widget.LinearLayout;
 
 import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
-import com.yueyang.travel.Utils.ParseUtils;
-import com.yueyang.travel.manager.SocialManager;
-import com.yueyang.travel.manager.UserManager;
+import com.yueyang.travel.domin.Utils.ParseUtils;
+import com.yueyang.travel.domin.manager.SocialManager;
+import com.yueyang.travel.domin.manager.UserManager;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.model.bean.Comment;
 import com.yueyang.travel.view.adapter.CommentAdapter;

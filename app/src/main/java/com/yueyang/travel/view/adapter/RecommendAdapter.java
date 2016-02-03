@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yueyang.travel.R;
-import com.yueyang.travel.Utils.GlideUtils;
+import com.yueyang.travel.domin.Utils.GlideUtils;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.model.bean.Topic;
 import com.yueyang.travel.view.activity.WebActivity;

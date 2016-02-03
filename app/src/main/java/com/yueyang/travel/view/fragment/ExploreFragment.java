@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yueyang.travel.R;
-import com.yueyang.travel.manager.UserManager;
+import com.yueyang.travel.domin.manager.UserManager;
 import com.yueyang.travel.model.bean.User;
 import com.yueyang.travel.view.adapter.RecommendUserAdapter;
 import com.yueyang.travel.view.wiget.GridSpacingItemDecoration;

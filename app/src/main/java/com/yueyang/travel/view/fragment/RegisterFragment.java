@@ -12,11 +12,11 @@ import android.widget.EditText;
 
 import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
-import com.yueyang.travel.Utils.ParseUtils;
-import com.yueyang.travel.Utils.SnackbarUtils;
-import com.yueyang.travel.manager.IMManager;
-import com.yueyang.travel.manager.SpfHelper;
-import com.yueyang.travel.manager.UserManager;
+import com.yueyang.travel.domin.Utils.ParseUtils;
+import com.yueyang.travel.domin.Utils.SnackbarUtils;
+import com.yueyang.travel.domin.manager.IMManager;
+import com.yueyang.travel.domin.manager.SpfHelper;
+import com.yueyang.travel.domin.manager.UserManager;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.model.bean.User;
 import com.yueyang.travel.view.activity.MainActivity;

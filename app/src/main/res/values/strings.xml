@@ -6,8 +6,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
-    <string name="action_search">Search</string>
+    <string name="action_settings">设置</string>
+    <string name="action_search">搜索</string>
     <string name="action_search_hint">查找你喜欢的人和事</string>
     <string name="action_user">用户登入</string>
 
@@ -52,7 +52,6 @@
     <string name="nav_follow">我的关注</string>
     <string name="action_share">分享</string>
 
-
     <!--Setting Preference-->
     <string name="setting">设置</string>
     <string name="others">其他</string>
@@ -65,7 +64,5 @@
     <string name="preference_notify_title">不在接收通知</string>
     <string name="preference_notify_summary">会错过有意思的内容哦</string>
     <string name="preference_cache_title">清除缓存</string>
-
-
 
 </resources>
