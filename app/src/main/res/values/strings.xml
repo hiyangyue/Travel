@@ -20,6 +20,8 @@
 
     <!--register && login-->
     <string name="exit">退出</string>
+    <string name="exit_success">退出成功</string>
+    <string name="exit_title">确定要退出吗？</string>
     <string name="register">注册</string>
     <string name="register_success">注册成功 :)</string>
     <string name="register_error">服务器打了一个瞌睡~好像没有成功了呢 :(</string>
@@ -56,6 +58,8 @@
     <string name="setting">设置</string>
     <string name="others">其他</string>
     <string name="about">关于</string>
+    <string name="sure">确定</string>
+    <string name="cancel">取消</string>
     <string name="preference_category_title">个人</string>
     <string name="preference_category_function">功能</string>
     <string name="preference_source_title">开放源代码许可</string>
