@@ -140,7 +140,8 @@ public class UserListFragment extends Fragment {
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), UserProfileActivity.class);
                     Bundle args = new Bundle();
-                    args.putString(Constants.USER_ID,user.userId);
+                    args.putBoolean(Constants.IS_CURRENT,false);
+                    args.putString(Constants.USER_ID, user.userId);
                     args.putString(Constants.USER_AVATAR_URL,user.userPhotoUrl);
                     args.putString(Constants.USER_NICKNAME,user.nickname);
                     intent.putExtras(args);

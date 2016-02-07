@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.yueyang.travel.R;
 import com.yueyang.travel.domin.Utils.GlideUtils;
 import com.yueyang.travel.domin.manager.SpfHelper;
+import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.view.adapter.HomePagerAdapter;
 import com.yueyang.travel.view.wiget.CircleImageView;
 
@@ -64,6 +65,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         switch (v.getId()){
             case R.id.toolbar_avatar:
                 Intent intent = new Intent(MainActivity.this,UserProfileActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(Constants.IS_CURRENT,true);
+                intent.putExtras(bundle);
                 /**
                  *  Share Elements bugs here
                  */

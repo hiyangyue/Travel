@@ -301,4 +301,11 @@ public class ParseUtils {
         return new Comment(commendId,content,commentUser);
     }
 
+    public static String getUpdateAvatarUrl(JSONObject jsonObject) throws JSONException{
+        JSONObject responseObj = jsonObject.getJSONObject("response");
+        JSONObject userObj = responseObj.getJSONObject("user");
+        JSONObject photoObj = userObj.getJSONObject("photo");
+        return photoObj.getString("url");
+    }
+
 }

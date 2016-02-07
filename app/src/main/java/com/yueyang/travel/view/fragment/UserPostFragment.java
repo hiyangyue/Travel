@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.yueyang.travel.R;
 import com.yueyang.travel.domin.manager.SocialManager;
-import com.yueyang.travel.domin.manager.UserManager;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.model.bean.Post;
 import com.yueyang.travel.view.adapter.FeedAdapter;
@@ -47,7 +46,7 @@ public class UserPostFragment extends Fragment {
         ButterKnife.bind(this,view);
         getUserId();
         initRecyclerView();
-        getUserPost(UserManager.getInstance(getActivity()).getCurrentUser().userId);
+        getUserPost(userId);
         return view;
     }
 

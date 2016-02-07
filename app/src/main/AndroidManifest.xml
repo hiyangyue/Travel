@@ -73,15 +73,10 @@
         <activity android:name=".view.activity.PhotoActivity"
             android:parentActivityName=".view.activity.MainActivity"/>
 
-        <activity android:name=".view.activity.CommentActivity"
-           />
+        <activity android:name=".view.activity.CommentActivity" />
 
         <activity android:name=".view.activity.SettingActivity"
-            android:parentActivityName=".view.activity.UserProfileActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.activity.MainActivity" />
-        </activity>
+            android:parentActivityName=".view.activity.UserProfileActivity"/>
 
         <activity android:name=".view.activity.UserProfileActivity"
             android:parentActivityName=".view.activity.MainActivity"

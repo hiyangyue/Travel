@@ -2,16 +2,13 @@ package com.yueyang.travel.view.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.transition.Explode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +18,7 @@ import com.yueyang.travel.domin.Utils.BitmapUtils;
 import com.yueyang.travel.domin.Utils.BlurUtils;
 import com.yueyang.travel.domin.Utils.FileUtils;
 import com.yueyang.travel.domin.Utils.GlideUtils;
+import com.yueyang.travel.domin.Utils.ParseUtils;
 import com.yueyang.travel.domin.Utils.SnackbarUtils;
 import com.yueyang.travel.domin.manager.SpfHelper;
 import com.yueyang.travel.domin.manager.UserManager;
@@ -29,6 +27,7 @@ import com.yueyang.travel.model.callBack.LoadImageCallBack;
 import com.yueyang.travel.view.adapter.ProfilePagerAdapter;
 import com.yueyang.travel.view.wiget.CircleImageView;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.Bind;
@@ -50,18 +49,21 @@ public class UserProfileActivity extends BaseActivity {
     @Bind(R.id.blur_img)
     ImageView blurImg;
 
+    private boolean isCurrent;
+    private String userAvatar;
+    private String userNickName;
+    private String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
+//        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+//        getWindow().getDecorView().setSystemUiVisibility(
+//                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+//        getWindow().setStatusBarColor(Color.TRANSPARENT);
 
         super.onCreate(savedInstanceState);
-        getWindow().setEnterTransition(new Explode());
-        getWindow().setExitTransition(new Explode());
         ButterKnife.bind(this);
 
         initUserInfo();
@@ -94,9 +96,15 @@ public class UserProfileActivity extends BaseActivity {
                     updateMyPhoto(BitmapUtils.bitmap2byte(bitmap), new IAnSocialCallback() {
                         @Override
                         public void onSuccess(JSONObject jsonObject) {
+                            try {
+                                String avatarUrl = ParseUtils.getUpdateAvatarUrl(jsonObject);
+                                SpfHelper.getInstance(UserProfileActivity.this).updateAvatar(avatarUrl);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             profileAvatar.setImageBitmap(bitmap);
-                            SnackbarUtils.getSnackbar(pager, getString(R.string.avatar_update_success));
                             blur(bitmap);
+                            SnackbarUtils.getSnackbar(pager, getString(R.string.avatar_update_success));
                         }
 
                         @Override
@@ -127,7 +135,7 @@ public class UserProfileActivity extends BaseActivity {
     }
 
     private void setUpViewPager() {
-        ProfilePagerAdapter adapter = new ProfilePagerAdapter(getSupportFragmentManager(), SpfHelper.getInstance(this).getMyUserId());
+        ProfilePagerAdapter adapter = new ProfilePagerAdapter(getSupportFragmentManager(), userId);
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(pager);
@@ -150,9 +158,21 @@ public class UserProfileActivity extends BaseActivity {
     }
 
     private void initUserInfo() {
-        profileNickName.setText(SpfHelper.getInstance(this).getMyNickname());
-        if (SpfHelper.getInstance(this).getAvatar() != null) {
-            GlideUtils.loadImg(this, SpfHelper.getInstance(this).getAvatar(), profileAvatar, new LoadImageCallBack() {
+        Bundle bundle = getIntent().getExtras();
+        isCurrent = bundle.getBoolean(Constants.IS_CURRENT);
+        if (isCurrent){
+            userAvatar = SpfHelper.getInstance(this).getAvatar();
+            userId = SpfHelper.getInstance(this).getMyUserId();
+            userNickName = SpfHelper.getInstance(this).getMyNickname();
+        }else {
+            userAvatar = bundle.getString(Constants.USER_AVATAR_URL);
+            userId = bundle.getString(Constants.USER_ID);
+            userNickName = bundle.getString(Constants.USER_NICKNAME);
+        }
+
+        profileNickName.setText(userNickName);
+        if (userAvatar != null) {
+            GlideUtils.loadImg(this, userAvatar, profileAvatar, new LoadImageCallBack() {
                 @Override
                 public void success(Bitmap bitmap) {
                     profileAvatar.setImageBitmap(bitmap);
@@ -161,7 +181,7 @@ public class UserProfileActivity extends BaseActivity {
 
                 @Override
                 public void onError() {
-                    SnackbarUtils.getSnackbar(tabLayout,getString(R.string.avatar_load_error));
+                    SnackbarUtils.getSnackbar(tabLayout, getString(R.string.avatar_load_error));
                 }
             });
         }
@@ -169,6 +189,7 @@ public class UserProfileActivity extends BaseActivity {
     }
 
     private void updateUserAvatar(ImageView avatarImg) {
+
         avatarImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,13 +205,6 @@ public class UserProfileActivity extends BaseActivity {
         Bitmap blurred = BlurUtils.blurRenderScript(this, bitmap, 25);
         blurImg.setImageBitmap(blurred);
     }
-//    private void blur(){
-////        Bitmap bitmap = ((BitmapDrawable) profileAvatar.getDrawable()).getBitmap();
-//        BitmapDrawable drawable = (BitmapDrawable) profileAvatar.getDrawable();
-//        Bitmap bitmap = drawable.getBitmap();
-//        Bitmap blurred = BlurUtils.blurRenderScript(this, bitmap, 25);
-//        blurImg.setImageBitmap(blurred);
-//    }
 }
 
 
