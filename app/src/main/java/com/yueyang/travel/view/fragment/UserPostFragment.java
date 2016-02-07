@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 
 import com.yueyang.travel.R;
 import com.yueyang.travel.domin.manager.SocialManager;
@@ -27,15 +28,17 @@ public class UserPostFragment extends Fragment {
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
+    @Bind(R.id.view_stub)
+    ViewStub viewStub;
 
     private String userId;
     private List<Post> postList;
     private FeedAdapter adapter;
 
-    public static UserPostFragment getInstance(String userId){
+    public static UserPostFragment getInstance(String userId) {
         UserPostFragment fragment = new UserPostFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.USER_ID,userId);
+        bundle.putString(Constants.USER_ID, userId);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -43,7 +46,7 @@ public class UserPostFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.base_layout, container, false);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         getUserId();
         initRecyclerView();
         getUserPost(userId);
@@ -56,14 +59,14 @@ public class UserPostFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    private void getUserId(){
+    private void getUserId() {
         userId = getArguments().getString(Constants.USER_ID);
     }
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
 
         postList = new ArrayList<>();
-        adapter = new FeedAdapter(getActivity(),postList);
+        adapter = new FeedAdapter(getActivity(), postList);
 
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -71,7 +74,7 @@ public class UserPostFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    private void getUserPost(String userId){
+    private void getUserPost(String userId) {
         SocialManager.fetchUserPost(getActivity(), userId, 1, new SocialManager.FetchPostsCallback() {
             @Override
             public void onFailure(String errorMsg) {
@@ -80,14 +83,15 @@ public class UserPostFragment extends Fragment {
 
             @Override
             public void onFinish(List<Post> data) {
-                postList.addAll(data);
-                adapter.notifyDataSetChanged();
+                if (data.size() == 0){
+                    viewStub.setVisibility(View.VISIBLE);
+                }else {
+                    postList.addAll(data);
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
     }
-
-
-
 
 
 }
