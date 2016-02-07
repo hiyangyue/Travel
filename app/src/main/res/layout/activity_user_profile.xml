@@ -44,7 +44,6 @@
                     app:civ_border_color="@android:color/white" />
 
                 <TextView
-                    android:text="Mikey Yang"
                     android:id="@+id/profile_nickName"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/profile_avatar"
@@ -53,7 +52,8 @@
                     android:layout_marginTop="10dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:onClick="updateNickname"/>
 
                 <TextView
                     android:layout_centerHorizontal="true"

@@ -31,6 +31,9 @@
     <string name="password">密码</string>
     <string name="user_name">账号</string>
     <string name="nick_name">昵称</string>
+    <string name="nick_null">昵称不能为空</string>
+    <string name="update_nickname">请输入新的昵称</string>
+    <string name="update_nick_success">昵称更新成功</string>
     <string name="drawer_default_text">点击头像登入</string>
     <string name="avatar_update_success">头像更新成功</string>
     <string name="avatar_update_error">头像更新成功</string>

@@ -68,8 +68,6 @@ public class ParseUtils {
         return new Topic(imgUrl,noteUrl);
     }
 
-
-
     public static List<CityDetail> getCityDetail(String cityDetialUrl,int position) throws JSONException{
         List<CityDetail> cityDetailList = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(cityDetialUrl);
@@ -137,6 +135,12 @@ public class ParseUtils {
             avatarUrl = photoObj.getString("url");
         }
         return new User(userId,userName,avatarUrl,nickName,clientId);
+    }
+
+    public static String getUpdateNickname(JSONObject jsonObject) throws JSONException {
+        JSONObject responseObj = jsonObject.getJSONObject("response");
+        JSONObject userObj = responseObj.getJSONObject("user");
+        return userObj.getString("firstName");
     }
 
     public static List<User> getFriendListByUserId(JSONObject jsonObject) throws JSONException{

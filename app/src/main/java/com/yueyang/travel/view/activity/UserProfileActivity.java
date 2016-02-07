@@ -1,14 +1,19 @@
 package com.yueyang.travel.view.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,12 +61,6 @@ public class UserProfileActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-//        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-//        getWindow().getDecorView().setSystemUiVisibility(
-//                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-//        getWindow().setStatusBarColor(Color.TRANSPARENT);
 
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
@@ -186,6 +185,56 @@ public class UserProfileActivity extends BaseActivity {
             });
         }
 
+    }
+
+    public void updateNickname(View view){
+        View customDialog = LayoutInflater.from(UserProfileActivity.this).inflate(R.layout.custom_dialog,null);
+        final EditText nickNameEt = (EditText) customDialog.findViewById(R.id.dialog_et);
+        nickNameEt.setText(userNickName);
+        nickNameEt.setSelection(userNickName.length());
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.MyDialog);
+        builder.setView(customDialog);
+        builder.setPositiveButton(getString(R.string.sure), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String text = nickNameEt.getText().toString();
+                if(TextUtils.isEmpty(text)||text.trim().isEmpty()) {
+                    SnackbarUtils.getSnackbar(tabLayout,getString(R.string.nick_null));
+                    return;
+                }else if (nickNameEt.equals(text)){
+                    dialog.cancel();
+                }
+
+                UserManager.getInstance(UserProfileActivity.this)
+                        .updateNickName(SpfHelper.getInstance(UserProfileActivity.this).getMyUsername(), text, new IAnSocialCallback() {
+                            @Override
+                            public void onSuccess(JSONObject jsonObject) {
+                                Log.e("success","....");
+                                try {
+                                    String updateName = ParseUtils.getUpdateNickname(jsonObject);
+                                    profileNickName.setText(updateName);
+                                    Log.e("2",updateName);
+                                    SpfHelper.getInstance(UserProfileActivity.this).updateNickname(updateName);
+                                    SnackbarUtils.getSnackbar(tabLayout,getString(R.string.update_nick_success));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(JSONObject jsonObject) {
+
+                            }
+                        });
+
+            }
+        }).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        }).show();
     }
 
     private void updateUserAvatar(ImageView avatarImg) {
