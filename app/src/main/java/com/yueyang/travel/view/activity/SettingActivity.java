@@ -12,7 +12,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Yang on 2016/1/12.
  */
-public class SettingActivity extends BaseActivity {
+public class SettingActivity extends BaseActivity{
 
     @Bind(R.id.font_tv)
     FontTextView fontTv;
@@ -40,3 +40,15 @@ public class SettingActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+

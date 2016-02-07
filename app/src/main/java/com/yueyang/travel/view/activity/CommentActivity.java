@@ -56,12 +56,7 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        getWindow()
-                .getDecorView()
-                .setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-
         super.onCreate(savedInstanceState);
-
         ButterKnife.bind(this);
         init();
         getAllComments();

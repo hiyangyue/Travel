@@ -3,12 +3,10 @@ package com.yueyang.travel.view.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.transition.Explode;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +25,7 @@ import com.yueyang.travel.domin.Utils.SnackbarUtils;
 import com.yueyang.travel.domin.manager.SpfHelper;
 import com.yueyang.travel.domin.manager.UserManager;
 import com.yueyang.travel.model.Constants;
+import com.yueyang.travel.model.callBack.LoadImageCallBack;
 import com.yueyang.travel.view.adapter.ProfilePagerAdapter;
 import com.yueyang.travel.view.wiget.CircleImageView;
 
@@ -97,7 +96,7 @@ public class UserProfileActivity extends BaseActivity {
                         public void onSuccess(JSONObject jsonObject) {
                             profileAvatar.setImageBitmap(bitmap);
                             SnackbarUtils.getSnackbar(pager, getString(R.string.avatar_update_success));
-                            blur();
+                            blur(bitmap);
                         }
 
                         @Override
@@ -153,11 +152,19 @@ public class UserProfileActivity extends BaseActivity {
     private void initUserInfo() {
         profileNickName.setText(SpfHelper.getInstance(this).getMyNickname());
         if (SpfHelper.getInstance(this).getAvatar() != null) {
-            Log.e("2", SpfHelper.getInstance(this).getAvatar());
-            GlideUtils.loadImg(this, SpfHelper.getInstance(this).getAvatar(), profileAvatar);
-            blur();
-        }
+            GlideUtils.loadImg(this, SpfHelper.getInstance(this).getAvatar(), profileAvatar, new LoadImageCallBack() {
+                @Override
+                public void success(Bitmap bitmap) {
+                    profileAvatar.setImageBitmap(bitmap);
+                    blur(bitmap);
+                }
 
+                @Override
+                public void onError() {
+                    SnackbarUtils.getSnackbar(tabLayout,getString(R.string.avatar_load_error));
+                }
+            });
+        }
 
     }
 
@@ -173,13 +180,17 @@ public class UserProfileActivity extends BaseActivity {
         });
     }
 
-    private void blur(){
-//        Bitmap bitmap = ((BitmapDrawable) profileAvatar.getDrawable()).getBitmap();
-        BitmapDrawable drawable = (BitmapDrawable) profileAvatar.getDrawable();
-        Bitmap bitmap = drawable.getBitmap();
+    private void blur(Bitmap bitmap){
         Bitmap blurred = BlurUtils.blurRenderScript(this, bitmap, 25);
         blurImg.setImageBitmap(blurred);
     }
+//    private void blur(){
+////        Bitmap bitmap = ((BitmapDrawable) profileAvatar.getDrawable()).getBitmap();
+//        BitmapDrawable drawable = (BitmapDrawable) profileAvatar.getDrawable();
+//        Bitmap bitmap = drawable.getBitmap();
+//        Bitmap blurred = BlurUtils.blurRenderScript(this, bitmap, 25);
+//        blurImg.setImageBitmap(blurred);
+//    }
 }
 
 

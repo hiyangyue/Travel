@@ -34,6 +34,7 @@
     <string name="drawer_default_text">点击头像登入</string>
     <string name="avatar_update_success">头像更新成功</string>
     <string name="avatar_update_error">头像更新成功</string>
+    <string name="avatar_load_error">头像加载失败</string>
 
     <!--snackBar-->
     <string name="no_received">系统还没有可以分享的应用哦</string>
