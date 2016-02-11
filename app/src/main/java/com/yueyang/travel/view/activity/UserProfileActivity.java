@@ -8,7 +8,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -210,11 +209,9 @@ public class UserProfileActivity extends BaseActivity {
                         .updateNickName(SpfHelper.getInstance(UserProfileActivity.this).getMyUsername(), text, new IAnSocialCallback() {
                             @Override
                             public void onSuccess(JSONObject jsonObject) {
-                                Log.e("success","....");
                                 try {
                                     String updateName = ParseUtils.getUpdateNickname(jsonObject);
                                     profileNickName.setText(updateName);
-                                    Log.e("2",updateName);
                                     SpfHelper.getInstance(UserProfileActivity.this).updateNickname(updateName);
                                     SnackbarUtils.getSnackbar(tabLayout,getString(R.string.update_nick_success));
                                 } catch (JSONException e) {

@@ -2,7 +2,6 @@ package com.yueyang.travel.domin.application;
 
 import android.app.Application;
 
-import com.activeandroid.ActiveAndroid;
 import com.arrownock.exception.ArrownockException;
 import com.arrownock.push.AnPush;
 import com.arrownock.social.AnSocial;
@@ -23,7 +22,6 @@ public class IMppApp extends Application {
     }
 
     private void init() {
-        ActiveAndroid.initialize(this);
         try {
             anSocial = new AnSocial(this, getString(R.string.app_key));
             anPush = AnPush.getInstance(this);

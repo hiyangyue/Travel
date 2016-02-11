@@ -1,6 +1,5 @@
 package com.yueyang.travel.model.bean;
 
-import com.activeandroid.annotation.Column;
 
 /**
  * Created by Yang on 2015/12/18.

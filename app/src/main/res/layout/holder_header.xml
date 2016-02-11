@@ -10,7 +10,6 @@
         android:layout_centerVertical="true"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/test_icon"
         app:backgroundTint="@color/grey500"
         app:fabSize="mini"
         app:borderWidth="0dp" />
