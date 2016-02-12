@@ -1,9 +1,11 @@
 package com.yueyang.travel.view.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.yueyang.travel.R;
 
 /**
@@ -23,6 +25,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setNavigationBarTintEnabled(false);
+            tintManager.setStatusBarTintColor(getResources().getColor(R.color.colorPrimary));
+        }
+
         initToolbar();
     }
 
@@ -30,6 +39,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
+
+
 
 
 
