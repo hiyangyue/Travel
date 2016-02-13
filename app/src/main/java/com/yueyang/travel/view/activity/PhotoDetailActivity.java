@@ -18,6 +18,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.yueyang.travel.R;
 import com.yueyang.travel.domin.Utils.BitmapUtils;
+import com.yueyang.travel.domin.Utils.DistanceUtils;
 import com.yueyang.travel.domin.Utils.GlideUtils;
 import com.yueyang.travel.domin.Utils.SnackbarUtils;
 import com.yueyang.travel.model.Constants;
@@ -132,10 +133,10 @@ public class PhotoDetailActivity extends BaseActivity{
         content = bundle.getString(Constants.TRANSITIONS_CONTENT);
 
         if (photoUrl != null){
-            GlideUtils.loadImg(this,photoUrl,photoDetailPhoto);
+            GlideUtils.loadImg(this,photoUrl,photoDetailPhoto, DistanceUtils.getScreenWidth(this),300);
         }
         if (avatarUrl != null) {
-            GlideUtils.loadImg(this, avatarUrl, photoDetailAvatar);
+            GlideUtils.loadImg(this, avatarUrl, photoDetailAvatar,40,40);
         }
         photoDetailTime.setText(createTime);
         photoDetailNickname.setText(nickname);

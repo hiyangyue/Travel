@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yueyang.travel.R;
+import com.yueyang.travel.domin.Utils.DistanceUtils;
 import com.yueyang.travel.domin.Utils.GlideUtils;
 import com.yueyang.travel.model.bean.HotPlace;
 import com.yueyang.travel.view.wiget.CircleImageView;
@@ -42,8 +43,8 @@ public class HotPlaceAdapter extends RecyclerView.Adapter<HotPlaceAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         HotPlace hotPlace = hotPlaceList.get(position);
         holder.holderHotTitle.setText(hotPlace.getTitle());
-        GlideUtils.loadImg(mContext, hotPlace.getPlaceBgUrl(), holder.holderHotBg);
-        GlideUtils.loadImg(mContext, hotPlace.getAuthorPhotoUrl(), holder.holderHotAvatar);
+        GlideUtils.loadImg(mContext, hotPlace.getPlaceBgUrl(), holder.holderHotBg, DistanceUtils.getScreenWidth(mContext) / 3 , 150);
+        GlideUtils.loadImg(mContext, hotPlace.getAuthorPhotoUrl(), holder.holderHotAvatar,35,35);
         holder.holderHotRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

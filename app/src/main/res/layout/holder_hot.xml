@@ -15,7 +15,6 @@
 
         <ImageView
             android:id="@+id/holder_hot_bg"
-            android:src="@drawable/test_profile"
             android:scaleType="centerCrop"
             android:layout_weight="3"
             android:layout_width="match_parent"

@@ -42,7 +42,7 @@ public class CityDetailAdapter extends RecyclerView.Adapter<CityDetailAdapter.Vi
         holder.cityTitle.setText(cityDetail.getTitle());
         holder.cityDetail.setText(cityDetail.getDescription());
         if (cityDetail.getPhotoUrl() != null){
-            GlideUtils.loadImg(mContext,cityDetail.getPhotoUrl(),holder.cityImg);
+            GlideUtils.loadImg(mContext,cityDetail.getPhotoUrl(),holder.cityImg,60,50);
         }
     }
 

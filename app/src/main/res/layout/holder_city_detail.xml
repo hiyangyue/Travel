@@ -25,7 +25,6 @@
 
     <ImageView
         android:id="@+id/city_img"
-        android:src="@drawable/test_bg"
         android:layout_marginLeft="@dimen/margin_10"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"

@@ -42,7 +42,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.commitTv.setText(comment.content);
         holder.commentName.setText(comment.commentUser.nickname);
         if (comment.commentUser.userPhotoUrl != null) {
-            GlideUtils.loadImg(mContext, comment.commentUser.userPhotoUrl, holder.commitAvatar);
+            GlideUtils.loadImg(mContext, comment.commentUser.userPhotoUrl, holder.commitAvatar,30,30);
         }
     }
 

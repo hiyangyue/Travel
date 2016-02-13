@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -90,12 +91,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     private void initUserInfo(){
         toolbarNickname.setText(SpfHelper.getInstance(this).getMyNickname());
-        if (SpfHelper.getInstance(this).getAvatar().equals("")){
+        if (TextUtils.isEmpty(SpfHelper.getInstance(this).getAvatar())){
             Bitmap avatar = BitmapFactory.decodeResource(getResources(),
                     R.drawable.icon_default_avatar);
             toolbarAvatar.setImageBitmap(avatar);
         }else {
-            GlideUtils.loadImg(this, SpfHelper.getInstance(this).getAvatar(), toolbarAvatar);
+            GlideUtils.loadImg(this, SpfHelper.getInstance(this).getAvatar(), toolbarAvatar,30,30);
         }
     }
 

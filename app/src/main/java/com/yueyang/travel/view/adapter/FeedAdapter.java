@@ -23,6 +23,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.yueyang.travel.R;
 import com.yueyang.travel.domin.Utils.BitmapUtils;
+import com.yueyang.travel.domin.Utils.DistanceUtils;
 import com.yueyang.travel.domin.Utils.GlideUtils;
 import com.yueyang.travel.domin.Utils.ParseUtils;
 import com.yueyang.travel.domin.Utils.SnackbarUtils;
@@ -67,9 +68,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         holder.feedName.setText(post.getUser().nickname);
         holder.feedContent.setText(post.getContent());
 
-        GlideUtils.loadImg(mContext, post.photoUrls, holder.feedImage);
+//        GlideUtils.loadImg(mContext, post.photoUrls, holder.feedImage);
+        GlideUtils.loadImg(mContext,post.photoUrls,holder.feedImage, DistanceUtils.getScreenWidth(mContext),200);
         if (post.user.userPhotoUrl != null) {
-            GlideUtils.loadImg(mContext, post.user.userPhotoUrl, holder.feedHeaderImage);
+            GlideUtils.loadImg(mContext, post.user.userPhotoUrl, holder.feedHeaderImage,35,35);
         }
 
         holder.feedShare.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +80,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 shareImage(holder.feedShare,post.getPhotoUrls());
             }
         });
-
 
         holder.feedImage.setOnClickListener(new View.OnClickListener() {
             @Override

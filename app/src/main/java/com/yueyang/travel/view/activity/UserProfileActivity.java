@@ -170,7 +170,7 @@ public class UserProfileActivity extends BaseActivity {
         }
 
         profileNickName.setText(userNickName);
-        if (userAvatar.equals("")) {
+        if (TextUtils.isEmpty(userAvatar)) {
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
                     R.drawable.icon_default_avatar);
             blur(bitmap);

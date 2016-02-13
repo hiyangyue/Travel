@@ -23,6 +23,15 @@ public class GlideUtils {
                 .into(imageView);
     }
 
+    public static void loadImg(Context context,String imgUrl,ImageView imageView,int width,int height){
+        Glide.with(context)
+                .load(imgUrl)
+                .centerCrop()
+                .override(width,height)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imageView);
+    }
+
     public static void loadImg(Context context,String imgUrl,ImageView imageView, final LoadImageCallBack callBack){
         Glide.with(context)
                 .load(imgUrl)
@@ -35,7 +44,5 @@ public class GlideUtils {
                         callBack.success(resource);
                     }
                 });
-
-
     }
 }

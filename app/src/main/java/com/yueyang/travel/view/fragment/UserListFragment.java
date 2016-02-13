@@ -133,7 +133,7 @@ public class UserListFragment extends Fragment {
             final User user = userList.get(position);
             holder.userNickname.setText(user.nickname);
             if (user.userPhotoUrl != null) {
-                GlideUtils.loadImg(getContext(), user.userPhotoUrl, holder.userListAvatar);
+                GlideUtils.loadImg(getContext(), user.userPhotoUrl, holder.userListAvatar,40,40);
             }
             holder.userListRl.setOnClickListener(new View.OnClickListener() {
                 @Override

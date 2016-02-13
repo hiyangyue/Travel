@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.yueyang.travel.R;
+import com.yueyang.travel.domin.Utils.DistanceUtils;
 import com.yueyang.travel.domin.Utils.GlideUtils;
 import com.yueyang.travel.domin.Utils.ParseUtils;
 import com.yueyang.travel.domin.Utils.TravelApi;
@@ -89,7 +90,7 @@ public class CityDetailFragment extends Fragment {
         cityCnName.setText(cnName);
         cityEnName.setText(enName);
         if (cityPhotoUrl != null) {
-            GlideUtils.loadImg(getContext(), cityPhotoUrl, imageDetail);
+            GlideUtils.loadImg(getContext(), cityPhotoUrl, imageDetail, DistanceUtils.getScreenWidth(getActivity()),192);
         }
 
     }

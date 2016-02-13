@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yueyang.travel.R;
+import com.yueyang.travel.domin.Utils.DistanceUtils;
 import com.yueyang.travel.domin.Utils.GlideUtils;
 import com.yueyang.travel.domin.Utils.MaterialUtils;
 import com.yueyang.travel.model.bean.City;
@@ -46,7 +47,7 @@ public class DesDetailAdapter extends RecyclerView.Adapter<DesDetailAdapter.View
         City city = cityList.get(position);
         holder.cityCnName.setText(city.getCityName());
         holder.cityEnName.setText(city.getEnCityName());
-        GlideUtils.loadImg(mContext, city.getCityImgUrl(), holder.cityImg);
+        GlideUtils.loadImg(mContext, city.getCityImgUrl(), holder.cityImg, DistanceUtils.getScreenWidth(mContext),170);
         MaterialUtils.setPattle(mContext, holder.cityImg, city.getCityImgUrl(), holder.cityRl);
     }
 
