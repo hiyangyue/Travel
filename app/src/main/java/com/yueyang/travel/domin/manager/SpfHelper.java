@@ -2,6 +2,7 @@ package com.yueyang.travel.domin.manager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.yueyang.travel.R;
 
@@ -34,11 +35,19 @@ public class SpfHelper {
     }
 
     public void clearUserInfo() {
-        editor.putString(KEY_USER_USERNAME, "").commit();
-        editor.putString(KEY_USER_PWD, "").commit();
-        editor.putString(KEY_USER_USERID, "").commit();
-        editor.putString(KEY_USER_CLIENTID, "").commit();
-        editor.putString(KEY_USER_AVATAR,"").commit();
+        editor.clear().apply();
+        Log.e("test",getMyUserId() + "...");
+//        editor.remove(KEY_USER_USERNAME);
+//        editor.remove(KEY_USER_PWD);
+//        editor.remove(KEY_USER_USERID);
+//        editor.remove(KEY_USER_CLIENTID);
+//        editor.remove(KEY_USER_AVATAR);
+//        editor.commit();
+//        editor.putString(KEY_USER_USERNAME, "").commit();
+//        editor.putString(KEY_USER_PWD, "").commit();
+//        editor.putString(KEY_USER_USERID, "").commit();
+//        editor.putString(KEY_USER_CLIENTID, "").commit();
+//        editor.putString(KEY_USER_AVATAR,"").commit();
     }
 
     public void saveUserInfo(String username, String pwd,String nickname, String userId, String clientId,String avatar) {

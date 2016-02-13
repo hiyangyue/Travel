@@ -100,15 +100,13 @@ public class RegisterFragment extends Fragment {
     }
 
     private void afterRegister(User user, String name, String pass, String nickName) {
-        if (!SpfHelper.getInstance(getContext()).hasSignIn()) {
-            SpfHelper.getInstance(getContext()).saveUserInfo(name,
-                    pass,
-                    nickName,
-                    user.userId, user.clientId, user.userPhotoUrl);
-        }
-        IMManager.getInstance(getContext()).connect(user.clientId);
-        UserManager.getInstance(getContext()).setCurrentUser(user);
 
+        SpfHelper.getInstance(getContext()).saveUserInfo(name,
+                pass,
+                nickName,
+                user.userId, user.clientId, user.userPhotoUrl);
+        
+        IMManager.getInstance(getContext()).connect(user.clientId);
         goToMainActivity();
     }
 

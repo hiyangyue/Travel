@@ -3,6 +3,7 @@ package com.yueyang.travel.view.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -169,7 +170,11 @@ public class UserProfileActivity extends BaseActivity {
         }
 
         profileNickName.setText(userNickName);
-        if (userAvatar != null) {
+        if (userAvatar.equals("")) {
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
+                    R.drawable.icon_default_avatar);
+            blur(bitmap);
+        }else {
             GlideUtils.loadImg(this, userAvatar, profileAvatar, new LoadImageCallBack() {
                 @Override
                 public void success(Bitmap bitmap) {
@@ -183,6 +188,8 @@ public class UserProfileActivity extends BaseActivity {
                 }
             });
         }
+
+
 
     }
 

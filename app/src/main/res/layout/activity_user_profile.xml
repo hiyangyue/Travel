@@ -36,7 +36,7 @@
                 <com.yueyang.travel.view.wiget.CircleImageView
                     android:id="@+id/profile_avatar"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/test_profile_3"
+                    android:src="@drawable/icon_default_avatar"
                     android:layout_width="76dp"
                     android:layout_height="76dp"
                     android:textColor="@android:color/white"

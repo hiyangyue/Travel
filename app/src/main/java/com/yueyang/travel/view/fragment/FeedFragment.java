@@ -144,7 +144,7 @@ public class FeedFragment extends Fragment {
             @Override
             public void onSuccess(List<User> userList) {
                 Set<String> friendSet = new HashSet<>();
-                friendSet.add(UserManager.getInstance(context).getCurrentUser().userId);
+                friendSet.add(SpfHelper.getInstance(getActivity()).getMyUserId());
                 for (User user : userList) {
                     friendSet.add(user.userId);
                 }

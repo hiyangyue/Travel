@@ -86,7 +86,6 @@ public class SettingFragment extends PreferenceFragment
     private void exit(){
         SpfHelper.getInstance(getActivity()).clearUserInfo();
         Intent intent = new Intent(getActivity(), LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         SnackbarUtils.getSnackbar(getView(),getString(R.string.exit_success));
     }

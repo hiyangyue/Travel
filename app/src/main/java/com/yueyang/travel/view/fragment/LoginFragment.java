@@ -100,9 +100,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private void goToMainActivity() {
         Intent i = new Intent(getActivity(), MainActivity.class);
-        if (payload != null) {
-            i.putExtra(Constants.INTENT_EXTRA_KEY_PAYLOAD, payload);
-        }
+//        if (payload != null) {
+//            i.putExtra(Constants.INTENT_EXTRA_KEY_PAYLOAD, payload);
+////        }
+//        Intent i = getActivity().getApplicationContext().getPackageManager()
+//                .getLaunchIntentForPackage(getActivity().getApplicationContext().getPackageName() );
+
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
         startActivity(i);
         getActivity().finish();
     }

@@ -1,6 +1,8 @@
 package com.yueyang.travel.view.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -88,8 +90,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     private void initUserInfo(){
         toolbarNickname.setText(SpfHelper.getInstance(this).getMyNickname());
-        if (SpfHelper.getInstance(this).getAvatar() != null){
-            GlideUtils.loadImg(this,SpfHelper.getInstance(this).getAvatar(),toolbarAvatar);
+        if (SpfHelper.getInstance(this).getAvatar().equals("")){
+            Bitmap avatar = BitmapFactory.decodeResource(getResources(),
+                    R.drawable.icon_default_avatar);
+            toolbarAvatar.setImageBitmap(avatar);
+        }else {
+            GlideUtils.loadImg(this, SpfHelper.getInstance(this).getAvatar(), toolbarAvatar);
         }
     }
 
