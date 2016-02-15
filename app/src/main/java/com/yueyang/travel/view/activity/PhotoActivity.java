@@ -16,7 +16,7 @@ import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
 import com.yueyang.travel.domin.Utils.BitmapUtils;
 import com.yueyang.travel.domin.manager.SocialManager;
-import com.yueyang.travel.domin.manager.UserManager;
+import com.yueyang.travel.domin.manager.SpfHelper;
 import com.yueyang.travel.model.Constants;
 
 import org.json.JSONObject;
@@ -72,7 +72,7 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
                 picBytes.add(BitmapUtils.bitmap2byte(mPhotoPath));
                 SocialManager.createPost(PhotoActivity.this,
                         getString(R.string.wall_id),
-                        UserManager.getInstance(this).getCurrentUser().userId,
+                        SpfHelper.getInstance(this).getMyUserId(),
                         photoEt.getText().toString(),
                         picBytes,
                         new IAnSocialCallback() {
