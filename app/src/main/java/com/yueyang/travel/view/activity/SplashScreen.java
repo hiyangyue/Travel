@@ -1,5 +1,6 @@
 package com.yueyang.travel.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +14,12 @@ import com.yueyang.travel.domin.manager.UserManager;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.model.bean.User;
 
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import za.co.riggaroo.materialhelptutorial.TutorialItem;
+import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
 
 /**
  * Created by Yang on 2015/12/17.
@@ -25,6 +30,7 @@ public class SplashScreen extends AppCompatActivity {
     ImageView splashImage;
 
     private String payload;
+    private static final int REQUEST_CODE = 12345;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +41,6 @@ public class SplashScreen extends AppCompatActivity {
         Animation animation = AnimationUtils.loadAnimation(SplashScreen.this, R.anim.splash);
         splashImage.startAnimation(animation);
         checkBundle();
-//        signIn();
 
         Thread timerThread = new Thread() {
             public void run() {
@@ -44,14 +49,64 @@ public class SplashScreen extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    signIn();
+                   isFirstLogin();
                 }
             }
         };
         timerThread.start();
     }
 
+    private void isFirstLogin(){
+        if (SpfHelper.getInstance(this).getFirstLogin()){
+            signIn();
+        }else {
+            SpfHelper.getInstance(this).updateLogin();
+            startGuide();
+        }
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE){
+            goToLoginActivity();
+        }
+    }
+
+    public void startGuide(){
+        Intent mainAct = new Intent(this, MaterialTutorialActivity.class);
+        mainAct.putParcelableArrayListExtra(MaterialTutorialActivity.MATERIAL_TUTORIAL_ARG_TUTORIAL_ITEMS, getTutorialItems(this));
+        startActivityForResult(mainAct, REQUEST_CODE);
+    }
+
+    private ArrayList<TutorialItem> getTutorialItems(Context context) {
+        TutorialItem tutorialItem1 = new TutorialItem(
+                context.getString(R.string.title),
+                context.getString(R.string.sub_title),
+                R.color.colorAccent, R.drawable.bg_1,  0);
+
+        TutorialItem tutorialItem2 = new TutorialItem(
+                context.getString(R.string.title),
+                context.getString(R.string.sub_title),
+                R.color.colorPrimaryDark, R.drawable.bg_2,  0);
+
+        TutorialItem tutorialItem3 = new TutorialItem(
+                context.getString(R.string.title),
+                context.getString(R.string.sub_title),
+                R.color.colorAccent, R.drawable.bg_3,  0);
+        
+        TutorialItem tutorialItem4 = new TutorialItem(
+                context.getString(R.string.title),
+                context.getString(R.string.sub_title),
+                R.color.colorPrimaryDark, R.drawable.bg_4,  0);
+
+        ArrayList<TutorialItem> tutorialItems = new ArrayList<>();
+        tutorialItems.add(tutorialItem1);
+        tutorialItems.add(tutorialItem2);
+        tutorialItems.add(tutorialItem3);
+        tutorialItems.add(tutorialItem4);
+
+        return tutorialItems;
+    }
 
     private void signIn(){
         if (SpfHelper.getInstance(this).hasSignIn()){
@@ -87,9 +142,4 @@ public class SplashScreen extends AppCompatActivity {
         finish();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        finish();
-    }
 }

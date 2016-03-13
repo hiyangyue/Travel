@@ -2,7 +2,6 @@ package com.yueyang.travel.domin.manager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.yueyang.travel.R;
 
@@ -21,6 +20,7 @@ public class SpfHelper {
     private static final String KEY_USER_CLIENTID = "clientid";
     private static final String KEY_USER_NICKNAME = "nickname";
     private static final String KEY_USER_AVATAR = "avatar";
+    private static final String KEY_IS_FRIST_LOGIN = "is_first";
 
     private SpfHelper(Context ct) {
         Account = ct.getSharedPreferences(ct.getString(R.string.app_name), 0);
@@ -34,20 +34,17 @@ public class SpfHelper {
         return sSpfHelper;
     }
 
+    public void updateLogin(){
+        editor.putBoolean(KEY_IS_FRIST_LOGIN,true);
+        editor.commit();
+    }
+
+    public boolean getFirstLogin(){
+        return Account.getBoolean(KEY_IS_FRIST_LOGIN,false);
+    }
+
     public void clearUserInfo() {
         editor.clear().apply();
-        Log.e("test",getMyUserId() + "...");
-//        editor.remove(KEY_USER_USERNAME);
-//        editor.remove(KEY_USER_PWD);
-//        editor.remove(KEY_USER_USERID);
-//        editor.remove(KEY_USER_CLIENTID);
-//        editor.remove(KEY_USER_AVATAR);
-//        editor.commit();
-//        editor.putString(KEY_USER_USERNAME, "").commit();
-//        editor.putString(KEY_USER_PWD, "").commit();
-//        editor.putString(KEY_USER_USERID, "").commit();
-//        editor.putString(KEY_USER_CLIENTID, "").commit();
-//        editor.putString(KEY_USER_AVATAR,"").commit();
     }
 
     public void saveUserInfo(String username, String pwd,String nickname, String userId, String clientId,String avatar) {
@@ -66,7 +63,6 @@ public class SpfHelper {
     public void updateAvatar(String avatar){
         editor.putString(KEY_USER_AVATAR,avatar).commit();
     }
-
 
     public String getMyUserId() {
         return Account.getString(KEY_USER_USERID, "");

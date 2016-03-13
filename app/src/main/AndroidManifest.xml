@@ -116,8 +116,10 @@
             android:value=".view.activity.MainActivity" />
         </activity>
 
-        <activity android:name=".view.activity.TestActivity"/>
+        <activity android:name="za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
+        <activity android:name=".view.activity.TestActivity"/>
 
         <service android:name="com.arrownock.push.PushService" />
 

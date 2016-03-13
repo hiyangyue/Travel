@@ -73,4 +73,7 @@
     <string name="preference_notify_summary">会错过有意思的内容哦</string>
     <string name="preference_cache_title">清除缓存</string>
 
+    <string name="title">Title</string>
+    <string name="sub_title">SubTitle</string>
+
 </resources>
