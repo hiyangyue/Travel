@@ -42,18 +42,18 @@ public class SplashScreen extends AppCompatActivity {
         splashImage.startAnimation(animation);
         checkBundle();
 
-        Thread timerThread = new Thread() {
-            public void run() {
-                try {
-                    sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } finally {
+//        Thread timerThread = new Thread() {
+//            public void run() {
+//                try {
+//                    sleep(3000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                } finally {
                    isFirstLogin();
-                }
-            }
-        };
-        timerThread.start();
+//                }
+//            }
+//        };
+//        timerThread.start();
     }
 
     private void isFirstLogin(){
@@ -93,7 +93,7 @@ public class SplashScreen extends AppCompatActivity {
                 context.getString(R.string.title),
                 context.getString(R.string.sub_title),
                 R.color.colorAccent, R.drawable.bg_3,  0);
-        
+
         TutorialItem tutorialItem4 = new TutorialItem(
                 context.getString(R.string.title),
                 context.getString(R.string.sub_title),

@@ -91,6 +91,9 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
                 TopPagerAdapter pagerAdapter = new TopPagerAdapter(imgList);
                 pagerHolder.headerPager.setAdapter(pagerAdapter);
+//                pagerHolder.indicator.setViewPager(pagerHolder.headerPager);
+//                int imgIds[] = { R.drawable.banner, R.drawable.banner2 , R.drawable.banner3 };
+//                pagerHolder.headerPager.setData(imgIds,8,8);
                 break;
             case TYPE_HEADER:
                 switch (position){
@@ -145,11 +148,15 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public class PagerHolder extends RecyclerView.ViewHolder{
 
-        public ViewPager headerPager;
+//        public SlideBanner headerPager;
+        private ViewPager headerPager;
+//        private CircleIndicator indicator;
 
         public PagerHolder(View itemView) {
             super(itemView);
             headerPager = (ViewPager) itemView.findViewById(R.id.holder_pager);
+//            indicator = (CircleIndicator) itemView.findViewById(R.id.indicator);
+//            headerPager = (SlideBanner) itemView.findViewById(R.id.holder_pager);
         }
     }
 

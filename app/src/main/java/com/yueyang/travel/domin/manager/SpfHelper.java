@@ -21,6 +21,7 @@ public class SpfHelper {
     private static final String KEY_USER_NICKNAME = "nickname";
     private static final String KEY_USER_AVATAR = "avatar";
     private static final String KEY_IS_FRIST_LOGIN = "is_first";
+    private static final String KEY_IS_FIRST_MAIN = "is_first_main";
 
     private SpfHelper(Context ct) {
         Account = ct.getSharedPreferences(ct.getString(R.string.app_name), 0);
@@ -41,6 +42,14 @@ public class SpfHelper {
 
     public boolean getFirstLogin(){
         return Account.getBoolean(KEY_IS_FRIST_LOGIN,false);
+    }
+
+    public boolean getFirstMainActivity(){
+        return Account.getBoolean(KEY_IS_FIRST_MAIN,false);
+    }
+
+    public void updateHightLight(){
+        editor.putBoolean(KEY_IS_FIRST_MAIN,true).commit();
     }
 
     public void clearUserInfo() {

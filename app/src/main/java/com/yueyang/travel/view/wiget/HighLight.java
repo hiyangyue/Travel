@@ -1,9 +1,5 @@
 package com.yueyang.travel.view.wiget;
 
-/**
- * Created by Yang on 2016/3/18.
- */
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.RectF;
@@ -16,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by zhy on 15/10/8.
+ * Created by Yang on 2016/3/18.
  */
 public class HighLight
 {
@@ -26,11 +22,9 @@ public class HighLight
         public RectF rectF;
         public MarginInfo marginInfo;
         public View view;
-        public int x;
-        public int y;
-        public int radius;
         public OnPosCallback onPosCallback;
     }
+
 
     public static class MarginInfo
     {
@@ -39,17 +33,22 @@ public class HighLight
         public float rightMargin;
         public float bottomMargin;
 
+
     }
+
 
     public static interface OnPosCallback
     {
         void getPos(float rightMargin, float bottomMargin, RectF rectF, MarginInfo marginInfo);
     }
 
+
     public static interface OnClickCallback
     {
         void onClick();
     }
+
+
 
 
     private View mAnchor;
@@ -58,44 +57,17 @@ public class HighLight
     private HightLightView mHightLightView;
     private OnClickCallback clickCallback;
 
+
     private boolean intercept = true;
-    private boolean isCircle;
+    private boolean shadow = true;
     private int maskColor = 0xCC000000;
-    private int circleX;
-    private int circleY;
-    private int radius;
 
-    private int[][] location;
 
-    public HighLight(Context context,boolean isCircle)
+    public HighLight(Context context)
     {
         mContext = context;
-        mViewRects = new ArrayList<>();
-        this.isCircle = isCircle;
+        mViewRects = new ArrayList<ViewPosInfo>();
         mAnchor = ((Activity) mContext).findViewById(android.R.id.content);
-    }
-
-    public HighLight(Context context,boolean isCircle,int circleX,int circleY,int radius)
-    {
-        mContext = context;
-        mViewRects = new ArrayList<>();
-        this.isCircle = isCircle;
-        this.circleX = circleX;
-        this.circleY = circleY;
-        this.radius = radius;
-        mAnchor = ((Activity) mContext).findViewById(android.R.id.content);
-    }
-
-    public HighLight setLocation(int x,int y,int radius){
-        circleX = x;
-        circleY = y;
-        this.radius = radius;
-        return this;
-    }
-
-    public HighLight setLocation(int[][] location){
-        this.location = location;
-        return this;
     }
 
 
@@ -105,17 +77,28 @@ public class HighLight
         return this;
     }
 
+
     public HighLight intercept(boolean intercept)
     {
         this.intercept = intercept;
         return this;
     }
 
+
+    public HighLight shadow(boolean shadow)
+    {
+        this.shadow = shadow;
+        return this;
+    }
+
+
     public HighLight maskColor(int maskColor)
     {
         this.maskColor = maskColor;
         return this;
     }
+
+
 
 
     public HighLight addHighLight(int viewId, int decorLayoutId, OnPosCallback onPosCallback)
@@ -126,20 +109,26 @@ public class HighLight
         return this;
     }
 
+
     public void updateInfo()
     {
         ViewGroup parent = (ViewGroup) mAnchor;
         for (HighLight.ViewPosInfo viewPosInfo : mViewRects)
         {
 
+
             RectF rect = new RectF(ViewUtils.getLocationInView(parent, viewPosInfo.view));
+//            if (!rect.equals(viewPosInfo.rectF))//TODO bug dismissed...fc...
             {
                 viewPosInfo.rectF = rect;
                 viewPosInfo.onPosCallback.getPos(parent.getWidth() - rect.right, parent.getHeight() - rect.bottom, rect, viewPosInfo.marginInfo);
             }
         }
 
+
     }
+
+
 
 
     public HighLight addHighLight(View view, int decorLayoutId, OnPosCallback onPosCallback)
@@ -160,8 +149,10 @@ public class HighLight
         viewPosInfo.onPosCallback = onPosCallback;
         mViewRects.add(viewPosInfo);
 
+
         return this;
     }
+
 
     // 一个场景可能有多个步骤的高亮。一个步骤完成之后再进行下一个步骤的高亮
     // 添加点击事件，将每次点击传给应用逻辑
@@ -171,18 +162,22 @@ public class HighLight
     }
 
 
+
+
     public void show()
     {
 
+
         if (mHightLightView != null) return;
 
-//        HightLightView hightLightView = new HightLightView(mContext, this,isCircle,mViewRects,circleX,circleY,radius);
-        HightLightView hightLightView = new HightLightView(mContext, this,isCircle,mViewRects);
+
+        HightLightView hightLightView = new HightLightView(mContext, this, maskColor, shadow, mViewRects);
         if (mAnchor.getClass().getSimpleName().equals("FrameLayout"))
         {
             ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams
                     (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             ((ViewGroup) mAnchor).addView(hightLightView, ((ViewGroup) mAnchor).getChildCount(), lp);
+
 
         } else
         {
@@ -194,8 +189,10 @@ public class HighLight
                     (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             frameLayout.addView(mAnchor, lp);
 
+
             frameLayout.addView(hightLightView);
         }
+
 
         if (intercept)
         {
@@ -212,8 +209,10 @@ public class HighLight
             });
         }
 
+
         mHightLightView = hightLightView;
     }
+
 
     public void remove()
     {
@@ -232,6 +231,8 @@ public class HighLight
         }
         mHightLightView = null;
     }
+
+
 
 
 }

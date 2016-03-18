@@ -3,6 +3,7 @@ package com.yueyang.travel.view.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -21,6 +22,7 @@ import com.yueyang.travel.domin.manager.SpfHelper;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.view.adapter.HomePagerAdapter;
 import com.yueyang.travel.view.wiget.CircleImageView;
+import com.yueyang.travel.view.wiget.HighLight;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,6 +42,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     private MenuItem searchMenuItem;
     private SearchView searchView;
+    private HighLight highLight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         setUpViewPager();
 
         toolbarAvatar.setOnClickListener(this);
+        isShowHightLight();
     }
+
+
 
     @Override
     public int getLayoutResource() {
@@ -169,5 +175,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         } else {
             MenuItemCompat.collapseActionView(searchMenuItem);
         }
+    }
+
+    private void isShowHightLight(){
+        if (!SpfHelper.getInstance(this).getFirstMainActivity()){
+            addHightLight();
+            SpfHelper.getInstance(this).updateHightLight();
+        }
+    }
+
+    private void addHightLight(){
+        highLight = new HighLight(this)
+                .anchor(findViewById(R.id.container))
+                .addHighLight(R.id.fab, R.layout.test, new HighLight.OnPosCallback() {
+                    @Override
+                    public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
+
+                    }
+                })
+                .addHighLight(R.id.toolbar_avatar, R.layout.test, new HighLight.OnPosCallback() {
+                    @Override
+                    public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
+
+                    }
+                });
+
+        highLight.show();
     }
 }
