@@ -312,4 +312,30 @@ public class ParseUtils {
         return photoObj.getString("url");
     }
 
+    public static User getUserByName(JSONObject object)throws JSONException{
+        JSONObject responseObj = object.getJSONObject("response");
+        JSONArray userArray = responseObj.getJSONArray("users");
+        JSONObject userObj = userArray.getJSONObject(0);
+        String id = userObj.getString("id");
+        String nickName = userObj.getString("firstName");
+        return new User(id,nickName,null);
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

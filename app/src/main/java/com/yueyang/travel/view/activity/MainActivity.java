@@ -5,40 +5,54 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.RectF;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.arrownock.social.IAnSocialCallback;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.yueyang.travel.R;
 import com.yueyang.travel.domin.Utils.GlideUtils;
+import com.yueyang.travel.domin.manager.SocialManager;
 import com.yueyang.travel.domin.manager.SpfHelper;
+import com.yueyang.travel.domin.manager.UserManager;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.view.adapter.HomePagerAdapter;
 import com.yueyang.travel.view.wiget.CircleImageView;
 import com.yueyang.travel.view.wiget.HighLight;
 
+import org.json.JSONObject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener{
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.tab_layout)
     TabLayout tabLayout;
     @Bind(R.id.pager)
     ViewPager pager;
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
     @Bind(R.id.toolbar_avatar)
     CircleImageView toolbarAvatar;
     @Bind(R.id.toolbar_nickname)
     TextView toolbarNickname;
+    @Bind(R.id.fab_photo)
+    FloatingActionButton fabPhoto;
+    @Bind(R.id.fab_user)
+    FloatingActionButton fabUser;
+    @Bind(R.id.container)
+    CoordinatorLayout container;
+    @Bind(R.id.fab_menu)
+    FloatingActionMenu fabMenu;
 
     private MenuItem searchMenuItem;
     private SearchView searchView;
@@ -53,9 +67,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         setUpViewPager();
 
         toolbarAvatar.setOnClickListener(this);
-        isShowHightLight();
+//        isShowHightLight();
     }
-
 
 
     @Override
@@ -71,11 +84,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.toolbar_avatar:
-                Intent intent = new Intent(MainActivity.this,UserProfileActivity.class);
+                Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putBoolean(Constants.IS_CURRENT,true);
+                bundle.putBoolean(Constants.IS_CURRENT, true);
                 intent.putExtras(bundle);
                 /**
                  *  Share Elements bugs here
@@ -95,14 +108,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
-    private void initUserInfo(){
+    private void initUserInfo() {
         toolbarNickname.setText(SpfHelper.getInstance(this).getMyNickname());
-        if (TextUtils.isEmpty(SpfHelper.getInstance(this).getAvatar())){
+        if (TextUtils.isEmpty(SpfHelper.getInstance(this).getAvatar())) {
             Bitmap avatar = BitmapFactory.decodeResource(getResources(),
                     R.drawable.icon_default_avatar);
             toolbarAvatar.setImageBitmap(avatar);
-        }else {
-            GlideUtils.loadImg(this, SpfHelper.getInstance(this).getAvatar(), toolbarAvatar,30,30);
+        } else {
+            GlideUtils.loadImg(this, SpfHelper.getInstance(this).getAvatar(), toolbarAvatar, 30, 30);
         }
     }
 
@@ -130,9 +143,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 updateSearchStatus(isExpand(position));
 
                 if (position == 1 || position == 2) {
-                    fab.hide();
+                    fabMenu.hideMenu(true);
                 } else {
-                    fab.show();
+                    fabMenu.showMenu(true);
                 }
             }
 
@@ -177,14 +190,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
-    private void isShowHightLight(){
-        if (!SpfHelper.getInstance(this).getFirstMainActivity()){
+    public void startSearchActivity(View view){
+        Intent intent = new Intent(this,SearchActivity.class);
+        startActivity(intent);
+    }
+
+    private void isShowHightLight() {
+        if (!SpfHelper.getInstance(this).getFirstMainActivity()) {
             addHightLight();
             SpfHelper.getInstance(this).updateHightLight();
         }
     }
 
-    private void addHightLight(){
+    private void addHightLight() {
         highLight = new HighLight(this)
                 .anchor(findViewById(R.id.container))
                 .addHighLight(R.id.fab, R.layout.test, new HighLight.OnPosCallback() {

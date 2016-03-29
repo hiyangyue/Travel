@@ -49,7 +49,8 @@ public class FeedFragment extends Fragment {
     RecyclerView feedRecycler;
     @Bind(R.id.progress_bar)
     ContentLoadingProgressBar progressBar;
-    private FloatingActionButton fab;
+//    private FloatingActionButton fab;
+    private com.github.clans.fab.FloatingActionButton fab;
 
     private String mCurrentPhotoPath;
     private FeedAdapter feedAdapter;
@@ -105,7 +106,7 @@ public class FeedFragment extends Fragment {
 
 
     private void setUpFab() {
-        fab = (FloatingActionButton)getActivity().findViewById(R.id.fab);
+        fab = (com.github.clans.fab.FloatingActionButton) getActivity().findViewById(R.id.fab_photo);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

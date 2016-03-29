@@ -264,6 +264,27 @@ public class UserManager extends Observable {
         }
     }
 
+
+    public void sendFriendRequest(final Context context,final String userId, final IAnSocialCallback cbk){
+        final Map<String, Object> params = new HashMap<String, Object>();
+        params.put("user_id", SpfHelper.getInstance(context).getMyUserId());
+        params.put("target_user_id", userId);
+        try {
+            anSocial.sendRequest("friends/requests/send.json", AnSocialMethod.POST, params, new IAnSocialCallback(){
+                @Override
+                public void onFailure(JSONObject arg0) {
+                    Log.e("error",arg0.toString());
+                }
+                @Override
+                public void onSuccess(final JSONObject arg0) {
+                    Log.e("successs",arg0.toString());
+                }
+            });
+        } catch (ArrownockException e) {
+            e.printStackTrace();
+        }
+    }
+
     public interface FetchUserListCallback{
         void onSuccess(List<User> userList);
         void onError(String errorMessage);

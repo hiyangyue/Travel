@@ -1,6 +1,7 @@
 package com.yueyang.travel.domin.manager;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.arrownock.exception.ArrownockException;
@@ -413,6 +414,26 @@ public class SocialManager {
         }
     }
 
+    public static void fetchUserByUserName(final Context context,String userId,final FetchUserCallback callback){
+        AnSocial anSocial = ((IMppApp)context.getApplicationContext()).anSocial;
+        Map<String,Object> params = new HashMap<>();
+        params.put("username",userId);
+        try {
+            anSocial.sendRequest("users/query.json", AnSocialMethod.GET, params, new IAnSocialCallback() {
+                @Override
+                public void onSuccess(JSONObject jsonObject) {
+                    callback.onSuccess(jsonObject);
+                }
+
+                @Override
+                public void onFailure(JSONObject jsonObject) {
+                    callback.onFailure(jsonObject);
+                }
+            });
+        } catch (ArrownockException e) {
+            e.printStackTrace();
+        }
+    }
 
     public  interface FetchLikeByIdCallback{
         void onFailure(JSONObject jsonObject);
@@ -430,6 +451,11 @@ public class SocialManager {
     }
 
     public interface LikeCallback{
+        void onFailure(JSONObject object);
+        void onSuccess(JSONObject object);
+    }
+
+    public interface FetchUserCallback{
         void onFailure(JSONObject object);
         void onSuccess(JSONObject object);
     }

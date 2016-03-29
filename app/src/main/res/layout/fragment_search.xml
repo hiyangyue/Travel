@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.lapism.searchview.view.SearchView
+        android:id="@+id/searchView"
+        app:search_version = "toolbar"
+        app:search_style = "toolbar_classic"
+        app:search_theme = "dark"
+        app:search_divider = "true"
+        app:search_hint = "查找好友"
+        app:search_hint_size = "16sp"
+        app:search_animation_duration = "360"
+        app:search_shadow_color = "#80000000"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"/>-->
+
+</LinearLayout>
