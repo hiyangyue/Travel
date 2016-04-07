@@ -78,6 +78,13 @@
     <string name="title">Title</string>
     <string name="sub_title">SubTitle</string>
 
+    <string name="guide_title_1">随时随地</string>
+    <string name="guide_sub_title_1">分享每一次旅游</string>
+    <string name="guide_title_2">智能推荐</string>
+    <string name="guide_sub_title_2">发现身边的美</string>
+    <!--<string name="guide_title_3"></string>-->
+    <!--<string name="guide_sub_title_3"></string>-->
+
     <!--btn-->
     <string name="btn_follow">关注</string>
     <string name="fab_follow_success">关注成功</string>

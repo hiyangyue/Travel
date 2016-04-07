@@ -80,30 +80,30 @@ public class SplashScreen extends AppCompatActivity {
 
     private ArrayList<TutorialItem> getTutorialItems(Context context) {
         TutorialItem tutorialItem1 = new TutorialItem(
-                context.getString(R.string.title),
-                context.getString(R.string.sub_title),
+                context.getString(R.string.guide_title_1),
+                context.getString(R.string.guide_sub_title_1),
                 R.color.colorAccent, R.drawable.bg_1,  0);
 
         TutorialItem tutorialItem2 = new TutorialItem(
-                context.getString(R.string.title),
-                context.getString(R.string.sub_title),
+                context.getString(R.string.guide_title_2),
+                context.getString(R.string.guide_sub_title_2),
                 R.color.colorPrimaryDark, R.drawable.bg_2,  0);
 
-        TutorialItem tutorialItem3 = new TutorialItem(
-                context.getString(R.string.title),
-                context.getString(R.string.sub_title),
-                R.color.colorAccent, R.drawable.bg_3,  0);
-
-        TutorialItem tutorialItem4 = new TutorialItem(
-                context.getString(R.string.title),
-                context.getString(R.string.sub_title),
-                R.color.colorPrimaryDark, R.drawable.bg_4,  0);
+//        TutorialItem tutorialItem3 = new TutorialItem(
+//                context.getString(R.string.title),
+//                context.getString(R.string.sub_title),
+//                R.color.colorAccent, R.drawable.bg_3,  0);
+//
+//        TutorialItem tutorialItem4 = new TutorialItem(
+//                context.getString(R.string.title),
+//                context.getString(R.string.sub_title),
+//                R.color.colorPrimaryDark, R.drawable.bg_4,  0);
 
         ArrayList<TutorialItem> tutorialItems = new ArrayList<>();
         tutorialItems.add(tutorialItem1);
         tutorialItems.add(tutorialItem2);
-        tutorialItems.add(tutorialItem3);
-        tutorialItems.add(tutorialItem4);
+//        tutorialItems.add(tutorialItem3);
+//        tutorialItems.add(tutorialItem4);
 
         return tutorialItems;
     }
