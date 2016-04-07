@@ -19,6 +19,8 @@ import com.yueyang.travel.domin.Utils.BlurUtils;
 import com.yueyang.travel.domin.Utils.ParseUtils;
 import com.yueyang.travel.domin.Utils.SnackbarUtils;
 import com.yueyang.travel.domin.manager.SocialManager;
+import com.yueyang.travel.domin.manager.SpfHelper;
+import com.yueyang.travel.domin.manager.UserManager;
 import com.yueyang.travel.model.bean.User;
 
 import org.json.JSONException;
@@ -89,13 +91,13 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-    private void initViewStub(User user){
+    private void initViewStub(final User user){
         viewStub = (ViewStub) findViewById(R.id.view_stub_user);
         final View view  = viewStub.inflate();
 
         TextView tvNickName = (TextView) view.findViewById(R.id.tv_nick_name);
         ImageView ivBlurBg = (ImageView) view.findViewById(R.id.iv_blur_bg);
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_follow);
+        final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_follow);
 
         tvNickName.setText(user.nickname);
         if (user.userPhotoUrl == null){
@@ -112,7 +114,18 @@ public class SearchActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SnackbarUtils.getSnackbar(view,"Clicked");
+                UserManager.getInstance(SearchActivity.this)
+                        .followTargetUser(SpfHelper.getInstance(SearchActivity.this).getMyUserId(), user.userId, new UserManager.FollowTargetUserCallback() {
+                            @Override
+                            public void onSuccess() {
+                                SnackbarUtils.getSnackbar(fab,getString(R.string.fab_follow_success));
+                            }
+
+                            @Override
+                            public void onError(JSONObject jsonObject) {
+                                SnackbarUtils.getSnackbar(fab,getString(R.string.fab_follow_error));
+                            }
+                        });
             }
         });
     }

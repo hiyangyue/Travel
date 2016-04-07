@@ -80,5 +80,7 @@
 
     <!--btn-->
     <string name="btn_follow">关注</string>
+    <string name="fab_follow_success">关注成功</string>
+    <string name="fab_follow_error">关注失败</string>
 
 </resources>

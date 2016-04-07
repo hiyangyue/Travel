@@ -162,7 +162,7 @@ public class UserManager extends Observable {
         }
     }
 
-    public void followTargetUser(final String currentUserId, final String targetUserId) {
+    public void followTargetUser(final String currentUserId, final String targetUserId, final FollowTargetUserCallback callback) {
         final Map<String, Object> params = new HashMap<String, Object>();
         params.put("user_id", currentUserId);
         params.put("target_user_id", targetUserId);
@@ -170,12 +170,12 @@ public class UserManager extends Observable {
             anSocial.sendRequest("friends/add.json", AnSocialMethod.POST, params, new IAnSocialCallback() {
                 @Override
                 public void onFailure(JSONObject arg0) {
-                    Log.e("error",arg0.toString());
+                    callback.onError(arg0);
                 }
 
                 @Override
                 public void onSuccess(final JSONObject arg0) {
-                    Log.e("success",arg0.toString());
+                    callback.onSuccess();
                 }
             });
         } catch (ArrownockException e) {
@@ -293,6 +293,11 @@ public class UserManager extends Observable {
     public interface FetchUserCallback{
         void onSuccess(User user);
         void onError(String errorMessage);
+    }
+
+    public interface FollowTargetUserCallback{
+        void onSuccess();
+        void onError(JSONObject jsonObject);
     }
 
 }
