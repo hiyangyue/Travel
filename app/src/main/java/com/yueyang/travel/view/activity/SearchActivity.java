@@ -1,21 +1,25 @@
 package com.yueyang.travel.view.activity;
 
 import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.view.ViewStub;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.lapism.searchview.view.SearchView;
 import com.yueyang.travel.R;
+import com.yueyang.travel.domin.Utils.BlurUtils;
 import com.yueyang.travel.domin.Utils.ParseUtils;
+import com.yueyang.travel.domin.Utils.SnackbarUtils;
 import com.yueyang.travel.domin.manager.SocialManager;
-import com.yueyang.travel.view.activity.BaseActivity;
+import com.yueyang.travel.model.bean.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,12 +30,13 @@ import butterknife.ButterKnife;
 /**
  * Created by YueYang on 2016/3/29.
  */
-public class SearchActivity extends AppCompatActivity{
+public class SearchActivity extends AppCompatActivity {
 
     @Bind(R.id.searchView)
     SearchView searchView;
 
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
+    private ViewStub viewStub;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +52,7 @@ public class SearchActivity extends AppCompatActivity{
         ButterKnife.unbind(this);
     }
 
-    private void initSearchView(){
+    private void initSearchView() {
         searchView.show(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -57,13 +62,16 @@ public class SearchActivity extends AppCompatActivity{
                     @Override
                     public void onFailure(JSONObject object) {
                         hideProgressDialog();
+                        SnackbarUtils.getSnackbar(searchView, getString(R.string.action_search_failure));
                     }
 
                     @Override
                     public void onSuccess(JSONObject object) {
                         hideProgressDialog();
+                        searchView.out();
+                        SnackbarUtils.getSnackbar(searchView, getString(R.string.action_search_success));
                         try {
-                            ParseUtils.getUserByName(object);
+                            initViewStub(ParseUtils.getUserByName(object));
                             hideProgressDialog();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -81,7 +89,35 @@ public class SearchActivity extends AppCompatActivity{
 
     }
 
-    private void showProgressDialog(){
+    private void initViewStub(User user){
+        viewStub = (ViewStub) findViewById(R.id.view_stub_user);
+        final View view  = viewStub.inflate();
+
+        TextView tvNickName = (TextView) view.findViewById(R.id.tv_nick_name);
+        ImageView ivBlurBg = (ImageView) view.findViewById(R.id.iv_blur_bg);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_follow);
+
+        tvNickName.setText(user.nickname);
+        if (user.userPhotoUrl == null){
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 4;
+            Bitmap blurBg = BlurUtils.blurRenderScript(
+                    this,
+                    BitmapFactory.decodeResource(this.getResources(),R.drawable.test_profile,options),
+                    20);
+
+            ivBlurBg.setImageBitmap(blurBg);
+        }
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SnackbarUtils.getSnackbar(view,"Clicked");
+            }
+        });
+    }
+
+    private void showProgressDialog() {
         progressDialog = new ProgressDialog(this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
@@ -89,8 +125,8 @@ public class SearchActivity extends AppCompatActivity{
         progressDialog.show();
     }
 
-    private void hideProgressDialog(){
-       runOnUiThread(new Runnable() {
+    private void hideProgressDialog() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 progressDialog.dismiss();

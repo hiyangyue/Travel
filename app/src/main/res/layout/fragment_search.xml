@@ -10,7 +10,7 @@
         android:id="@+id/searchView"
         app:search_version = "toolbar"
         app:search_style = "toolbar_classic"
-        app:search_theme = "dark"
+        app:search_theme = "light"
         app:search_divider = "true"
         app:search_hint = "查找好友"
         app:search_hint_size = "16sp"
@@ -19,13 +19,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <ViewStub
+        android:id="@+id/view_stub_user"
+        android:layout_margin="@dimen/margin_10"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout="@layout/holder_search_user"/>
 
-    <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"/>-->
 
 </LinearLayout>

@@ -255,7 +255,7 @@ public class UserProfileActivity extends BaseActivity {
     }
 
     private void blur(Bitmap bitmap){
-        Bitmap blurred = BlurUtils.blurRenderScript(this, bitmap, 25);
+        Bitmap blurred = BlurUtils.blurRenderScript(this, bitmap, 10);
         blurImg.setImageBitmap(blurred);
     }
 }

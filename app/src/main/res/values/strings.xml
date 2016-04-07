@@ -9,6 +9,8 @@
     <string name="action_settings">设置</string>
     <string name="action_search">搜索</string>
     <string name="action_search_hint">查找你喜欢的人和事</string>
+    <string name="action_search_failure">查找失败，是不是用户名不存在~</string>
+    <string name="action_search_success">查找成功</string>
     <string name="action_user">用户登入</string>
 
     <!--transitions-->
@@ -75,5 +77,8 @@
 
     <string name="title">Title</string>
     <string name="sub_title">SubTitle</string>
+
+    <!--btn-->
+    <string name="btn_follow">关注</string>
 
 </resources>
