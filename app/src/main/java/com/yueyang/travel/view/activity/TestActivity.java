@@ -22,7 +22,7 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setEnterTransition(new Slide());
         getWindow().setExitTransition(new Explode());
-        setContentView(R.layout.test_layout);
+        setContentView(R.layout.empty_layout);
     }
 
     @Override

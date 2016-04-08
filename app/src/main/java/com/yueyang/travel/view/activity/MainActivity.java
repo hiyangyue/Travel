@@ -205,7 +205,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void addHightLight() {
         highLight = new HighLight(this)
                 .anchor(findViewById(R.id.container))
-                .addHighLight(R.id.fab, R.layout.test, new HighLight.OnPosCallback() {
+                .addHighLight(R.id.fab_menu, R.layout.test, new HighLight.OnPosCallback() {
                     @Override
                     public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
 

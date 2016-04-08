@@ -49,6 +49,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     private Context mContext;
     private List<Post> postList;
+//    private static final int TYPE_EMPTY = 0;
+//    private static final int TYPE_OTHERS = 1;
+
 
     public FeedAdapter(Context mContext, List<Post> postList) {
         this.mContext = mContext;
@@ -57,13 +60,18 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.holder_feed, parent, false);
+
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        View view = inflater.inflate(R.layout.holder_feed,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+        bindView(holder,position);
+    }
 
+    private void bindView(final ViewHolder holder,int position){
         final Post post = postList.get(position);
         holder.feedName.setText(post.getUser().nickname);
         holder.feedContent.setText(post.getContent());
@@ -234,6 +242,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     public int getItemCount() {
         return postList.size();
     }
+
+//    @Override
+//    public int getItemViewType(int position) {
+//        if (postList.size() == 0){
+//            return TYPE_EMPTY;
+//        }else {
+//            return TYPE_OTHERS;
+//        }
+//    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 

@@ -6,15 +6,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.yueyang.travel.R;
 import com.yueyang.travel.domin.Utils.FileUtils;
 import com.yueyang.travel.domin.Utils.ParseUtils;
@@ -27,6 +27,7 @@ import com.yueyang.travel.model.bean.Post;
 import com.yueyang.travel.model.bean.User;
 import com.yueyang.travel.view.activity.PhotoActivity;
 import com.yueyang.travel.view.adapter.FeedAdapter;
+import com.yueyang.travel.view.wiget.EmptyRecyclerView;
 
 import org.json.JSONException;
 
@@ -46,11 +47,12 @@ import butterknife.ButterKnife;
 public class FeedFragment extends Fragment {
 
     @Bind(R.id.feed_recycler)
-    RecyclerView feedRecycler;
+    EmptyRecyclerView feedRecycler;
     @Bind(R.id.progress_bar)
     ContentLoadingProgressBar progressBar;
-//    private FloatingActionButton fab;
-    private com.github.clans.fab.FloatingActionButton fab;
+    @Bind(R.id.container)
+    CoordinatorLayout container;
+    private FloatingActionButton fab;
 
     private String mCurrentPhotoPath;
     private FeedAdapter feedAdapter;
@@ -106,7 +108,7 @@ public class FeedFragment extends Fragment {
 
 
     private void setUpFab() {
-        fab = (com.github.clans.fab.FloatingActionButton) getActivity().findViewById(R.id.fab_photo);
+        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab_photo);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,15 +131,18 @@ public class FeedFragment extends Fragment {
 
     private void setUpRecyclerView() {
         postList = new ArrayList<>();
-        feedAdapter = new FeedAdapter(getContext(),postList);
+        feedAdapter = new FeedAdapter(getContext(), postList);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         feedRecycler.setLayoutManager(layoutManager);
         feedRecycler.setAdapter(feedAdapter);
+
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.null_content_remind,container);
+        feedRecycler.setEmptyView(view);
     }
 
-    private void initData(final Context context){
+    private void initData(final Context context) {
 
         showProgressBar();
 
@@ -176,11 +181,11 @@ public class FeedFragment extends Fragment {
 
     }
 
-    public void hideProgressBar(){
+    public void hideProgressBar() {
         progressBar.setVisibility(View.INVISIBLE);
     }
 
-    public void showProgressBar(){
+    public void showProgressBar() {
         progressBar.setVisibility(View.VISIBLE);
     }
 
