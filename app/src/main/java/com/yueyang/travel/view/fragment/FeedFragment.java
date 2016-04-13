@@ -63,7 +63,6 @@ public class FeedFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Log.e("______________yy","_____size____" + postList.size());
     }
 
     @Override
