@@ -102,19 +102,20 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 bundle.putString(Constants.TRANSITIONS_POST_ID, post.postId);
                 intent.putExtras(bundle);
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    Pair<View, String> p1 =
-                            Pair.create((View) holder.feedHeaderImage, mContext.getString(R.string.transitions_avatar));
-                    Pair<View, String> p2 =
-                            Pair.create((View) holder.feedName, mContext.getString(R.string.transitions_nickname));
-                    Pair<View, String> p4 =
-                            Pair.create((View) holder.feedImage, mContext.getString(R.string.transitions_photo));
-                    ActivityOptionsCompat options = ActivityOptionsCompat
-                            .makeSceneTransitionAnimation((Activity) mContext, p1, p2, p4);
-                    mContext.startActivity(intent, options.toBundle());
-                } else {
-                    mContext.startActivity(intent);
-                }
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                    Pair<View, String> p1 =
+//                            Pair.create((View) holder.feedHeaderImage, mContext.getString(R.string.transitions_avatar));
+//                    Pair<View, String> p2 =
+//                            Pair.create((View) holder.feedName, mContext.getString(R.string.transitions_nickname));
+//                    Pair<View, String> p4 =
+//                            Pair.create((View) holder.feedImage, mContext.getString(R.string.transitions_photo));
+//                    ActivityOptionsCompat options = ActivityOptionsCompat
+//                            .makeSceneTransitionAnimation((Activity) mContext, p1, p2, p4);
+//                    mContext.startActivity(intent, options.toBundle());
+//                } else {
+//                    mContext.startActivity(intent);
+//                }
+                mContext.startActivity(intent);
 
             }
         });

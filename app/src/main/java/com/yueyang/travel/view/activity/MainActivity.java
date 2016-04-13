@@ -11,27 +11,19 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
-import com.arrownock.social.IAnSocialCallback;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.yueyang.travel.R;
 import com.yueyang.travel.domin.Utils.GlideUtils;
-import com.yueyang.travel.domin.manager.SocialManager;
 import com.yueyang.travel.domin.manager.SpfHelper;
-import com.yueyang.travel.domin.manager.UserManager;
 import com.yueyang.travel.model.Constants;
 import com.yueyang.travel.view.adapter.HomePagerAdapter;
 import com.yueyang.travel.view.wiget.CircleImageView;
 import com.yueyang.travel.view.wiget.HighLight;
-
-import org.json.JSONObject;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 

@@ -10,6 +10,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,12 @@ public class FeedFragment extends Fragment {
     private FeedAdapter feedAdapter;
     private List<Post> postList;
     private int page = 1;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.e("______________yy","_____size____" + postList.size());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -135,11 +142,11 @@ public class FeedFragment extends Fragment {
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        View view = LayoutInflater.from(getActivity()).inflate(R.layout.null_content_remind,container);
+//        feedRecycler.setEmptyView(view);
         feedRecycler.setLayoutManager(layoutManager);
         feedRecycler.setAdapter(feedAdapter);
 
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.null_content_remind,container);
-        feedRecycler.setEmptyView(view);
     }
 
     private void initData(final Context context) {

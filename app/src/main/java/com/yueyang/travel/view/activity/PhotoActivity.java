@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.arrownock.social.IAnSocialCallback;
 import com.yueyang.travel.R;
 import com.yueyang.travel.domin.Utils.BitmapUtils;
+import com.yueyang.travel.domin.Utils.GlideUtils;
 import com.yueyang.travel.domin.manager.SocialManager;
 import com.yueyang.travel.domin.manager.SpfHelper;
 import com.yueyang.travel.model.Constants;
@@ -60,8 +61,7 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
         Bundle bundle = getIntent().getExtras();
         mPhotoPath = bundle.getString(Constants.PHOTO_PATH);
         if (mPhotoPath != null){
-            Bitmap bitmap = BitmapUtils.compressPic(photoThumbImg,mPhotoPath);
-            photoThumbImg.setImageBitmap(bitmap);
+            GlideUtils.loadImg(this,mPhotoPath,photoThumbImg,30,30);
         }
     }
 
