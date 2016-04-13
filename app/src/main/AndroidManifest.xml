@@ -25,6 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/BaseMaterial">
 
+        <meta-data android:name="UMENG_CHANNEL" android:value="UMENG"/>
 
         <!-- 设置不同网络环境下的长连接保持心跳频率。(单位: 分钟) -->
         <meta-data android:name="com.arrownock.push.KEEPALIVE_INTERVAL_WIFI" android:value="14" />
@@ -52,7 +53,7 @@
             android:name=".view.activity.MainActivity"
             android:label="@string/app_name"
             android:configChanges="keyboardHidden|orientation"
-            android:theme="@style/MainTheme">
+            android:theme="@style/BaseMaterial">
 
         </activity>
         <activity android:name=".view.activity.LoginActivity"

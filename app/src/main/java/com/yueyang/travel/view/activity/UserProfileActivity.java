@@ -92,7 +92,7 @@ public class UserProfileActivity extends BaseActivity {
             final String imagePath = FileUtils.getRealPathFromURI(this, data.getData());
             final Bitmap bitmap = BitmapUtils.compressPic(profileAvatar, imagePath);
             UserManager.getInstance(this).
-                    updateMyPhoto(BitmapUtils.bitmap2byte(bitmap), new IAnSocialCallback() {
+                    updateMyPhoto(UserProfileActivity.this,BitmapUtils.bitmap2byte(bitmap), new IAnSocialCallback() {
                         @Override
                         public void onSuccess(JSONObject jsonObject) {
                             try {

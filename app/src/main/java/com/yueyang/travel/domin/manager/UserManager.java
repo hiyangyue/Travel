@@ -135,11 +135,11 @@ public class UserManager extends Observable {
         IMManager.getInstance(ct).disconnect(true);
     }
 
-    public void updateMyPhoto(byte[] data, final IAnSocialCallback lsr) {
+    public void updateMyPhoto(Context contexts,byte[] data, final IAnSocialCallback lsr) {
         AnSocialFile AnFile = new AnSocialFile("photo", new ByteArrayInputStream(data));
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("photo", AnFile);
-        params.put("user_id", currentUser.userId);
+        params.put("user_id", SpfHelper.getInstance(contexts).getMyUserId());
 
         try {
             anSocial.sendRequest("users/update.json", AnSocialMethod.POST, params, new IAnSocialCallback() {

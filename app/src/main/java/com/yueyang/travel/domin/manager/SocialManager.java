@@ -74,6 +74,7 @@ public class SocialManager {
 
     public static void createPost(final Context context, final String wallId, final String userId,
                                   final String content, List<byte[]> dataList, final IAnSocialCallback callback) {
+
         PhotoUploader mPhotoUploader = new PhotoUploader(context, userId, dataList, new PhotoUploader.PhotoUploadCallback() {
             @Override
             public void onFailure(String errorMsg) {
