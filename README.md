@@ -1,4 +1,4 @@
-# Sreenshot
+# Screenshot
 ![](screenshots/login.png) 
 
 ![](screenshots/home_2.png) 
