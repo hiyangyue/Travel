@@ -10,12 +10,14 @@
         android:paddingStart="@dimen/margin_30"
         android:paddingEnd="@dimen/margin_30"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <EditText
             android:id="@+id/user_name_et"
             android:textColorHint="@color/grey500"
             android:hint="@string/user_name"
+            android:textColor="@color/white"
             android:singleLine="true"
             android:imeOptions="actionNext"
             android:layout_width="match_parent"
@@ -36,6 +38,7 @@
             android:id="@+id/user_pass_et"
             android:textColorHint="@color/grey500"
             android:hint="@string/password"
+            android:textColor="@color/white"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:layout_width="match_parent"
